@@ -1,0 +1,33 @@
+<div class="index_sale_con" id="index_sale_con_like">
+	#foreach($!obj in $goods)
+	<ul class="index_sale_two">
+		#if($!obj.goods_main_photo)
+		#set($img="$!imageWebServer/$!{obj.goods_main_photo.path}/$!{obj.goods_main_photo.name}_middle.$!{obj.goods_main_photo.ext}")
+		#else
+		#set($img="$!imageWebServer/$!{config.goodsImage.path}/$!{config.goodsImage.name}")
+		#end #set($goods_url="$!webPath/goods_$!{obj.id}_gcase.htm")
+		#if($!config.second_domain_open)
+		#set($goods_url="http://$!{obj.goods_store.store_second_domain}.$!{domainPath}/goods_$!{obj.id}.htm")
+		#end
+		<li><a href="$!goods_url" target="_blank"> <a
+				href="$!goods_url" target="_blank" class="sale_two_img"> <span
+					class="img_cspan">
+						<p>
+							<img src="$!img" width="170" height="170" />
+						</p>
+				</span>
+			</a>
+				<div class="goods_list_bottom">
+					<span class="sale_two_name">$!obj.goods_name</span> <span
+						class="sale_pingfen"></span>
+					<!-- <span class="was">&nbsp;$!{goods.goods_current_price}&nbsp;AED</span> -->
+					<span class="sale_two_price">
+						<h5>
+							<strong>$!obj.goods_current_price&nbsp;</strong><small>AED</small>
+						</h5>
+					</span> <span class="sale_two_price"> </span>
+				</div>
+		</a></li>
+	</ul>
+	#end
+</div>

@@ -1,0 +1,166 @@
+@charset "utf-8";
+/*一些全局样式，仅供参考*/
+.tabnav, .tabctrl, .tabpage {
+	zoom: 1;
+	margin: 0;
+}
+
+.tabnav em, tabctrl b {
+	cursor: pointer;
+	font-family: "微软雅黑", Arial;
+}
+
+.tabpage * {
+	cursor: default;
+	font-weight: normal;
+	font-family: "微软雅黑", Arial;
+}
+
+.tableftno, .tabrightno, .tabprevno, .tabnextno {
+	cursor: default !important;
+	font-family: "微软雅黑", Arial;
+}
+
+.tabprocess {
+	height: 5px;
+	overflow: hidden;
+}
+
+.tabdel {
+	position: relative;
+	top: -2px;
+	left: 2px;
+	font: 14px Arial!;
+	margin: 0 0 0 2px;
+}
+
+.tabscroll {
+	*background: #f5f5f5;
+	*height: 26px;
+}
+
+.tabscroll * {
+	margin: 0 0 0 5px;
+	font-family: "微软雅黑", Arial;
+}
+
+.tabbtn kbd {
+	font: 14px/24px "微软雅黑";
+}
+/*Tab选项卡效果默认样式*/
+.kandyTabs {
+	margin: 0;
+	zoom: 1;
+	position: relative
+}
+
+.kandyTabs .tabtitle {
+	padding: 0;
+	line-height: 24px;
+	overflow: hidden;
+	position: relative;
+	z-index: 1;
+	zoom: 1;
+	text-align: left;
+	margin: auto;
+	background-color: #e5e5e4
+}
+
+.kandyTabs .tabtitle .tabbtn {
+	padding: 10px 20px;
+	white-space: nowrap;
+	cursor: pointer;
+	line-height: 20px;
+	display: inline-block;
+	border-bottom: 0;
+	background-position: left top;
+	background-repeat: repeat-x;
+	font-size: 16px;
+	color: #666;
+	width: 35px;
+}
+
+.tabbtn>span {
+	display: inline-block;
+	width: 40px;
+	height: 30px;
+	vertical-align: middle
+}
+
+.kandyTabs .tabtitle .tabbtn:hover {
+	color: #000;
+}
+
+.kandyTabs .tabtitle .tabcur {
+	color: #ff0000;
+	background-color: #fff;
+	border-top: 1px #eee solid
+}
+
+.kandyTabs .tabtitle .tabcur:hover {
+	color: #ff0000 !important;
+}
+
+.kandyTabs .tabbody {
+	overflow: hidden;
+	zoom: 1;
+	margin: 0;
+}
+
+.kandyTabs .tabbody .tabcont {
+	padding-top: 30px;
+}
+
+.kandyTabs .tabbody .tabroll .tabcont {
+	
+}
+
+#tj span {
+	background-image: url('../images/nav-icon.png');
+	background-position: 40px 0px
+}
+
+#tj.tabcur span {
+	background-image: url('../images/nav-icon.png');
+	background-position: 0px 0px
+}
+
+#fz span {
+	background-image: url('../images/nav-icon.png');
+	background-position: 40px -60px
+}
+
+#fz.tabcur span {
+	background-image: url('../images/nav-icon.png');
+	background-position: 0px -60px
+}
+
+#jj span {
+	background-image: url('../images/nav-icon.png');
+	background-position: 40px -30px
+}
+
+#jj.tabcur span {
+	background-image: url('../images/nav-icon.png');
+	background-position: 0px -30px
+}
+
+#xb span {
+	background-image: url('../images/nav-icon.png');
+	background-position: 40px -90px
+}
+
+#xb.tabcur span {
+	background-image: url('../images/nav-icon.png');
+	background-position: 0px -90px
+}
+
+#cs span {
+	background-image: url('../images/nav-icon.png');
+	background-position: 40px -120px
+}
+
+#cs.tabcur span {
+	background-image: url('../images/nav-icon.png');
+	background-position: 0px -120px
+}

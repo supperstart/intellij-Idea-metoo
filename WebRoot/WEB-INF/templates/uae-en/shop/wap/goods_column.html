@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta charset="utf-8">
+<title>首页 - $!config.title</title>
+<meta name="viewport"
+	content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<link href="$!webPath/resources/wap/css/mui.min.css" rel="stylesheet"
+	type="text/css" />
+<link href="$!webPath/resources/wap/fonts/mui.ttf" rel="stylesheet"
+	type="text/css" />
+<link
+	href="$!webPath/resources/style/system/front/wap/v2.0/css/v2.0style.css"
+	rel="stylesheet" type="text/css" />
+<link
+	href="$!webPath/resources/style/system/front/wap/v2.0/css/font-awesome-4.7.0/css/font-awesome.min.css"
+	rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="$!webPath/resources/wap/fonts/iconfont.css">
+<link
+	href="$!webPath/resources/style/system/front/wap/css/style_170228_bak.css"
+	rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="$!webPath/resources/wap/css/animate.css">
+<script src="$!webPath/resources/wap/jquery-3.1.1.min.js"></script>
+<script>
+		$(function () {
+			$("#$!{title}").addClass("this");
+
+			$("#search_btn").click(function () {
+				$("#main_title").hide();
+				$("#search_form").slideToggle(2000);
+			});
+
+			$(".group_top>ul>li").click(function () {
+				$(this).siblings('li').removeClass("this");
+				$(this).addClass("this");
+			});
+		});
+
+		function search_form() {
+			jQuery("#theForm").submit();
+		}
+		function isWeiXin() {
+			var ua = window.navigator.userAgent.toLowerCase();
+			if (ua.match(/MicroMessenger/i) == 'micromessenger') {
+				return true;
+			} else {
+				return false;
+			}
+		}
+		jQuery(".category_center_list li")
+		.click(
+				function() {
+					var id = jQuery(this).attr("id");
+					var mark = jQuery(this)
+							.attr("mark");
+					if (mark == "true") {
+						jQuery(this)
+								.find("img")
+								.attr("src",
+										"$!webPath/resources/style/system/front/wap/images/search_on_bg.png");
+						jQuery("#class2_" + id)
+								.fadeOut();
+						jQuery(this).attr("mark",
+								"false");
+					} else {
+						jQuery(this)
+								.find("img")
+								.attr("src",
+										"$!webPath/resources/style/system/front/wap/images/search_off_bg.png");
+						jQuery("#class2_" + id)
+								.fadeIn();
+						jQuery(this).attr("mark",
+								"true");
+					}
+				});
+	</script>
+<style>
+html, body {
+	background-color: #efeff4;
+}
+
+.mui-bar .mui-pull-left .mui-icon {
+	padding-right: 5px;
+	font-size: 28px;
+}
+
+.mui-bar .mui-btn {
+	font-weight: normal;
+	font-size: 17px;
+}
+
+.mui-bar .mui-btn-link {
+	top: 1px;
+}
+</style>
+</head>
+
+<body>
+
+	<header id="header" class="mui-bar mui-bar-nav">
+		<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+		<h1 class="mui-title">$!config.title</h1>
+	</header>
+
+	<div class="mui-content">
+		<div class="mui-scroll">
+			<!-- 子分类
+			<div class="category">
+				<div class="category_center">
+					<div class="category_center_list">
+						<ul>
+							#foreach($gc in $gcs)
+							<li id="$!{gc.id}" mark="false">
+								<div class="category_center_list_left">$!gc.className</div> <i><img
+									src="$!webPath/resources/style/system/front/wap/images/search_on_bg.png">
+							</i></li>
+							<div class="category_center_list_right" style="display:none"
+								id="class2_$!{gc.id}">
+								#foreach($child in $gc.childs) 
+									#if($child.display == true)
+										<span>
+											<a href="$!webPath/wap/class_goods.htm?gc_id=$!{child.id}">$!child.className</a>
+										</span> 
+									#end
+								
+								#end
+							</div>
+							#end
+						</ul>
+					</div>
+				</div>
+			</div>
+			 子分类END -->
+			<div class="hot_recommed">
+				#foreach($gc in $gcs)
+				<div class="phone_floor">
+					<!-- 名字 -->
+					<div
+						style="background-color: #3aaba9; width: 97vw; line-height: 40px; margin: 1vw 1.5vw 0vw 1.5vw; border-radius: 5px; color: #fff;">
+						<span class="recommed_title" style="font-size: 16px;"> <i
+							class="fa fa-long-arrow-left fa-1x"></i>
+							&nbsp;&nbsp;名字：$!{gc.className}&nbsp;&nbsp; <i
+							class="fa fa-long-arrow-right fa-1x"></i>
+						</span>
+					</div>
+					<!-- 商品 -->
+					#set($recommedGoods =
+					$!goodsViewTools.queryRecommedByGc("$!{gc.id}"))
+					#if($!recommedGoods.ad_acc.path) #set($img =
+					"$!imageWebServer/$!recommedGoods.ad_acc.path/$!recommedGoods.ad_acc.name")
+					<div class="recommed_goods"
+						style="margin-bottom: 0px; border-bottom: 0px solid #f2f2f2;">
+						<a href="$!webPath/wap/goods.htm?id=$!recommedGoods.id"> <img
+							src="$!img"
+							style="height: calc(100vw * 0.5); width: 97vw; padding: 1vw 1.5vw;">
+							<span class="recom_title"> <span style="color: red;">￥$!{recommedGoods.store_price}</span>&nbsp;&nbsp;$!{recommedGoods.goods_name}
+						</span> <span class="recom_name">$!{recommedGoods.seo_description}</span>
+						</a>
+					</div>
+					#end
+					<div class="goodslist">
+						<div class="ohbox">
+							<ul>
+								#foreach($goods in
+								$goodsViewTools.query_with_gc("$!{gc.id}",50))
+								#if($!goods.goods_main_photo)
+								#set($img="$!imageWebServer/$!{goods.goods_main_photo.path}/$!{goods.goods_main_photo.name}_small.$!{goods.goods_main_photo.ext}")
+								#else
+								#set($img="$!imageWebServer/$!{config.goodsImage.path}/$!{config.goodsImage.name}")
+								#end
+								<li><a href="$!webPath/wap/goods.htm?id=$!goods.id"> <img
+										src="$!img" /> <span class="goods_title">$!{goods.goods_name}#if($!goodsViewTools.query_activity_status("$!goods.id","group_buy")=="true")
+											<i
+											style="font-size: 12px; padding: 0px 5px; overflow: hidden; border-radius: 2px; background: #6ea724; text-align: center; line-height: 17px; color: #FFF; margin-right: 5px;">团购</i>#end
+									</span> <span class="goods_price">￥$!{goods.goods_current_price}</span>
+								</a></li> #end
+							</ul>
+						</div>
+					</div>
+				</div>
+				#end
+			</div>
+
+			<div
+				style="height: 40px; width: 100%; background-color: #fff; margin: 10px 0px;">
+				<ul style="height: 40px; width: 100%;">
+					#foreach($gc in $gc_parents)
+					<li
+						style="width: 25%; text-align: center; font-size: 14px; line-height: 40px; float: left;"
+						id="menu_$!{gc.className}"><a
+						href="$!webPath/wap/goods_column.htm?gcid=$!{gc.id}&title=menu_$!{gc.className}">
+							<span>$!{gc.className}测试</span>
+					</a></li> #end
+				</ul>
+			</div>
+		</div>
+	</div>
+	<script src="$!webPath/resources/wap/swiper.min.js"></script>
+	<script src="$!webPath/resources/wap/mui.js"></script>
+	<script src="$!webPath/resources/js/jquery.SuperSlide.2.1.1.js"></script>
+	<script type="text/javascript">
+		mui.init({
+			swipeBack: true //启用右滑关闭功能
+		});
+	</script>
+
+</body>
+
+</html>

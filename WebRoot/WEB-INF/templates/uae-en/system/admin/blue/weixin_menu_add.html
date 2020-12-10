@@ -1,0 +1,118 @@
+<link href="$!webPath/resources/style/common/css/window.css"
+	type="text/css" rel="stylesheet" />
+<script>
+jQuery(document).ready(function(){
+    jQuery("#theForm").validate({
+	   rules:{
+		   menu_name:{required:true},
+		   menu_key:{required:true,
+					 remote:{
+						url: "$!webPath/admin/weixin_menukey_verify.htm",     //鍚庡彴澶勭悊绋嬪簭
+						type: "post",               //鏁版嵁鍙戦�佹柟寮�
+						dataType: "json",           //鎺ュ彈鏁版嵁鏍煎紡   
+						data: {                     //瑕佷紶閫掔殑鏁版嵁
+							  "menu_key": function(){return jQuery("#menu_key").val();},
+							  "store_id":"$!store.id",
+							  "menu_id":function(){return jQuery("#menu_id").val();}
+						      }
+						     }
+			         }
+	   },
+	   messages:{
+	       menu_name:{required:"鑿滃崟鍚嶇О涓嶈兘涓虹┖"},
+		   menu_key:{required:"鑿滃崟Key涓嶈兘涓虹┖",remote:"鑿滃崟Key宸插瓨鍦�"}
+	   }
+	});
+	jQuery(":radio").click(function(){
+	   var menu_type=jQuery(this).val()
+	   if(menu_type=="click"){
+	     jQuery("#menu_key_info").show();
+		 jQuery("#tr_menu_key_content").show();
+		 jQuery("#menu_url_info").hide();
+	   }
+	   if(menu_type=="view"){
+	     jQuery("#menu_key_info").hide();
+		 jQuery("#tr_menu_key_content").hide();
+		 jQuery("#menu_url_info").show();	   
+	   }
+	});
+	#if($!obj.menu_type=="click")
+	     jQuery("#menu_key_info").show();
+		  jQuery("#tr_menu_key_content").show();
+		 jQuery("#menu_url_info").hide();	
+	#end
+	#if($!obj.menu_type=="view")
+	     jQuery("#menu_key_info").hide();
+		  jQuery("#tr_menu_key_content").hide();
+		 jQuery("#menu_url_info").show();	
+	#end	
+	jQuery(":radio[value=$!{obj.menu_type}]").attr("checked",true);
+});
+function menu_remove(){
+  if(confirm('鍒犻櫎鑿滃崟浼氬悓姝ュ垹闄や笅绾э紝纭畾鍒犻櫎锛�')){
+     window.location.href='$!webPath/admin/weixin_menu_delete.htm?menu_id=$!obj.id';
+  }
+}
+
+function plat_menu_save(){
+	jQuery("#theForm").submit();
+}
+</script>
+<form action="$!webPath/admin/weixin_menu_save.htm" method="post"
+	id="theForm">
+	<div class="edit">
+		<div class="editul setcont">
+			<ul class="set1">
+				<li class="setcont_bg">鑿滃崟鍚嶇О锛�</li>
+				<li><span class="size200"> <input name="menu_name"
+						type="text" id="menu_name" value="$!obj.menu_name" /> <input
+						name="menu_id" type="hidden" id="menu_id" value="$!obj.id" /> <input
+						name="pmenu_id" type="hidden" id="pmenu_id" value="$!pmenu_id" />
+				</span></li>
+			</ul>
+			<ul class="set1">
+				<li class="setcont_bg">鑿滃崟搴忓彿锛�</li>
+				<li><span class="size200"> <input name="menu_sequence"
+						type="text" id="menu_sequence" value="$!obj.menu_sequence"
+						style="width: 200px;" />
+				</span> 姝ｅ簭鎺掑垪</li>
+			</ul>
+			<ul class="set1">
+				<li class="setcont_bg">鑿滃崟绫诲瀷锛�</li>
+				<li><label> <span class="use_code"><strong>
+								<input name="menu_type" type="radio" id="menu_type"
+								value="click" checked="checked" />
+						</strong><strong class="usecode"> 鐐瑰嚮浜嬩欢</strong></span>
+				</label> <label> <span class="use_code"><strong> <input
+								type="radio" name="menu_type" id="menu_type" value="view" />
+						</strong><strong class="usecode"> URL璇锋眰</strong></span>
+				</label></li>
+			</ul>
+			<ul class="set1">
+				<li class="setcont_bg">鑿滃崟URL锛�</li>
+				<li><span class="size200"> <input name="menu_url"
+						type="text" id="menu_url" value="$!obj.menu_url" />
+				</span></li>
+			</ul>
+			<ul class="set1">
+				<li class="setcont_bg">鑿滃崟Key锛�</li>
+				<li><span class="size200"> <input name="menu_key"
+						type="text" id="menu_key" value="$!obj.menu_key" />
+				</span></li>
+			</ul>
+			<ul class="set1">
+				<li class="setcont_bg">鑿滃崟Key鍐呭锛�</li>
+				<li><textarea name="menu_key_content" type="text"
+						id="menu_key_content" style="width: 200px; height: 80px">$!obj.menu_key_content</textarea>
+				</li>
+			</ul>
+			<div class="submit">
+				<span class="pad120"> <input type="button"
+					onclick="plat_menu_save()" value="淇濆瓨" style="cursor: pointer;" />
+					<input name="鎸夐挳" onclick="menu_remove();" type="button"
+					style="cursor: pointer;" value="鍒犻櫎" />
+				</span>
+			</div>
+		</div>
+	</div>
+</form>

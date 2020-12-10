@@ -1,0 +1,59 @@
+<ul class="tab-view-user">
+	<!-- 用户top -->
+	<li style="margin-bottom: 10px;" class="last_li">
+		<div class="canvas-left-content">
+			<div class="canvas-left-top">
+				<p>
+					<i class="iconfont iconguanbi" id="offCanvasHide"></i>
+				</p>
+				<div class="account_info">
+					<p>#if($!user.userName) hala $!{user.userName} ! #else Hi, We
+						Are noon #end</p>
+				</div>
+			</div>
+			<div class="canvas-left-bottom">
+				<ul>
+					<li><a href="$!webPath/wap/buyer/order_list.htm"> <i
+							class="iconfont icondingdan"></i><span>Orders</span>
+					</a></li>
+					<li><a href="$!webPath/wap/buyer/address.htm"> <i
+							class="iconfont iconweibiaoti2fuzhi08"></i><span>Addresses</span>
+					</a></li>
+					<!-- <li>
+						<a href="$!webPath/wap/buyer/service_center.htm">
+							<i class="iconfont iconshoucang1"></i><span>Payment</span>
+						</a>
+					</li> -->
+					<li><a href="$!webPath/wap/buyer/service_center.htm"> <i
+							class="iconfont icongouwuche"></i><span>Metoo Credits</span>
+					</a></li>
+					<li><a href="$!webPath/wap/buyer/order_return_list.htm"> <i
+							class="iconfont icon3"></i><span>Returns</span>
+					</a></li>
+					<li><a href="$!webPath/wap/buyer/service_center.htm"> <i
+							class="iconfont iconzhanghuguanli"></i><span>Profile</span>
+					</a></li>
+					<!-- 语言/ -->
+					<li style="margin-top: 10px;"><a
+						href="$!webPath/wap/buyer/service_center.htm"> <i
+							class="iconfont iconyuyan"></i><span>Language</span>
+					</a></li>
+					<li style="margin-top: 10px;"><a
+						href="$!webPath/koala_logout.htm"> <i
+							class="iconfont icontuichu"></i><span>Sign Out</span>
+					</a></li>
+				</ul>
+			</div>
+		</div>
+	</li>
+	<!-- 菜单选项 -->
+	#foreach($gc in $gcs)
+	<li class="tab-view-list"><a href="#" class="mui-navigate-right">$!gc.className</a>
+		<ul class="accordion">
+			#foreach($child in $gc.childs) #if($child.display == true)
+			<li class=""><a
+				href="$!webPath/wap/class_goods.htm?gc_id=$!{child.id}"
+				target="_blank" class="mui-navigate-right">$!child.className</a></li>
+			#end #end
+		</ul></li> #end
+</ul>

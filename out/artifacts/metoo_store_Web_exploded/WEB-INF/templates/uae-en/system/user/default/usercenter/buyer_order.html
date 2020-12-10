@@ -1,0 +1,426 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>My order - $!config.title - $!{config.poweredby}</title>
+<meta name="keywords" content="$!config.keywords" />
+<meta name="description" content="$!config.description" />
+<meta name="generator" content="$!{config.meta_generator}" />
+<meta name="author" content="$!{config.meta_author}">
+	<meta name="copyright" content="$!{config.copyRight}">
+		<link
+			href="$!webPath/resources/style/system/front/default/css/public.css"
+			type="text/css" rel="stylesheet" />
+		<link
+			href="$!webPath/resources/style/system/front/default/css/public_auto.css"
+			type="text/css" rel="stylesheet" />
+		<link
+			href="$!webPath/resources/style/system/front/default/css/user.css"
+			type="text/css" rel="stylesheet" />
+		<link
+			href="$!webPath/resources/style/system/front/default/css/public_auto.css"
+			type="text/css" rel="stylesheet" />
+		<link href="$!webPath/resources/style/common/css/overlay.css"
+			type="text/css" rel="stylesheet" />
+		<link
+			href="$!webPath/resources/style/common/css/jquery-ui-1.8.22.custom.css"
+			type=text/css rel=stylesheet>
+			<script src="$!webPath/resources/js/jquery-1.6.2.js"></script>
+			<script src="$!webPath/resources/js/jquery.shop.common.js"></script>
+			<script src="$!webPath/resources/js/jquery-ui-1.8.21.js"></script>
+			<!-- <script src="$!webPath/resources/js/jquery.zh.cn.js" charset="utf-8"></script> -->
+			<script src="$!webPath/resources/js/jquery.SuperSlide.2.1.1.js"></script>
+			<script>
+jQuery(document).ready(function(){	
+  jQuery('#beginTime').datepicker({
+	  dateFormat:"yy-mm-dd",
+	  changeMonth: true,
+	  changeYear: true
+  });
+  jQuery('#endTime').datepicker({
+	  dateFormat:"yy-mm-dd",
+	  changeMonth: true,
+	  changeYear: true
+  });
+  jQuery(".gift_icon_c").mouseenter(function(){
+		jQuery(this).siblings("div").show();									
+											});
+  jQuery(".gift_icon_center").mouseleave(function(){
+		jQuery(this).children(".gift_icon_main").hide();									
+											});
+  //
+  jQuery("#order_status").val("$!order_status");
+  //QueryShip
+  jQuery(".li_10>a[id^=li_ship_]").click(function(){
+     jQuery("div[id^=li_ship_box]").hide();
+					var order_id =jQuery(this).attr("order_id");
+					var display =jQuery("#li_ship_box_"+order_id).css("display");
+							if(display=="none"){
+							jQuery("#li_ship_box_loading_"+order_id).show();
+							}
+							jQuery.post("$!webPath/buyer/query_ship.htm",{
+									"id":order_id
+									},
+									function(data){
+											if(data){
+											   jQuery(".li_ship_box_loading").hide();
+											   jQuery("#li_ship_box_"+order_id).show().find("ul").html(data);
+											  }	
+										},"text"); 
+  });
+  jQuery("div[id^=li_ship_box_]").mouseleave(function(){
+	  jQuery(this).hide();
+  });
+//
+jQuery("a[id^=delete_order_]").click(function(){									
+		var order_id=jQuery(this).attr("order_id");	
+		showDialog("share_sns","System Note","Unrecoverable after deletion，Continue？",1,"question","",function(){
+	       window.location.href="$!webPath/buyer/order_delete.htm?id="+order_id+"&currentPage=$!currentPage";
+		});	
+	});
+//
+jQuery(".user_guess_box_like").slide({mainCell:'.guess_like_box_like',autoPlay:true,effect:'left', vis:6, scroll:2, autoPage:true,interTime:3000,prevCell:"#like_goods_left",nextCell:"#like_goods_right"});
+});
+
+</script>
+</head>
+<body>
+	$!httpInclude.include("/top.htm") $!httpInclude.include("/head.htm")
+	$!httpInclude.include("/nav1.htm")
+	<div class="main">
+		<div class="usercenter">
+			$!httpInclude.include("/buyer/nav.htm?op=order")
+			<h4 style="float: left; padding: 10px 0px;">
+				<span class="myorder_fright"></span><strong>My order</strong>
+			</h4>
+			<div class="usercenter_right">
+				<div class="myorder">
+
+					<div class="myorder_index">
+						<ul class="myorder_index_ul">
+							<li><span style="font-weight: bold; font-size: 13px;">orders:
+							</span> #foreach($param in ${orders_status.keySet()}) <a
+								href="$!webPath/buyer/order.htm?order_status=$param">
+									#if($!velocityCount==1) For payment #elseif($!velocityCount==2)
+									Unreceived #else Completed #end (${orders_status.get($param)})</a>
+								#end</li>
+						</ul>
+					</div>
+				</div>
+				<form action="$!webPath/buyer/order.htm" method="post" id="ListForm">
+					<div class="user_list">
+						<div class="user_list_title" style="border: none;">
+							<span class="" style="display: flex; align-items: center;">
+								<div class="order_list_title">
+									<span
+										style="float: left; line-height: 24px; font-weight: bold; font-size: 13px;">Order
+										Type:</span> <select name="order_status" id="order_status"
+										style="width: 188px; height: 34px;">
+										<option value="">All Order</option>
+										<option value="order_submit">For payment</option>
+										<option value="order_pay">Not shipped</option>
+										<option value="order_shipping">shipped</option>
+										<option value="order_receive">Received</option>
+										<option value="order_finish">Completed</option>
+										<option value="order_cancel">Canceled</option>
+									</select>
+								</div>
+								<div class="order_list_title">
+									<span
+										style="float: left; line-height: 24px; font-weight: bold; font-size: 13px;">Order
+										number: </span> <input name="order_id" id="order_id" type="text"
+										style="width: 188px; height: 34px;" class="user_title_txt"
+										value="$!order_id" placeholder="Order number..." />
+								</div>
+								<div class="order_list_title">
+									<span
+										style="float: left; line-height: 24px; font-weight: bold; font-size: 13px;">Order
+										time: </span> <input name="beginTime" type="text" id="beginTime"
+										value="$!beginTime" readonly="readonly" class="user_title_txt"
+										style="width: 70px" placeholder="Start" /> <span
+										style="float: left; line-height: 24px; padding-right: 5px;">—</span>
+									<input name="endTime" type="text" id="endTime"
+										value="$!endTime" readonly="readonly" class="user_title_txt"
+										style="width: 70px" placeholder="End" /> <input name=""
+										type="submit" class="user_sear_btn" value="Inquire" />
+							</span>
+						</div>
+						<!-- <ul class="user_title_ul">
+              <li class="this"><i></i><a href="$!webPath/buyer/order.htm">全部订单</a></li>
+            </ul> -->
+					</div>
+
+
+					#if($!objs.size()>0) #foreach($obj in $objs)
+					#if($!obj.order_status==0) #set($status="Canceled") #end
+					#if($!obj.order_status==10) #set($status="Unpaid") #end
+
+					#if($!obj.order_status==16) #set($status="Pay on delivery and Not
+					shipped") #end #if($!obj.order_status==20) #set($status="Paid")
+					#end #if($!obj.order_status==30) #set($status="shipped")
+					#if($!{obj.delivery_type}==1) #set($status="Sending the pick up by
+					customer") #end #end #if($!obj.order_status==35) #set($status="Pick
+					up station has been collecting") #end #if($!obj.order_status==40)
+					#set($status="Received") #end #if($!obj.order_status==50)
+					#set($status="Completed,Commented") #end
+					#if($!obj.order_status==65) #if($!obj.order_cat==1)
+					#set($status="Completed") #else #set($status="Not commentable")
+					#end #end #set($payment="Unpaid") #if($!obj.payment.mark=="alipay")
+					#set($payment="Alipay") #end #if($!obj.payment.mark=="alipay_wap")
+					#set($payment="Mobile webpage Alipay") #end
+					#if($!obj.payment.mark=="alipay_app") #set($payment="Alipay APP")
+					#end #if($!obj.payment.mark=="tenpay") #set($payment="Tenpay") #end
+					#if($!obj.payment.mark=="bill") #set($payment="Quick Money") #end
+					#if($!obj.payment.mark=="chinabank") #set($payment="MOTOPAY") #end
+					#if($!obj.payment.mark=="balance") #set($payment="Advance deposit
+					payment") #end #if($!obj.payType=="payafter") #set($payment="Pay on
+					delivery") #end #if($!obj.payment.mark=="paypal")
+					#set($payment="paypal") #end #if($!obj.payment.mark=="wx_pay")
+					#set($payment="Web page WeChat payment") #end
+					#if($!obj.payment.mark=="wx_app") #set($!payment="WeaChat payment
+					APP") #end
+					#set($store=$!orderFormTools.goods_second_domain("$!obj.store_id","store"))
+					<div class="orderlist_one">
+						<h4 class="orderlist_one_h4">
+							#if($!obj.order_status==0) <a href="javascript:void(0);"
+								order_id="$!obj.id" id="delete_order_$!obj.id"
+								class="orderlist_oper_del">Delete</a> #end
+							#if($!obj.order_status>=10 && $!obj.order_status<20) <a
+								href="javascript:void(0);" class="orderlist_oper_cancel"
+								dialog_uri="$!webPath/buyer/order_cancel.htm?id=$!obj.id&currentPage=$!currentPage"
+								dialog_title="Cancel" dialog_width="400" dialog_height="100"
+								dialog_id="order_cancel">Cancel</a> #end <span> Order
+								number:<a href="$!webPath/buyer/order_view.htm?id=$!obj.id"
+								target="_blank" style="padding-right: 12px;">$!{obj.order_id}</a>
+								Order time:$!CommUtil.formatLongDate($!obj.addTime) Order
+								status:<a href="javascript:void(0);" class="order_h4_a"
+								style="padding-left: 12px;">$!status</a>
+							</span> #if($!obj.whether_gift==1)
+							<div class="gift_icon_center">
+								<div class="gift_icon_c" style="cursor: pointer">Full
+									amount of gifts</div>
+								<div class="gift_icon_main" style="display: none">
+									<dl>
+										#if($!obj.whether_gift==1) #set($maps =
+										$!CommUtil.Json2List("$!{obj.gift_infos}")) #foreach($map in
+										$maps) #set($goods_id = "$!{map.get('goods_id')}")
+										#set($goods_name = "$!{map.get('goods_name')}")
+										#set($goods_mainphoto_path =
+										"$!{map.get('goods_main_photo')}")
+										#set($img="$!imageWebServer/$!{goods_mainphoto_path}")
+										#set($goods_domainPath="$!webPath/goods_$!{goods_id}.htm")
+										#if($!store&&$!config.second_domain_open &&
+										$!store.store_second_domain!="")
+										#set($goods_domainPath="http://$!{store.store_second_domain}.$!{domainPath}/goods_$!{goods_id}.htm")
+										#end
+										<dt>
+											<a href="$!goods_domainPath" target="_blank"><img
+												src="$!img" title="$!goods_name" width="50" height="50" /></a>
+										</dt>
+										#end #end #if($!obj.child_order_detail) #foreach($child_map in
+										$!orderFormTools.queryGoodsInfo("$!obj.child_order_detail"))
+										#set($child_order=$!orderFormTools.query_order("$!child_map.get('order_id')"))
+										#set($store=$!orderFormTools.goods_second_domain("$!child_order.store_id","store"))
+										#if($!child_order.whether_gift==1) #set($maps =
+										$!CommUtil.Json2List("$!{child_order.gift_infos}"))
+										#foreach($map in $maps) #set($goods_id =
+										"$!{map.get('goods_id')}") #set($goods_name =
+										"$!{map.get('goods_name')}") #set($goods_mainphoto_path =
+										"$!{map.get('goods_main_photo')}")
+										#set($img="$!imageWebServer/$!{goods_mainphoto_path}")
+										#set($goods_domainPath="$!webPath/goods_$!{goods_id}.htm")
+										#if($!store&&$!config.second_domain_open &&
+										$!store.store_second_domain!="")
+										#set($goods_domainPath="http://$!{store.store_second_domain}.$!{domainPath}/goods_$!{goods_id}.htm")
+										#end
+										<dt>
+											<a href="$!goods_domainPath" target="_blank"><img
+												src="$!img" title="$!goods_name" width="50" height="50" /></a>
+										</dt>
+										#end #end #end #end
+									</dl>
+								</div>
+							</div>
+							#end
+						</h4>
+						<table width="100%" border="0" cellpadding="0" cellspacing="0"
+							class="user_order_table">
+							<tr>
+								<td colspan="4" width="80%"><div class="order_buy_data">
+										<ul style="height: 60px;">
+											<li style="width: 50%;">#if($!obj.order_cat==1)
+												#foreach($map in
+												$!orderFormTools.queryGoodsInfo("$!obj.goods_info"))
+												#set($goods_id = "$!{map.get('goods_id')}") #set($goods_name
+												= "$!{map.get('goods_name')}") #set($goods_count =
+												"$!{map.get('goods_count')}") #set($goods_price =
+												"$!{map.get('goods_price')}") #set($goods_mainphoto_path =
+												"$!{map.get('goods_mainphoto_path')}")
+												#set($img="$!imageWebServer/$!{goods_mainphoto_path}")
+												#set($order_total_price=$!{obj.totalPrice})
+												<dl class="order_img">
+													<img src="$!img" width="55" height="55"
+														title="$!{goods_name}" />
+													<dd>
+														<span> $!{goods_name} </span>
+													</dd>
+												</dl> #end #end #if($!obj.order_cat==0) #foreach($map in
+												$!orderFormTools.queryGoodsInfo("$!obj.goods_info"))
+												#set($goods_id = "$!{map.get('goods_id')}") #set($goods_name
+												= "$!{map.get('goods_name')}") #set($goods_count =
+												"$!{map.get('goods_count')}") #set($goods_price =
+												"$!{map.get('goods_price')}") #set($goods_gsp_val =
+												"$!{map.get('goods_gsp_val')}") #set($goods_mainphoto_path =
+												"$!{map.get('goods_mainphoto_path')}")
+												#set($goods_domainPath="$!webPath/goods_$!{goods_id}.htm")
+												#if($!store&&$!config.second_domain_open &&
+												$!store.store_second_domain!="")
+												#set($goods_domainPath="http://$!{store.store_second_domain}.$!{domainPath}/goods_$!{goods_id}.htm")
+												#end #set($img="$!imageWebServer/$!{goods_mainphoto_path}")
+												#set($order_total_price=$!{obj.totalPrice})
+												#set($order_total_ship_price=$!{obj.ship_price}) <a
+												href="$!{goods_domainPath}" target="_blank"
+												class="order_img_a"><img src="$!img" width="55"
+													height="55" title="$!{goods_name}" /></a> #end
+												#if($!obj.child_order_detail) #foreach($child_map in
+												$!orderFormTools.queryGoodsInfo("$!obj.child_order_detail"))
+												#set($child_order=$!orderFormTools.query_order("$!child_map.get('order_id')"))
+												#set($store=$!orderFormTools.goods_second_domain("$!child_order.store_id","store"))
+												#set($order_total_price=$order_total_price+$child_order.totalPrice)
+												#set($order_total_ship_price=$order_total_ship_price+$child_order.ship_price)
+												#foreach($map in
+												$!orderFormTools.queryGoodsInfo("$!child_map.get('order_goods_info')"))
+												#set($goods_id = "$!{map.get('goods_id')}") #set($goods_name
+												= "$!{map.get('goods_name')}") #set($goods_count =
+												$!{map.get('goods_count')}) #set($goods_price =
+												$!{map.get('goods_price')}) #set($goods_gsp_val =
+												"$!{map.get('goods_gsp_val')}") #set($goods_mainphoto_path =
+												"$!{map.get('goods_mainphoto_path')}")
+												#set($goods_domainPath="$!webPath/goods_$!{goods_id}.htm")
+												#if($!store&&$!config.second_domain_open &&
+												$!store.store_second_domain!="")
+												#set($goods_domainPath="http://$!{store.store_second_domain}.$!{domainPath}/goods_$!{goods_id}.htm")
+												#end #set($img="$!imageWebServer/$!{goods_mainphoto_path}")
+												<a href="$!{goods_domainPath}" target="_blank"
+												class="order_img_a"><img src="$!img" width="55"
+													height="55" title="$!{goods_name}" /></a> #end #end #end #end
+											</li>
+											<li class="blue2"
+												style="width: 15%; display: flex; height: 100%; align-items: center;"><span>$!obj.receiver_Name</span></li>
+											<li
+												style="width: 15%; display: flex; height: 100%; align-items: center; flex-direction: column;"><span>$!{order_total_price}AED</span>
+												#if($!obj.order_cat==0) <br /> (Including
+												freight:$!{order_total_ship_price}AED) #end</li>
+											<li
+												style="width: 20%; display: flex; height: 100%; align-items: center; justify-content: center;">
+												#if($!obj.order_cat==0) #if($!obj.shipCode) <a
+												title="Click to query【$!obj.shipCode】 Express Info"
+												href="$!webPath/buyer/ship_view.htm?id=$!obj.id"
+												target="_blank">$!obj.shipCode </a> #else Not shipped
+												information #end #end
+											</li>
+										</ul>
+									</div></td>
+								<td align="center"><span class="order_sp_td">
+										<ul class="order_list">
+											#if($!obj.order_status==65)
+											<li><a href="javascript:void(0);"> Ended, can not
+													comment</a></li> #end #if($!obj.order_status==10)
+											<li>#if($!obj.order_cat==1) <a
+												href="$!webPath/recharge_pay.htm?id=$!obj.id"
+												class="order_button order_pay1" target="_blank">Recharge</a>
+												#else <a href="$!webPath/order_pay_view.htm?id=$!obj.id"
+												class="order_button order_pay1" target="_blank">payment</a>
+												#end
+											</li> #end
+											#set($order_status=$!orderFormTools.query_order_status("$!obj.id"))
+											#if($!{order_status}==30&&$!{obj.delivery_type}==0)
+											<li><a href="javascript:void(0);"
+												dialog_uri="$!webPath/buyer/order_cofirm.htm?id=$!obj.id&currentPage=$!currentPage"
+												dialog_title="Confirm received" dialog_width="400"
+												dialog_height="100" dialog_id="order_cancel"
+												class="order_button orange">Confirm received</a></li> #end
+											#if($!order_status==35)
+											<li><a href="javascript:void(0);"
+												dialog_uri="$!webPath/buyer/order_cofirm.htm?id=$!obj.id&currentPage=$!currentPage"
+												dialog_title="Confirm received" dialog_width="400"
+												dialog_height="100" dialog_id="order_cancel"
+												class="order_button orange">Confirm received</a></li> #end
+											#if($!order_status>=30) #set($flag=0) #foreach($gc in
+											$obj.gcs) #if($gc.goods.goods_choice_type==1) #set($flag=1)
+											#end #end #if($!flag==1)
+											<li><a href="javascript:void(0);"
+												dialog_uri="$!webPath/buyer/order_seller_intro.htm?id=$!obj.id"
+												dialog_title="虚拟商品" dialog_width="400" dialog_height="100"
+												dialog_id="order_cancel">Virtual product</a></li> #end #end
+											#if($!obj.order_status>=40 && $!obj.order_status!=47 &&
+											$!obj.order_status!=50 && $!obj.order_status!=60 &&
+											$!obj.order_status!=65)
+											<li><a
+												href="$!webPath/buyer/order_evaluate.htm?id=$!obj.id"
+												class="order_button orange">Comment</a></li> #end
+										</ul>
+								</span></td>
+							</tr>
+						</table>
+						<div class="orderlist_bottom">
+							<span><a href="$!webPath/buyer/order_view.htm?id=$!obj.id"
+								class="order_bottom_btn" target="_blank" />Check Order</a></span><span
+								class="payment_way">Payment：$!payment</span>
+						</div>
+					</div>
+					#end
+					<div class="userlist_allop">
+						<div class="user_list_page">
+							<span class="user_page_sp"> <input name="currentPage"
+								type="hidden" id="currentPage" value="$!currentPage" />
+								$!gotoPageFormHTML
+							</span>
+						</div>
+					</div>
+					#else
+					<div class="nothing">
+						<div class="nothing_left">
+							<img
+								src="$!webPath/resources/style/system/front/default/images/nothing.png" />
+						</div>
+						<div class="nothing_right">
+							You have no pending orders yet! Go shopping<a
+								href="$!webPath/index.htm" target="_blank">Home page</a>
+						</div>
+					</div>
+					#end
+			</div>
+			</form>
+			<!-- <div class="user_guess_b">
+        <h3><strong>猜您喜欢</strong></h3>
+        <div class="user_guess_box_like"> <span class="guess_left"  style="cursor:pointer" id="like_goods_left"></span>
+          <div class="guess_like_box_like" id="like_goods_box">
+           #foreach($goods in $your_like_goods)
+              #if($!goods.goods_main_photo)
+              #set($img="$!imageWebServer/$!{goods.goods_main_photo.path}/$!{goods.goods_main_photo.name}_middle.$!{goods.goods_main_photo.ext}")
+              #else
+              #set($img="$!imageWebServer/$!{config.goodsImage.path}/$!{config.goodsImage.name}")
+              #end
+              
+              #set($goods_url="$!webPath/goods_$!{goods.id}.htm")
+              #if($!config.second_domain_open && $!goods.goods_type==1 && $!goods.goods_store.store_second_domain!="")
+              #set($goods_url="http://$!{goods.goods_store.store_second_domain}.$!{domainPath}/goods_$!{goods.id}.htm")
+              #end
+              <ul class="guess_like_one">
+                <li class="guess_img"><a href="$!goods_url" target="_blank"><span class="img_cspan">
+                  <p><img src="$!{img}" width="150" height="150" /></p>
+                  </span></a></li>
+                <li class="guess_name"><a href="$!goods_url" target="_blank">$!goods.goods_name</a></li>
+                <li class="guess_price">商城价：<strong>￥$!{goods.goods_current_price}</strong></li>
+              </ul>
+            #end
+          </div>
+          <span class="guess_right" style="cursor:pointer" id="like_goods_right"></span> </div>
+      </div> -->
+		</div>
+	</div>
+	</div>
+	$!httpInclude.include("/footer.htm")
+</body>
+</html>

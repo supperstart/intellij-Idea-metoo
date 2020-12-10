@@ -1,0 +1,55 @@
+<link href="$!webPath/resources/style/common/css/window.css"
+	type="text/css" rel="stylesheet" />
+<link href="$!webPath/resources/style/common/css/overlay.css"
+	type="text/css" rel="stylesheet" />
+<script>
+function switch_reason(){
+  var ck=jQuery("#reason_other").attr("checked");
+  if(ck=="checked"){
+    jQuery("#other_reason").show();
+  }else{
+	jQuery("#other_reason").hide();  
+  }
+}
+
+function saveForm(){
+	jQuery("#save").attr("disabled","disabled");
+	jQuery("#theForm").submit();
+	}
+</script>
+<form action="$!webPath/buyer/order_cofirm_save.htm" method="post"
+	id="theForm">
+	<table style="float: left;" width="390" border="0" cellspacing="0"
+		cellpadding="0" class="box_table">
+		<tr>
+			<td align="left" valign="top">Are you sure you have received the
+				following orders?</td>
+		</tr>
+		<tr>
+			<td align="center" valign="top">Order number： <input name="id"
+				type="hidden" id="id" value="$!obj.id" /> <span
+				style="color: #393;">$!obj.order_id</span></td>
+		</tr>
+		<!--     #if($!child_order)
+    <tr>
+      <td align="left" valign="top"><span style="color:#F00">Attention Please：</span><span style="color:#00F; font-weight:normal;">This order is shipped by multiple sellers. Please receive goods after receipt！</span>
+</td>
+    </tr>
+    #end -->
+		<tr>
+			<td align="left" valign="top"><span style="color: #F00">Notice
+					：</span><span style="color: #999; font-weight: normal;">If you have
+					not received the goods, please do not click "Confirm". Most of the
+					cases are fraudulent due to early confirmation of payment, please
+					be cautious！</span></td>
+		</tr>
+		<tr>
+			<td align="center"><span class="inputbtn"> <input
+					type="button" id="save" onclick="saveForm()" value="Confirm"
+					style="cursor: pointer;" class="white_btn" /> <input
+					name="currentPage" type="hidden" id="currentPage"
+					value="$!currentPage" />
+			</span></td>
+		</tr>
+	</table>
+</form>

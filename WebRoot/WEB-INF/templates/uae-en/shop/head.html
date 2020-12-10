@@ -1,0 +1,569 @@
+
+<!--[if lt IE 9]>
+    <script src="$!webPath/resources/js/css3-mediaqueries.js"></script>
+<![endif]-->
+<style>
+.en_text {
+	display: block;
+	text-align: center;
+	padding: 5px 0px;
+}
+
+#entext {
+	position: absolute;
+	background-color: #fff;
+	height: auto;
+	border-radius: 3px;
+	width: 168px;
+	top: 44px;
+	left: 0px;
+}
+
+.sanjio {
+	width: 0;
+	height: 0;
+	border-left: 5px solid transparent;
+	border-right: 5px solid transparent;
+	border-bottom: 10px solid #fff;
+	position: absolute;
+	top: 34px;
+	left: 10px;
+}
+
+.entext_content {
+	
+}
+
+.top_user_ul li a {
+	color: #ff9900;
+}
+
+.top_user_hb {
+	left: -1px;
+}
+
+.top_user_browse span a {
+	width: 71px;
+	margin: 3px 3px;
+	height: 71px;
+}
+
+.top_user_browse span a img {
+	width: 100%;
+	height: inherit;
+}
+
+.top_user_browse span {
+	height: auto;
+}
+
+.top_user_sp_this {
+	padding-left: 40px;
+}
+
+.head_seartxt_s {
+	position: relative;
+}
+
+.login_bt {
+	background-color: #ff9900;
+	border-radius: 3px;
+	color: #FFF !important;
+	width: 68%;
+	margin: 13px auto !important;
+	display: block;
+	font-size: 15px;
+	text-align: center;
+	padding: 8px;
+	overflow: hidden;
+	font-weight: 550;
+}
+
+.top_user_width {
+	width: 234px !important;
+}
+
+.top_ul_list, .top_user_width, .top_user_browse span, .top_user_browse,
+	.top_user {
+	padding: 0px;
+	width: auto;
+}
+
+.top_ul_list>li {
+	display: block;
+	font-size: 12.5px;
+	padding: 10px 13.5px;
+	width: 100%;
+	background: transparent;
+	border-bottom: 1px solid #F0F0F0;
+}
+
+.top_user_hb {
+	padding: 0px;
+}
+
+.top_ul_list>li:hover {
+	background-color: #F0F0F0;
+}
+/* .top_ul_list>li>a:hover{
+	color:#ff9900;
+} */
+#soubt {
+	position: absolute;
+	font-size: 25px;
+	top: 7px;
+	right: 27px;
+	color: #f90;
+}
+
+#keyword:focus {
+	border: 1px solid #dcdcdc;
+	outline: none;
+}
+
+.sousuo {
+	border-top: 1px solid #dcdcdc;
+	border-right: 1px solid #dcdcdc;
+	border-bottom: 1px solid #dcdcdc;
+	position: absolute;
+	right: 0px;
+	top: 0px;
+}
+
+.head_fixd .logo span p img {
+	height: 35px !important;
+	width: auto !important;
+}
+
+.
+.head_seartxt_s {
+	box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .08);
+}
+
+.top_user_browse {
+	margin-bottom: 10px;
+	background: transparent;
+}
+</style>
+<link rel="stylesheet" href="$!webPath/resources/wap/fonts/iconfont.css">
+<div class="head_width" id="head_h">
+	<div class="head">
+		#if($!config.websiteLogo)
+		#set($img="$!imageWebServer/$!{config.websiteLogo.path}/$!{config.websiteLogo.name}")
+		#else
+		#set($img="$!webPath/resources/style/system/front/default/images/logo.png")
+		#end
+		<h1 class="logo">
+			<span>
+				<p>
+					<a href="$!webPath/index.htm"> <img src="$!img" border="0"
+						style="height: 60px; width: 170px;" />
+					</a>
+				</p>
+			</span>
+		</h1>
+		<form action="$!webPath/search.htm" method="post" target="_blank"
+			id="searchForm">
+			<input name="type" type="hidden" id="type" value="$!type" />
+			<div class="head_search" id="head_search"
+				style="width: 665px; margin-left: 0px;">
+				<span class="head_seartxt_s head_seartxt"> <input
+					name="keyword" type="text" id="keyword"
+					placeholder="What are you looking for?" x-webkit-speech
+					lang="zh-CN" onwebkitspeechchange="jQuery('#searchForm').submit()"
+					class="h_sear_txt"
+					style="padding-left: 22px; width: 641px; font-size: 14px;"
+					autocomplete="off" />
+					<div class="sousuo">
+						<input name="" type="submit" class="h_sear_btn " value="" />
+					</div> <i class="iconfont icon-sousuo" id="soubt"></i>
+				</span> <span class="head_searstr">#if($!config.hotSearch!="")Hot
+					search�?#foreach($info in
+					$CommUtil.splitByChar("$!config.hotSearch",",")) <a
+					href="javascript:void(0);" onclick="search_form('$info','goods');">$!info</a>
+					#end #end
+				</span>
+				<!--搜索历史 -->
+				<div class="head_search_history" id="head_search_history"
+					style="display: none">
+					<dl>
+						<dt>
+							<ul>
+								<li class="head_search_history_top"><span>Search
+										History</span><i><a href="javascript:void(0)"
+										onclick="search_data_del_all()">Delete All</a></i></li>
+							</ul>
+						</dt>
+						<dd>
+							<span class="head_search_history_hot"> Hot search...</span>
+							<ul>
+
+								#if($!config.hotSearch!="") #foreach($info in
+								$CommUtil.splitByChar("$!config.hotSearch",","))
+								<li><a href="javascript:void(0);"
+									onclick="search_form('$info','goods');">$!info</a></li> #end #end
+							</ul>
+						</dd>
+					</dl>
+				</div>
+				<!--搜索历史 -->
+				<div class="head_search_history_up" id="head_search_history_up"
+					style="display: none">
+					<dl>
+						<dt>
+							<ul>
+								<li class="head_search_history_top"><span>Search
+										History</span><i><a href=""> Delete All</a></i></li>
+							</ul>
+						</dt>
+						<dd>
+							<span class="head_search_history_hot"> Hot search...</span>
+							<ul>
+
+								#if($!config.hotSearch!="") #foreach($info in
+								$CommUtil.splitByChar("$!config.hotSearch",","))
+								<li><a href="javascript:void(0);"
+									onclick="search_form('$info','goods');">$!info</a></li> #end #end
+							</ul>
+						</dd>
+					</dl>
+				</div>
+			</div>
+		</form>
+		<!--语言-->
+		<div class="top_uae">
+			<span class="top_pull"> <a href="#">العربية</a>
+			</span>
+		</div>
+		<!--用户中心�?�?-->
+		<div class="top_user" id="top_user">
+			<span class="top_user_sp"
+				style="display: flex; align-items: enter; height: 100%;"
+				id="top_user_sp"> <a href="$!webPath/buyer/index.htm"
+				style="display: flex; align-items: center; justify-content: center;">
+					<span> <strong class="top_col">
+							#if($!user.userName) <span>$!{user.userName}</span> #else <span>Hello,Login</span>
+							#end
+					</strong> <i class="iconfont icon-xiala"></i>
+				</span>
+			</a>
+			</span>
+			<div class="top_user_hid" id="top_user_hid"
+				style="display: none; z-index: 999;"></div>
+		</div>
+
+		<!--购物车结-->
+		<div class="goodscar" id="goodscar">
+			<span class="goodscar_sp" id="goodscar_sp"> #if($!user) <span>
+					<a href="$!webPath/goods_cart1.htm" style="padding-left: 12px;">
+						<em class="goodscar_num"><b id="cart_goods_count_top">$!carts.size()</b></em>
+
+						<strong> <!-- <i class="iconfont icon-gouwuche1" style="font-size: 32px;"></i> -->
+							<img
+							src='$!webPath/resources/style/system/front/default/images/gouwuche.png'
+							style="height: 28px; padding-right: 5px;">
+					</strong>
+				</a>
+			</span> #else <span> <a href="$!webPath/user_login.json"
+					style="padding-left: 12px;"> <em class="goodscar_num"><b
+							id="cart_goods_count_top">$!carts.size()</b></em> <strong> <!-- <i class="iconfont icon-gouwuche1" style="font-size: 32px;"></i> -->
+							<img
+							src='$!webPath/resources/style/system/front/default/images/gouwuche.png'
+							style="height: 28px; padding-right: 5px;">
+					</strong>
+				</a>
+			</span> #end
+			</span>
+		</div>
+		<!-- 语言切换 -->
+		<!-- <div class="top_uae" id="uae_en" style="right: 34px;">
+			<p><strong>EN</strong>&nbsp;&nbsp;&nbsp;<i class="iconfont iconyuyan"></i></p>
+			<i class="sanjio" style="display:none;"></i>
+			<div id="entext" style="display:none; width:100px;">
+				<a href="#" class="en_text">English-EN</a>
+				<a href="#" class="en_text">Arabic-AE</a>
+			</div>
+		</div> -->
+	</div>
+</div>
+<script src="$!webPath/resources/js/jquery.cookie.js"></script>
+<script>
+jQuery(document).ready(function(){
+	$("#soubt").click(function(){
+		 $(".h_sear_btn").trigger("click");
+	});
+		
+	$("#uae_en").click(function(){
+		if(jQuery(".sanjio").is(':hidden')){
+			jQuery(".sanjio").show();
+			jQuery("#entext").show();
+			
+		}else{
+			jQuery(".sanjio").hide();
+			jQuery("#entext").hide();
+		}
+	});
+	search_history_data();
+	var head_h=jQuery("#head_h").height();
+	//搜索框获取焦点
+	jQuery("#keyword").click(function(){
+		var top = jQuery(document).scrollTop();
+		jQuery("div[id^='head_search_goodslist']").hide();
+		if(top>head_h){
+		   jQuery("#head_search_history_up").fadeIn();
+	  	}else{
+		   jQuery("#head_search_history").fadeIn();
+	  	}
+	}).keyup(function(){
+		if(jQuery(this).val()!=''){
+			jQuery("div[id^='head_search_history']").hide();
+		};
+		var keyword = jQuery(this).val();
+		<!--查询分类-->
+		jQuery.post("$!webPath/search_goodsclass.htm",{"keyword":keyword},function(data){
+	    	if(data){
+				search_goodsclass_initialize();
+				jQuery.each(data.parent_gc,function(index,item){
+					if(index==0){
+						//构�?�提示框
+						jQuery("#head_search_goodslist>dl>dt>ul").append("<li class='this'><span><a href='$!{webPath}/store_goods_list_"+item.id+".htm' target='_blank'>"+item.name+"</a></span></li>");
+						var str = "<dd id='head_search_dd_"+item.id+"'><span class='head_search_history_hot' style='margin-bottom:20px; height:25px; line-height:25px;'>"+item.name+"</span><span onclick='search_gc_close()' class='head_search_history_hot' style='margin-bottom:20px; height:25px;float:right; line-height:15px; color:#999;;cursor:pointer'>Close</span><ul></ul></dd>"
+						jQuery("#head_search_goodslist>dl").append(str);
+						//下方的提示框
+						jQuery("#head_search_goodslist_up>dl>dt>ul").append("<li class='this'><span><a href='$!{webPath}/store_goods_list_"+item.id+".htm' target='_blank'>"+item.name+"</a></span></li>");
+						str = "<dd id='head_search_up_dd_"+item.id+"'><span class='head_search_history_hot' style='margin-bottom:20px; height:25px; line-height:25px;'>"+item.name+"</span><span onclick='search_gc_close()' class='head_search_history_hot' style='margin-bottom:20px; height:25px;float:right; line-height:15px; color:#999;;cursor:pointer'>Close</span><ul></ul></dd>"
+						jQuery("#head_search_goodslist_up>dl").append(str);
+					}else{
+						//构�?�提示框
+						jQuery("#head_search_goodslist>dl>dt>ul").append("<li><span><a href='$!{webPath}/store_goods_list_"+item.id+".htm' target='_blank'>"+item.name+"</a></span></li>");
+						var str = "<dd id='head_search_dd_"+item.id+"' style='display:none'><span class='head_search_history_hot' style='margin-bottom:20px; height:25px; line-height:25px;'>"+item.name+"</span><span onclick='search_gc_close()' class='head_search_history_hot' style='margin-bottom:20px; height:25px;float:right; line-height:15px; color:#999;;cursor:pointer'>Close</span><ul></ul></dd>"
+						jQuery("#head_search_goodslist>dl").append(str);
+						//下方的提示框
+						jQuery("#head_search_goodslist_up>dl>dt>ul").append("<li><span><a href='$!{webPath}/store_goods_list_"+item.id+".htm' target='_blank'>"+item.name+"</a></span></li>");
+						var str = "<dd id='head_search_up_dd_"+item.id+"' style='display:none'><span class='head_search_history_hot' style='margin-bottom:20px; height:25px; line-height:25px;'>"+item.name+"</span><span onclick='search_gc_close()' class='head_search_history_hot' style='margin-bottom:20px; height:25px;float:right; line-height:15px; color:#999;;cursor:pointer'>Close</span><ul></ul></dd>"
+						jQuery("#head_search_goodslist_up>dl").append(str);
+					}
+				})
+				jQuery.each(data.list_child,function(index,childs){
+						jQuery.each(childs,function(i,child){
+							jQuery("#head_search_goodslist>dl>dd").eq(index).find("ul").append("<li><a href='$!{webPath}/store_goods_list_"+child.id+".htm' target='_blank'>"+child.name+"</a></li>");
+							jQuery("#head_search_goodslist_up>dl>dd").eq(index).find("ul").append("<li><a href='$!{webPath}/store_goods_list_"+child.id+".htm' target='_blank'>"+child.name+"</a></li>");
+						})
+				})
+				var top = jQuery(document).scrollTop();
+				if(top>head_h){
+		   			jQuery("#head_search_goodslist_up").fadeIn();
+	  			}else{
+		   			jQuery("#head_search_goodslist").fadeIn();
+	  			}
+				//监听搜索分类提示鼠标上移事件
+				jQuery("div[id^='head_search_goodslist']>dl>dt>ul>li").mouseover(function() {
+                    var index = jQuery(this).index();
+					jQuery("div[id^='head_search_goodslist']>dl>dt>ul>li").removeClass("this");
+					jQuery("#head_search_goodslist>dl>dt>ul>li").eq(index).addClass("this");
+					jQuery("#head_search_goodslist_up>dl>dt>ul>li").eq(index).addClass("this");
+					jQuery("dd[id^='head_search_dd_']").hide();
+					jQuery("dd[id^='head_search_dd_']").eq(index).show();
+					jQuery("dd[id^='head_search_up_dd_']").hide();
+					jQuery("dd[id^='head_search_up_dd_']").eq(index).show();
+                });
+			}else{
+				search_goodsclass_initialize();
+			}
+	  	},"json");
+		<!--查询分类END-->
+	});
+	jQuery("div[id^='head_search_history']").mouseover(function(){
+		jQuery(this).show();
+	});
+	jQuery("div[id^='head_search_history']").mouseout(function(){
+		jQuery(this).hide();
+	});
+	jQuery(window).scroll(function(){
+		var top = jQuery(document).scrollTop();
+		if(top>head_h){
+			if(jQuery("#head_search_history").is(":visible")){
+				jQuery("#head_search_history").hide();
+				jQuery("#head_search_history_up").show();  
+		    };
+			if(jQuery("#head_search_goodslist").is(":visible")){  
+						jQuery("#head_search_goodslist").hide();
+						jQuery("#head_search_goodslist_up").show(); 
+			};
+	  	}else{
+		   if(jQuery("#head_search_history_up").is(":visible")){
+				jQuery("#head_search_history_up").hide();
+				jQuery("#head_search_history").show();
+		   };
+		   if(jQuery("#head_search_goodslist_up").is(":visible")){  
+				jQuery("#head_search_goodslist_up").hide();
+				jQuery("#head_search_goodslist").show(); 
+		   };
+	  	}
+		
+	});
+	//选定某一搜索历史
+	jQuery("#head_search_history").find("dl>dt>ul>li>span").click(function(){
+		jQuery("#keyword").val(jQuery(this).attr("data"));
+		jQuery("#searchForm").submit();
+	});
+	//鼠标经过用户中心
+   jQuery("#top_user_sp").mouseover(function(){
+		if(jQuery("#top_user_hb").size()==0){
+			jQuery.ajax({type:'POST',url:'$!current_webPath/head_ajax_usercenter.htm',data:'',
+						   beforeSend:function(){
+							     jQuery("#top_user_hid").html('<div class="top_user_hb" id="top_user_hb"><span class="top_user_loading"><img src="$!webPath/resources/style/system/front/default/images/loading.gif" /></span><b class="top_user_warning">Loading...</b></div>');
+							     jQuery("#top_user_hid").show();
+							   },
+						  success:function(data){
+						     jQuery("#top_user_hid").empty();
+								 jQuery("#top_user_hid").html(data);
+							   }
+						});		
+		}else{
+			jQuery("#top_user_hid").show();
+			}
+	jQuery("#top_user_sp").addClass("top_user_sp_this");
+  	});
+   jQuery("#top_user").mouseleave(function(){
+    jQuery("#top_user_hid").hide();
+	jQuery("#top_user_sp").removeClass("top_user_sp_this");
+  });
+   //鼠标经过购物�?
+   jQuery("#goodscar_sp").mouseover(function(){
+			var gstatus =jQuery("#goodscar_con_box").attr("mark");
+			if(gstatus=="none")
+			  jQuery.ajax({type:'POST',url:'$!current_webPath/cart_menu_detail.htm',data:'',
+						   beforeSend:function(){
+							     jQuery("#goodscar_con_box").empty().html(' <div><span class="top_user_loading"><img src="$!webPath/resources/style/system/front/default/images/loading.gif" /></span><b class="top_user_warning">加载中，请稍�?...</b></div>');
+							     jQuery("#goodscar_con_box").show();
+							   },
+						  success:function(data){
+							  jQuery("#goodscar_con_box").attr("mark","show");
+							     jQuery("#goodscar_con_box").empty();
+								 jQuery("#goodscar_con_box").html(data);
+								
+								 
+							   }
+						});
+			  jQuery("#goodscar_sp").addClass("goodscar_sp_this");
+		   });
+		   jQuery("#goodscar").mouseleave(function(){
+			jQuery("#goodscar_con_box").attr("mark","none");
+			  jQuery("#goodscar_con_box").hide();
+			  jQuery("#goodscar_sp").removeClass("goodscar_sp_this");
+		   });
+});
+//初始化分类搜索提示模�?
+function search_goodsclass_initialize(){
+	jQuery("div[class^='head_search_goodslist']").each(function(index,obj) {
+        jQuery(obj).remove();
+    });
+	var str = "<div class='head_search_goodslist' id='head_search_goodslist' style='display:none'><dl><dt><ul></ul></dt></dl></div>";
+	jQuery("#head_search").append(str);
+	str = "<div class='head_search_goodslist_up' id='head_search_goodslist_up' style='display:none'><dl><dt><ul></ul></dt></dl></div>";
+	jQuery("#head_search").append(str);
+}
+
+function search_gc_close(){
+	jQuery("div[id^='head_search_goodslist']").hide();
+}
+//加载搜索历史记录
+function search_history_data(){
+	var data = jQuery.cookie("search_history");
+	if(data==null){
+		jQuery("div[id^='head_search_history']").remove();
+	}else{
+		jQuery.each(data.split(","),function(index,item){
+			if(index<10){
+				jQuery("#head_search_history_up").find("dl>dt>ul").append("<li><span data='"+item+"'><a href='javascript:void(0)'>"+item+"</a></span><i onclick='search_data_del(this)'><a href='javascript:void(0)'>Delete</a></i></li>");
+				jQuery("#head_search_history").find("dl>dt>ul").append("<li><span data='"+item+"'><a href='javascript:void(0)'>"+item+"</a></span><i onclick='search_data_del(this)'><a href='javascript:void(0)'>Delete</a></i></li>");
+			}
+		});
+	}
+}
+//删除某一历史记录
+function search_data_del(obj){
+	var item = jQuery(obj).parent().find("span").attr("data");
+	var data = "";
+	var temp = jQuery.cookie("search_history");	
+	jQuery.each(temp.split(","),function(index,value){
+		if(item!=value){
+			if(data!=""){
+				data =data +","+value;
+			}else{
+				data = value;
+			}
+		}
+	});
+	
+	if(data!=""){
+		jQuery.cookie("search_history",data);
+	}else{
+		jQuery.cookie("search_history",null);
+	}
+	search_html_restore();
+	search_history_data();
+}
+//删除全部历史记录
+function search_data_del_all(){
+	jQuery.cookie("search_history",null);
+	search_html_restore();
+	search_history_data();
+}
+//清空搜索历史下拉数据
+function search_html_restore(){
+	jQuery("#head_search_history_up").find("dl>dt>ul>li").each(function(index, element) {
+       if(index!=0){
+		   jQuery(this).remove();
+	   } 
+    });
+	jQuery("#head_search_history").find("dl>dt>ul>li").each(function(index, element) {
+       if(index!=0){
+		   jQuery(this).remove();
+	   } 
+    });
+}
+function search_form(){
+  var keyword=arguments[0];
+  var type=arguments[1];
+  if(keyword!=""&&keyword!=undefined){
+   jQuery("#keyword").val(keyword);
+  }
+  if(type!=""&&type!=undefined){
+    jQuery("#type").val(type);
+  }
+  jQuery("#searchForm").submit();	
+  jQuery("#keyword").val("");
+}
+		 var total_price=0;
+		 #set($total_price=0)
+		 #foreach($gc in $cart)
+		  #if($!gc.goods.group_buy==2)
+		    #set($total_price=$!{gc.goods.group_goods.gg_price}*$!{gc.count}+$total_price)
+		  #else
+		    #set($total_price=$!{gc.goods.store_price}*$!{gc.count}+$total_price)
+		  #end
+		 #end
+		 
+		function menu_cart_remove(id){
+           jQuery.post("$!current_webPath/remove_goods_cart.htm",{"ids":id},function(data){
+		   if(data.code=="100"){		
+		   jQuery(".goodscar_list li[id="+id+"]").remove();
+           jQuery("#cart_goods_count_top").html(data.count);
+		   jQuery("#st_count").html(data.count);
+		   jQuery("#cart_goods_price_top").html(data.total_price);
+		   if(data.count==0){//购物车页面没有商�?
+			 jQuery(".goodscar_list").remove();
+			 jQuery("#goodscar_con_box").html("<b class='goodscar_none'>购物车还没有商品!</b>");	
+		   }else{
+			   jQuery("#goodscar_con_box").load("$!current_webPath/cart_menu_detail.htm");
+			   }
+			}
+			 if(data.code=="200"){	
+			   showDialog("msg_info","","系统繁忙，请稍后重试",2,"warning",3,'');	
+			 }
+         
+         },"json");
+       }
+</script>

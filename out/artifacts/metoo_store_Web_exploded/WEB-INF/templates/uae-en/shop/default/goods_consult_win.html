@@ -1,0 +1,96 @@
+<script>
+jQuery(document).ready(function(){
+  jQuery("#theForm").validate({					 
+       rules: {
+			consult_content: "required"#if($!config.securityCodeConsult),
+			consult_code:{
+				required:true,
+				remote:{
+		           url: "$!webPath/verify_code.htm",     //閸氬骸褰存径鍕倞缁嬪绨�
+                   type: "post",               //閺佺増宓侀崣鎴︼拷閺傜懓绱�
+                   dataType: "json",           //閹恒儱褰堥弫鐗堝祦閺嶇厧绱�   
+                   data: {                     //鐟曚椒绱堕柅鎺旀畱閺佺増宓�
+                         "code": function(){return jQuery("#consult_code").val();}
+						 
+		                }
+			       }
+			}
+			#end
+			},
+		messages: {
+			consult_content: "閸愬懎顔愭稉宥堝厴娑撹櫣鈹�"#if($!config.securityCodeConsult),
+			consult_code:{required:"娑撳秷鍏樻稉铏光敄","remote":"妤犲矁鐦夐惍渚�鏁婄拠锟絵
+			#end
+					},
+	   errorPlacement: function(error, element){ 
+	      if(jQuery(error[0]).html()!=""){
+		      element.parent().remove(".ask_error");
+		      element.parent().append("<i class='ask_error'></i>");
+              error.appendTo(element.parent().find(".ask_error"));
+	        }
+        },
+	   submitHandler:function(){
+	      var params = jQuery("#theForm").serialize();
+		  jQuery.ajax({type:'POST',url:'$!webPath/goods_consult_save.htm',data:params,success:function(data){
+		      jQuery("#goods_consult_list").empty();
+			  jQuery("#goods_consult_list").append(data);
+			  jQuery("#goods_cousult_win").remove();
+		  }}
+		 );
+	   }
+  });
+});
+function refreshCode(){
+   jQuery("#code_img").attr("src","$!webPath/verify.json?name=consult_code&d="+new Date().getTime());
+}
+</script>
+<form action="$!webPath/goods_consult_save.htm" method="post"
+	id="theForm" name="theForm">
+	<div class="consultation_top_c_ask_center">
+		<ul>
+			<li class="ask_c_select"><span>閸掑棛琚敍锟�/span> <select
+					name="consult_type" id="consult_type" class="ask_c_select_s">
+						<option value="娴溠冩惂閸溿劏顕�">娴溠冩惂閸溿劏顕�</option>
+						<option
+							value="鎼存挸鐡ㄩ崣濠囧帳闁拷>鎼存挸鐡ㄩ崣濠囧帳闁拷/option>
+          <option value="閺�顖欑帛閸欏﹤褰傜粊锟�>閺�顖欑帛閸欏﹤褰傜粊锟�/option>
+
+						
+						<option value="閸烆喖鎮楅崪銊嚄">閸烆喖鎮楅崪銊嚄</option>
+						<option value="娣囧啴鏀㈠ú璇插З">娣囧啴鏀㈠ú璇插З</option>
+				</select></li>
+			<li class="ask_c_word"><span>閸愬懎顔愰敍锟�/span> <textarea
+						name="consult_content" cols="" rows="" id="consult_content"></textarea></li>
+			#if($!config.securityCodeConsult)
+			<script>
+	   jQuery(function(){
+		   jQuery("#code_img").attr("src","$!webPath/verify.json?d"+new Date().getTime());
+		   })
+                 function refreshCode(){
+	                 jQuery("#code_img").attr("src","$!webPath/verify.json?d"+new Date().getTime());
+                 }
+             </script>
+			<li class="ask_c_password"><span>妤犲矁鐦夐惍渚婄窗</span> <i> <input
+					name="consult_code" type="text" id="consult_code" />
+			</i>#if($!config.securityCodeType=='voice') <script>
+				   function readCode(id){
+                         var  s = "<embed id='sound_play' name='sound_play' src='$!webPath/resources/flash/soundPlayer.swf?" + (new Date().getTime()) + "' FlashVars='url=$!webPath"+ "' width='0'   height='0' allowScriptAccess='always' type='application/x-shockwave-flash' pluginspage='http://www.macromedia.com/go/getflashplayer' /></embed>";
+                    jQuery("#"+id).html(s);
+                    }
+			 </script> <img id="code_img" src="$!webPath/verify.json" width="59"
+				height="27" style="display: none;" /> <a href="javascript:void(0);"
+				onclick="readCode('player')" title="閺堟顕版宀冪槈閻拷 class="code_speech"></a>
+				<span id="player"></span> #else <b><img style="cursor: pointer;"
+					src="$!webPath/verify.json" id="code_img" onclick="refreshCode();"
+					width="59" height="27"
+					title="閻愮懓鍤弴瀛樺床妤犲矁鐦夐惍锟� /></b>#end <a href="
+					javascript:void(0);" onclick="refreshCode();" class="code_refresh"></a></li>
+			#end
+			<li class="ask_c_submit"
+				style="margin-left: 0px; text-align: center;"><a
+				href="javascript:void(0);" onclick="jQuery('#theForm').submit();">閹绘劒姘�</a>
+				<input name="goods_id" type="hidden" id="goods_id"
+				value="$!goods_id" /></li>
+		</ul>
+	</div>
+</form>

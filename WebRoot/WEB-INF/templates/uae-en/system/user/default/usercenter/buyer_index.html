@@ -1,0 +1,377 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>$!config.title - $!{config.poweredby}</title>
+<meta name="keywords" content="$!config.keywords" />
+<meta name="description" content="$!config.description" />
+<meta name="generator" content="$!{config.meta_generator}" />
+<meta name="author" content="$!{config.meta_author}" />
+<meta name="copyright" content="$!{config.copyRight}" />
+<link
+	href="$!webPath/resources/style/system/front/default/css/public.css"
+	type="text/css" rel="stylesheet" />
+<link
+	href="$!webPath/resources/style/system/front/default/css/public_auto.css"
+	type="text/css" rel="stylesheet" />
+<link href="$!webPath/resources/style/system/front/default/css/user.css"
+	type="text/css" rel="stylesheet" />
+<link href="$!webPath/resources/style/common/css/overlay.css"
+	type="text/css" rel="stylesheet" />
+<link
+	href="$!webPath/resources/style/common/css/jquery-ui-1.8.22.custom.css"
+	type=text/css rel=stylesheet />
+<script src="$!webPath/resources/js/jquery-1.6.2.js"></script>
+<script src="$!webPath/resources/js/jquery-ui-1.8.21.js"></script>
+<script src="$!webPath/resources/js/jquery.SuperSlide.2.1.1.js"></script>
+<script src="$!webPath/resources/js/jquery.shop.common.js"></script>
+<script>
+jQuery(document).ready(function(){	
+	jQuery("#fav_goods").slide({mainCell:'ul',autoPlay:true,effect:'left', vis:3, scroll:1, autoPage:true,interTime:3000,prevCell:"#fav_goods_left",nextCell:"#fav_goods_right"});
+	//
+	jQuery("#fav_store").slide({mainCell:'ul',autoPlay:true,effect:'left', vis:3, scroll:1, autoPage:true,interTime:3000,prevCell:"#fav_store_left",nextCell:"#fav_store_right"});
+	//
+	jQuery("#fav_store").slide({mainCell:'ul',autoPlay:true,effect:'left', vis:3, scroll:1, autoPage:true,interTime:3000,prevCell:"#fav_store_left",nextCell:"#fav_store_right"});
+	//
+	jQuery("#integral_order").slide({mainCell:'ul',autoPlay:true,effect:'left', vis:3, scroll:1, autoPage:true,interTime:3000,prevCell:"#integral_order_left",nextCell:"#integral_order_right"});
+	//
+	jQuery(".see_all_order_center").slide({mainCell:'ul',autoPlay:true,effect:'left', vis:3, scroll:2, autoPage:true,interTime:3000,prevCell:".see_all_order_center_left",nextCell:".see_all_order_center_right"});
+	//
+	jQuery("#foot_point").slide({mainCell:'ul',autoPlay:true,effect:'left', vis:3, scroll:1, autoPage:true,interTime:3000,prevCell:"#foot_point_left",nextCell:"#foot_point_right"});
+	//
+	jQuery(".see_all_order_center").mouseenter(function(){
+	  jQuery(".see_all_order_center_left").show();
+	  jQuery(".see_all_order_center_right").show();
+	}).mouseleave(function(){
+	  jQuery(".see_all_order_center_left").hide();
+	  jQuery(".see_all_order_center_right").hide();
+	});
+	//
+	jQuery("#fav_goods_info").mouseenter(function(){
+	  jQuery("#fav_goods_left").show();
+	  jQuery("#fav_goods_right").show();
+	}).mouseleave(function(){
+	  jQuery("#fav_goods_left").hide();
+	  jQuery("#fav_goods_right").hide();
+	});
+	//
+	jQuery("#fav_store_info").mouseenter(function(){
+	  jQuery("#fav_store_left").show();
+	  jQuery("#fav_store_right").show();
+	}).mouseleave(function(){
+	  jQuery("#fav_store_left").hide();
+	  jQuery("#fav_store_right").hide();
+	});
+	//
+	jQuery("#integral_order_info").mouseenter(function(){
+	  jQuery("#integral_order_left").show();
+	  jQuery("#integral_order_right").show();
+	}).mouseleave(function(){
+	  jQuery("#integral_order_left").hide();
+	  jQuery("#integral_order_right").hide();
+	});
+	//
+	jQuery("#foot_point_info").mouseenter(function(){
+	  jQuery("#foot_point_left").show();
+	  jQuery("#foot_point_right").show();
+	}).mouseleave(function(){
+	  jQuery("#foot_point_left").hide();
+	  jQuery("#foot_point_right").hide();
+	});
+});
+</script>
+</head>
+<body>
+	$!httpInclude.include("/top.htm") $!httpInclude.include("/head.htm")
+
+	<div class="main">
+		<div class="usercenter">
+			$!httpInclude.include("/buyer/nav.htm")
+			<div class="usercenter_right"
+				style="border: none; box-shadow: none; background-color: transparent;">
+				<div class="usercenter_index_top">
+					<!--  <dt class="user_info_img"><img src="$!user_photo" width="100" height="100" /><b><a href="$!webPath/buyer/account.htm">编辑资料</a></b></dt> -->
+					<dl class="user_info">
+						#set($user_photo="$!imageWebServer/$!config.memberIcon.path/$!config.memberIcon.name")
+						#if($!config.memberIcon)
+						#set($user_photo="$!imageWebServer/$!config.memberIcon.path/$!config.memberIcon.name")
+						#end #if($!user.photo)
+						#set($user_photo="$!imageWebServer/$!user.photo.path/$!user.photo.name")
+						#end
+						#set($level_name=$integralViewTools.query_user_level_name("$!user.id"))
+						#set($level_img=$integralViewTools.query_user_level_img("$!user.id"))
+
+						<dd>
+							<!--   <div class="user_deposit">
+              <div class="user_deposit_word"><strong>Available Balance</strong></div>
+              <div class="user_deposit_number">#if($!{user.availableBalance}) $!{user.availableBalance}AED #else 0AED #end</div>
+              <div class="user_deposit_button"><a href="$!webPath/buyer/predeposit.htm">Recharge</a></div>
+            </div> -->
+							<!-- <div class="user_deposit">
+              <div class="user_deposit_word">可用积分</div>
+              <div class="user_deposit_number"> #if($!{user.integral})$!{user.integral}分 #else 0分 #end</div>
+              <div class="user_deposit_button"><a href="$!webPath/integral/index.htm" target="_blank">积分商城</a></div>
+            </div>
+            <div class="user_deposit">
+              <div class="user_deposit_word">优惠券</div>
+              <div class="user_deposit_number">$!couponInfos<i>张</i></div>
+              <div class="user_deposit_button"><a href="$!webPath/buyer/coupon.htm">查看</a></div>
+            </div> -->
+							<div class="user_deposit">
+								<div class="user_deposit_word">
+									<strong>Message</strong>
+								</div>
+								<a href="$!webPath/buyer/message.htm"><div
+										class="user_deposit_number">
+										$!msg_size
+										<!-- <i>number</i> -->
+									</div></a>
+								<!-- <div class="user_deposit_button"><a href="$!webPath/buyer/message.htm">Check</a></div> -->
+							</div>
+						</dd>
+					</dl>
+				</div>
+				<div class="usercenter_index_myorder">
+					<h3>
+						<a href="$!webPath/buyer/order.htm" class="see_all_order">ALL
+							Order</a><strong>My Order</strong><span class="idx_myorder_sp">
+							#foreach($param in ${orders_status.keySet()}) <a
+							href="$!webPath/buyer/order.htm?order_status=$param">#if($!velocityCount==1)
+								For payment #elseif($!velocityCount==2) Unreceived #else
+								Finished #end (${orders_status.get($param)})</a> #end
+						</span>
+					</h3>
+					#if($!orderForms.size()>0)
+					<div class="see_all_order_center">
+						<div class="see_all_order_center_c">
+							<ul>
+								#set($store=$!orderFormTools.goods_second_domain("$!order.store_id","store"))
+								#foreach($order in $orderForms)
+								#set($maps=$!orderFormTools.queryGoodsInfo("$!order.goods_info"))
+								#foreach($map in $!maps) #if($!velocityCount==1) #set($goods_id
+								= "$!{map.get('goods_id')}") #set($goods_name =
+								"$!{map.get('goods_name')}") #set($goods_count =
+								"$!{map.get('goods_count')}") #set($goods_price =
+								"$!{map.get('goods_price')}") #set($goods_gsp_val =
+								"$!{map.get('goods_gsp_val')}") #set($goods_mainphoto_path =
+								"$!{map.get('goods_mainphoto_path')}")
+								#set($goods_domainPath="$!webPath/goods_$!{goods_id}.htm")
+								#if($!store&&$!config.second_domain_open &&
+								$!store.store_second_domain!="")
+								#set($goods_domainPath="http://$!{store.store_second_domain}.$!{domainPath}/goods_$!{goods_id}.htm")
+								#end #set($img="$!imageWebServer/$!{goods_mainphoto_path}") #end
+								#end
+								<li class="see_all_order_center_one">
+									<div class="see_all_order_center_one_top">
+										Order Number：$!order.order_id<span>[ Unpaid ]</span>
+									</div>
+									<div class="see_all_order_center_one_center">
+										<dl>
+											<dt>
+												<a href="$!goods_domainPath" target="_blank"><img
+													src="$!img" /></a>
+											</dt>
+											<dd>
+												<span> <a
+													href="$!webPath/buyer/order_view.htm?id=$!order.id">The
+														order has been submitted, waiting for payment</a>
+													<p>$!CommUtil.formatLongDate($!order.addTime)</p>
+												</span>
+											</dd>
+											<dt>Totals：$!maps.size()Pieces</dt>
+											<dt>
+												<a href="$!webPath/order_pay_view.htm?id=$!order.id"
+													style="border-radius: 2px; background-color: #ff9900; color: #fff; padding: 5px;">For
+													payment</a>
+											</dt>
+										</dl>
+									</div> <!-- <div class="see_all_order_center_one_b">
+                  <dl>
+                    <dd><a href="$!webPath/buyer/order_view.htm?id=$!order.id">订单号：$!order.order_id</a></dd>
+                    <dt><a href="$!webPath/order_pay_view.htm?id=$!order.id">For payment</a></dt>
+                  </dl>
+                </div> -->
+								</li> #end
+							</ul>
+						</div>
+						#if($!orderForms.size()>3)
+						<div class="see_all_order_center_left"
+							style="cursor: pointer; display: none;"></div>
+						<div class="see_all_order_center_right"
+							style="cursor: pointer; display: none;"></div>
+						#end
+					</div>
+					#else
+					<div class="see_all_order_nothing">Here are no pending
+						orders！</div>
+					#end
+				</div>
+				<div class="user_guess_center">
+					<div class="user_guess" id="fav_goods_info">
+						<div class="idx_myorder_h3">
+							<a href="$!webPath/buyer/favorite_goods.htm"
+								class="see_all_order">More</a><strong>Wishlists</strong>
+						</div>
+						#if($!favorite_goods.size()>0)
+						<div class="user_guess_box" id="fav_goods">
+							<div class="guess_like_box">
+								<ul>
+									#foreach($f_goods in $favorite_goods)
+									#if($!f_goods.goods_photo)
+									#set($img="$!imageWebServer/$!{f_goods.goods_photo}_small.$!{f_goods.goods_photo_ext}")
+									#else
+									#set($img="$!imageWebServer/$!{config.goodsImage.path}/$!{config.goodsImage.name}")
+									#end
+									#set($goods_url="$!webPath/goods_$!{f_goods.goods_id}.htm")
+									#if($!config.second_domain_open && $!f_goods.goods_type==1 &&
+									$!f_goods.goods_store_second_domain!="")
+									#set($goods_url="http://$!{f_goods.goods_store_second_domain}.$!{domainPath}/goods_$!{f_goods.goods_id}.htm")
+									#end
+									<li class="guess_like_one">
+										<div class="guess_img">
+											<a href="$!goods_url" target="_blank"><span
+												class="img_cspan">
+													<p>
+														<img src="$!img" width="150" height="150" />
+													</p>
+											</span></a>
+										</div>
+										<div class="guess_name">
+											<a href="$!goods_url" target="_blank">$!f_goods.goods_name</a>
+										</div>
+										<div class="guess_price">
+											<h5>
+												<strong>$!{f_goods.goods_current_price}&nbsp;</strong><small>AED</small>
+											</h5>
+										</div>
+									</li> #end
+								</ul>
+							</div>
+							#if($!favorite_goods.size()>3) <span class="guess_left"
+								id="fav_goods_left" style="cursor: pointer; display: none;"></span>
+							<span class="guess_right" id="fav_goods_right"
+								style="cursor: pointer; display: none;"></span> #end
+						</div>
+						#else
+						<div class="user_guess_box_nothing">
+							<span><img
+								src="$!webPath/resources/style/system/front/default/images/save.png" /></span>
+							<i>No collections yet！</i>
+						</div>
+						#end
+					</div>
+					<!--  <div class="user_guess" id="fav_store_info">
+          <h3 class="idx_myorder_h3"><a href="$!webPath/buyer/favorite_store.htm" class="see_all_order">More</a><strong>I pay attention to the store</strong></h3>
+          #if($!favorite_stores.size()>0)
+          <div class="user_guess_box" id="fav_store">
+            <div class="guess_like_box">
+              <ul>
+                #foreach($f_store in $favorite_stores)  
+                #set($store=$!orderFormTools.goods_second_domain("$!f_store.store_id","store"))
+                #if($!store.store_logo)
+                #set($store_logo="$!imageWebServer/$!{store.store_logo.path}/$!{store.store_logo.name}")
+                #else
+                #set($store_logo="$!imageWebServer/$!config.storeImage.path/$!config.storeImage.name")
+                #end 
+                #set($store_url="$!webPath/store_$!{store.id}.htm")
+                #if($!config.second_domain_open && $!store.store_second_domain!="")
+                #set($store_url="http://$!{store.store_second_domain}.$!{domainPath}")
+                #end
+                <li class="guess_like_one_s">
+                  <div class="guess_img_s"><a href="$!store_url" target="_blank"><span class="img_cspan_s">
+                    <p><img src="$!store_logo" /></p>
+                    </span></a></div>
+                  <div class="guess_name_s"><a a href="$!store_url" target="_blank">$!store.store_name</a></div>
+                  <div class="guess_praise">Overall rating：$!{store.sp.store_evaluate}Grade</div>
+                  <div class="guess_number">Number of people concerned：$!{store.favorite_count}Peoples</div>
+                  <div class="guess_number">Quantity of commodity:$!{store.goods_list.size()}Pieces</div>
+                  <div class="guess_into"><a href="$!store_url" target="_blank">进入店铺</a></div>
+                </li>
+                #end
+              </ul>
+            </div> -->
+					#if($!favorite_stores.size()>3) <span class="guess_left"
+						id="fav_store_left" style="cursor: pointer; display: none;"></span>
+					<span class="guess_right" id="fav_store_right"
+						style="cursor: pointer; display: none;"></span> #end
+				</div>
+				#else
+				<div class="user_guess_box_nothing">
+					<span><img
+						src="$!webPath/resources/style/system/front/default/images/home.png" /></span>
+					<i>No collection shop yet！</i>
+				</div>
+				#end
+			</div>
+			<!-- <div class="user_guess" id="integral_order_info">
+          <h3 class="idx_myorder_h3"><a href="$!webPath/buyer/integral_order_list.htm" class="see_all_order">更多兑换</a><strong>我的积分兑换</strong></h3>
+        #if($!igois.size()>0)
+          <div class="user_guess_box" id="integral_order">
+            <div class="guess_like_box">
+              <ul>
+                #foreach($igoi in $igois)
+                <li class="guess_like_one">
+                  <div class="guess_img"><a href="$!webPath/integral/view_$!{igoi.igo_goods_id}.htm" target="_blank"><span class="img_cspan">
+                    <p><img src="$!igoi.igo_goods_img" width="150" height="150" /></p>
+                    </span></a></div>
+                  <div class="guess_name"><a href="$!webPath/integral/view_$!{igoi.igo_goods_id}.htm" target="_blank">$!igoi.igo_goods_name</a></div>
+                  <div class="guess_price">消耗积分：<strong>$!{igoi.igo_total_integral}分</strong></div>
+                </li>
+                #end
+              </ul>
+            </div>
+            #if($igois.size()>3)
+            <span class="guess_left" style="cursor:pointer;display:none;" id="integral_order_left"></span> <span class="guess_right" style="cursor:pointer;display:none;" id="integral_order_right"></span>
+           #end 
+            </div>
+          #else
+          <div class="user_guess_box_nothing"> <span><img src="$!webPath/resources/style/system/front/default/images/ji.png" /></span> <i>还没有积分兑换哦！</i> </div>
+          #end 
+         </div> -->
+			<div class="user_guess" id="foot_point_info">
+				<div class="idx_myorder_h3">
+					<a href="$!webPath/buyer/foot_point.htm" class="see_all_order">More</a><strong>My&nbspfootprint</strong>
+				</div>
+				<div class="user_guess_box" id="foot_point">
+					<div class="guess_like_box">
+						<ul>
+							#foreach($fpv in $fpvs)
+							#set($store=$!orderFormTools.goods_second_domain("$!fpv.fpv_goods_id","goods"))
+							#set($goods_domainPath="$!webPath/goods_$!{fpv.fpv_goods_id}.htm")
+							#if($!store&&$!config.second_domain_open &&
+							$!store.store_second_domain!="")
+							#set($goods_domainPath="http://$!{store.store_second_domain}.$!{domainPath}/goods_$!{fpv.fpv_goods_id}.htm")
+							#end
+							<li class="guess_like_one">
+								<div class="guess_img">
+									<a href="$!goods_domainPath" target="_blank"><span
+										class="img_cspan">
+											<p>
+												<img src="$!fpv.fpv_goods_img_path" width="150" height="150" />
+											</p>
+									</span></a>
+								</div>
+								<div class="guess_name">
+									<a href="$!goods_domainPath" target="_blank">$!{fpv.fpv_goods_name}</a>
+								</div>
+								<div class="guess_price">
+									<h5>
+										<strong>$!{fpv.fpv_goods_price}&nbsp;</strong><small>AED</small>
+									</h5>
+								</div>
+							</li> #end
+						</ul>
+					</div>
+					#if($!fpvs.size()>3) <span class="guess_left"
+						style="cursor: pointer; display: none;" id="foot_point_left"></span>
+					<span class="guess_right" style="cursor: pointer; display: none;"
+						id="foot_point_right"></span> #end
+				</div>
+			</div>
+		</div>
+	</div>
+	</div>
+	</div>
+	$!httpInclude.include("/footer.htm")
+</body>
+</html>

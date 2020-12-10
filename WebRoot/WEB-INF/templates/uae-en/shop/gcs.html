@@ -1,0 +1,97 @@
+<div>
+	<div class="left_menu" id="left_menu">
+		#foreach($gc in $!gcs)
+		#set($icon_img="$!webPath/resources/style/common/images/icon/default_icon.png")
+		<a href="$!webPath/store_goods_list_$!{gc.id}.htm">
+			<dl #if($!velocityCount%2==0) class="left_menu_dl double" #else
+				class="left_menu_dl" #end child_count="$!gc.childs.size()"
+				#if($!{gc.gc_color}) gc_color="$!{gc.gc_color}" #else
+				gc_color="#E60012" #end id="$!gc.id" #if($!velocityCount==1)
+				style="position: relative; z-index: 999; cursor: pointer;"
+				onclick="javascript:window.location.href='$!webPath/store_goods_list_$!{gc.id}.htm'"
+				#end>
+				<!--left_menu_this经过状态，和left_menu_dt不经状态过交换-->
+				#if($!gc.icon_type==0) #if($!gc.icon_sys!="")
+				#set($icon_img="$!webPath/resources/style/common/images/icon/icon_$!{gc.icon_sys}.png")
+				#end #else #if($!gc.icon_acc)
+				#set($icon_img="$!imageWebServer/$!gc.icon_acc.path/$!gc.icon_acc.name")
+				#end #end
+				<!-- 鼠标经过父级时添加style="border:1px solid #F00; border-left:3px solid #F00;"添加底层颜色-->
+				<dt class="left_menu_dt" id="dts_$!gc.id">
+					<i class="left_menu_i"></i> <span class="left_menu_str">
+						$!gc.className </span>
+					<!-- <b class="left_menu_str_b">
+							            #foreach($child_gc in $gcViewTools.query_third_rec("$!gc.id",4))
+							            	<a href="$!webPath/store_goods_list_$!{child_gc.id}.htm">$!{child_gc.className}</a>  
+							            #end
+							            </b> -->
+				</dt>
+				<dd class="left_menu_dd" style="display: none" id="child_$!gc.id">
+					<!--存在广告时left_menu_con this   鼠标经过父级时添加style="border:1px solid #F00; border-left:3px solid #F00;"添加底层颜色-->
+					#set($adv_map=$!gcViewTools.query_gc_advert("$!gc.id","$!webPath"))
+					<div class="left_menu_con #if($!adv_map.get('advert_img')!="
+						") this #end" id="left_menu_con_$!{gc.id}">
+
+						<span class="left_menu_sp">
+							<div class="left_menu_con_center">
+								<div class="left_menu_con_center_left">
+									<dl>
+										<dt id="nav_title_top">
+											<span style="font-size: 16px;">$!gc.className</span>
+										</dt>
+									</dl>
+								</div>
+								#foreach($gc1 in $gc.childs)
+								<div class="left_menu_con_center_left">
+									<dl>
+										<dt>
+											<a href="$!webPath/store_goods_list_$!{gc1.id}.htm">$!gc1.className</a>
+										</dt>
+										<!-- #foreach($gc2 in $!gc1.childs)
+							                            <dd><a href="$!webPath/store_goods_list_$!{gc2.id}.htm">$!gc2.className</a></dd>
+							                  			#end -->
+									</dl>
+								</div>
+								#end
+							</div> <!-- center_banner --> #if($!adv_map.get('advert_img')!="" &&
+							$!adv_map.get('advert_img')!='null')
+							<div class="right_menu_con_right_img">
+								#set($adv_url=$!adv_map.get('advert_url')) <a
+									#if($!{adv_url}!="" ) href="$!adv_map.get('advert_url')"
+									target="_blank" #else href="javascript:void(0);" #end><img
+									src="$!adv_map.get('advert_img')" /></a>
+							</div> #end
+						</span> #set($gbs=$gcViewTools.query_gc_brand("$!gc.id"))
+						#if($!gbs.size()>=0)
+						<div class="menu_con_right_top">
+							<dl>
+								<dt id="nav_title_top">
+									<span>Top Brand</span>
+								</dt>
+							</dl>
+							<dl>
+								<dt>
+									#set($velocityCount=0) #foreach($map in $gbs) #set(
+									$velocityCount = $velocityCount+(-1)) #if($velocityCount<5)
+									#set($path=$!{map.get('imgPath')})
+									#set($imgName=$!{map.get('imgName')}) <span id="nav_brand">
+										<a href="$!webPath/brand_goods_$!{map.get('id')}.htm">
+											#set($img="$!imageWebServer/$path/$imgName") <img
+											data-src="$!img"
+											src="$!webPath/resources/style/common/images/loader.png"
+											width="170" height="170" position="relative" />
+
+									</a>
+									</span> #end #end
+								</dt>
+							</dl>
+
+						</div>
+						#end
+					</div>
+
+				</dd>
+			</dl>
+		</a> #end
+	</div>
+</div>

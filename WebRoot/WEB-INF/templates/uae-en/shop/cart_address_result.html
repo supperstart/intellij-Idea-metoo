@@ -1,0 +1,9 @@
+<ul>
+  <li class="shopping_address_one_top"> Consignee：$!{addr.trueName}</li>
+  <li class="shopping_address_one_tel"> Phone ：$!{addr.mobile}&nbsp;&nbsp;$!{addr.telephone}</li>
+  <li class="shopping_address_one_address">Delivery address：$!{addr.area.parent.parent.areaName}$!{addr.area.parent.areaName}$!{addr.area.areaName}</li>
+  <li class="shopping_address_one_address_a"> Detailed Address：$!{addr.area_info}</li>
+  <li class="shopping_address_one_coding"> ZIP：$!{addr.zip}</li>
+  <li class="shopping_address_one_edit" style="display:none;"><a href="javascript:void(0);" onclick="addr_edit('$!{addr.id}',this)"> Edit </a></li>
+  <li class="shopping_address_one_default" style="display:none;"><a href="javascript:void(0);" onclick="addr_default('$!{addr.id}',this)"> Default address</a></li>
+</ul>

@@ -1,0 +1,48 @@
+ <link
+	href="$!webPath/resources/style/system/front/wap/v2.0/css/v2.0style.css"
+	rel="stylesheet" type="text/css" />
+<style>
+	span{display: inline-block;}
+	.pink_span{color : #F94D4D; }
+</style>	
+#set($index_img="$!webPath/resources/style/system/front/wap/v2.0/images/black_home.png")
+#set($list_img="$!webPath/resources/style/system/front/wap/v2.0/images/black_list.png")
+#set($cart_img="$!webPath/resources/style/system/front/wap/v2.0/images/black_cart.png")
+#set($user_img="$!webPath/resources/style/system/front/wap/v2.0/images/black_user.png")
+#set($search_img="$!webPath/resources/style/system/front/wap/v2.0/images/black_search.png")
+#if($!op=="list")
+#set($list_img="$!webPath/resources/style/system/front/wap/v2.0/images/pink_list.png")
+#elseif($!op=="cart")
+#set($cart_img="$!webPath/resources/style/system/front/wap/v2.0/images/pink_cart.png")
+#elseif($!op=="center")
+#set($user_img="$!webPath/resources/style/system/front/wap/v2.0/images/pink_user.png")
+#elseif($!op=="search")
+#set($search_img="$!webPath/resources/style/system/front/wap/v2.0/images/pink_search.png")
+#else
+#set($index_img="$!webPath/resources/style/system/front/wap/v2.0/images/pink_home.png")
+#end
+<script>
+jQuery(function(){
+	var op = "$!op";
+	
+	jQuery("#index").removeClass("this");
+	jQuery("#list").removeClass("this");
+	jQuery("#cart").removeClass("this");
+	jQuery("#search").removeClass("this");
+	jQuery("#center").removeClass("this");
+	jQuery("#"+op).addClass("this");
+	jQuery("#"+op+" span").attr("class","pink_span");
+	
+	})
+</script>
+
+ <!-- 底部菜单 -->
+  <div class="main_bottom" >
+  		<ul>
+   		<li id="index" class="this"><a href="$!webPath/wap/index.htm?op=index"><img src="$!index_img"><span>1首页</span></a></li>
+   		<li id="list"><a href="$!webPath/wap/goodsclass.htm?op=list"><img src="$!list_img"><span>分类</span></a></li>
+   		<li id="cart"><a href="$!webPath/wap/goods_cart1.htm?op=cart"><img src="$!cart_img"><span>购物车</span></a></li>
+   		<li id="search"><a href="$!webPath/wap/search.htm?op=search"><img src="$!search_img"><span>搜索</span></a></li>
+   		<li id="center"><a href="$!webPath/wap/buyer/center.htm?op=center"><img src="$!user_img"><span>个人中心</span></a></li>
+   	</ul>
+</div> 

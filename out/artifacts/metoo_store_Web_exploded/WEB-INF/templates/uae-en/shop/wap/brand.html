@@ -1,0 +1,125 @@
+
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+<title>品牌 - $!config.title</title>
+<link href="$!webPath/resources/wap/css/mui.min.css" rel="stylesheet"
+	type="text/css" />
+<link href="$!webPath/resources/wap/fonts/mui.ttf" rel="stylesheet"
+	type="text/css" />
+<link href="$!webPath/resources/wap/css/mui.indexedlist.css"
+	rel="stylesheet" />
+<link href="$!webPath/resources/style/system/front/wap/css/style.css"
+	rel="stylesheet" type="text/css" />
+<link
+	href="$!webPath/resources/style/system/front/wap/v2.0/css/v2.0style.css"
+	rel="stylesheet" type="text/css" />
+<script src="$!webPath/resources/js/wap/jquery-1.10.2.min.js"></script>
+<style>
+html, body {
+	height: 100%;
+	overflow: hidden;
+}
+
+.mui-bar {
+	-webkit-box-shadow: none;
+	box-shadow: none;
+}
+
+h2 {
+	text-align: center;
+	padding-top: 10px;
+}
+</style>
+<script>
+			jQuery(document).ready(function(e) {
+				jQuery(".brand_nav_fixed a:first").addClass("this");
+			   jQuery(window).scroll(function(){
+				var top = 0;
+				var id;
+				 top = jQuery(document).scrollTop();
+					 jQuery(".brand_list h2").each(function(){
+				    var top=jQuery(this).offset().top - jQuery(window).scrollTop();
+					if(top<=10 && top>0){
+					  id = jQuery(this).attr("id");
+					  jQuery(".brand_nav_fixed a").removeClass("this");
+					  jQuery("#word_"+id).addClass("this");
+					}
+				  });	
+					
+				});	
+			});<!--end-->
+		</script>
+</head>
+
+<body>
+	<header class="mui-bar mui-bar-nav">
+		<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+		<h1 class="mui-title">品牌 - $!config.title</h1>
+	</header>
+	<div class="mui-content">
+		<div id='list' class="mui-indexed-list">
+			<div class="mui-indexed-list-search mui-input-row mui-search">
+				<input type="search"
+					class="mui-input-clear mui-indexed-list-search-input"
+					placeholder="搜索品牌">
+			</div>
+			<div class="mui-indexed-list-bar">
+				#foreach($list in $all_list)
+				<h2 id="$!list.get('word')">$!list.get("word")</h2>
+				#end
+			</div>
+			<div class="mui-indexed-list-alert"></div>
+			<div class="mui-indexed-list-inner">
+				<div class="mui-indexed-list-empty-alert">没有数据</div>
+				<ul class="mui-table-view">
+
+					#foreach($list in $all_list)
+					<li data-group="$!list.get("
+						word")" class="mui-table-view-divider mui-indexed-list-group">$!list.get("word")</li>
+					#foreach($map in $!list.get("brand_list"))
+					<li data-value="$!map.get('name')" data-tags=""><a
+						href="$!webPath/wap/brand_goods.htm?gb_id=$!map.get('id')"
+						style="overflow: hidden; display: flex; align-items: center;">
+							<span class="lg"><img src="$!map.get('photo')" width="142"
+								height="66" /></span> <span class="name">$!map.get("name")</span>
+					</a></li> #end #end
+
+					<!-- 					  <a href="javascript:void(0);" id="word_$!list.get('word')" >$!list.get("word")</a> -->
+
+					<!-- <li data-group="A" class="mui-table-view-divider mui-indexed-list-group">A</li>
+						<li data-value="AKU" data-tags="AKeSu" class="mui-table-view-cell mui-indexed-list-item">阿克苏机场</li>
+						<li data-value="BPL" data-tags="ALaShanKou" class="mui-table-view-cell mui-indexed-list-item">阿拉山口机场</li>
+						<li data-value="AAT" data-tags="ALeTai" class="mui-table-view-cell mui-indexed-list-item">阿勒泰机场</li>
+						<li data-value="NGQ" data-tags="ALiKunSha" class="mui-table-view-cell mui-indexed-list-item">阿里昆莎机场</li>
+						<li data-value="AQG" data-tags="AnQingTianZhuShan" class="mui-table-view-cell mui-indexed-list-item">安庆天柱山机场</li>
+						<li data-value="MFM" data-tags="AoMenGuoJi" class="mui-table-view-cell mui-indexed-list-item">澳门国际机场</li> -->
+
+
+				</ul>
+			</div>
+		</div>
+	</div>
+
+	<script src="$!webPath/resources/wap/mui.js"></script>
+	<script src="$!webPath/resources/wap/mui.indexedlist.js"></script>
+	<script type="text/javascript" charset="utf-8">
+			mui.init();
+			mui.ready(function() {
+				var header = document.querySelector('header.mui-bar');
+				var list = document.getElementById('list');
+				//calc hieght
+				list.style.height = (document.body.offsetHeight - header.offsetHeight) + 'px';
+				//create
+				window.indexedList = new mui.IndexedList(list);
+			});
+		</script>
+</body>
+
+</html>
+
+

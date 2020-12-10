@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+<meta charset="utf-8" />
+<meta name="viewport"
+	content="width=device-width,inital-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+<meta name="apple-wap-web-app-capable" content="yes">
+<meta name="apple-wap-web-app-status-bar-style"
+	content="black-translucent">
+<title>$!config.title</title>
+<link href="$!webPath/resources/wap/css/mui.min.css" rel="stylesheet"
+	type="text/css" />
+<link href="$!webPath/resources/wap/fonts/mui.ttf" rel="stylesheet"
+	type="text/css" />
+<link rel="stylesheet" href="$!webPath/resources/wap/css/mian.css">
+<link href="$!webPath/resources/style/system/front/wap/css/style.css"
+	rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="$!webPath/resources/wap/css/index.css">
+<link rel="stylesheet" href="$!webPath/resources/wap/fonts/iconfont.css">
+<link rel="stylesheet" href="$!webPath/resources/wap/css/animate.css">
+<script src="$!webPath/resources/wap/jquery-3.1.1.min.js"></script>
+<style>
+.canvas-left-bottom {
+	border: none;
+}
+
+.mui-badge-danger {
+	background-color: #007aff;
+}
+
+.mui-table-view-divider {
+	background-color: rgb(252, 251, 244);
+}
+</style>
+</head>
+
+<body>
+
+	<div id="offCanvasWrapper" class="mui-off-canvas-wrap mui-draggable">
+		<!--侧滑菜单部分-->
+		<aside id="offCanvasSide" class="mui-off-canvas-left">
+			<div id="offCanvasSideScroll" class="mui-scroll-wrapper">
+				<div class="mui-scroll">
+					$!httpInclude.include("/wap/buyer/nav.htm")</div>
+			</div>
+		</aside>
+		<!--主界面部分-->
+		<div class="mui-inner-wrap">
+			<header class="mui-bar mui-bar-nav">
+				<a href="#offCanvasSide"
+					class="mui-icon mui-action-menu mui-icon-bars mui-pull-left"></a>
+				<div class="mui-title">
+					<!-- 	<img src="$!webPath/images/logos.png" alt="" class="logo" > -->
+				</div>
+
+				<div class="meunright mui-pull-right">
+					<!-- #if($!user.userName)
+			            <a class="meunright_a" href="$!webPath/wap/buyer/center.htm?op=center" >
+		                	<span class="" style="color:#007aff;font-size:18px;">
+		                		$!{user.userName}
+			                </span>
+		                </a>
+		            #else
+			            <a href="$!webPath/wap/login.htm" >
+		                	<span class="meunright_a" style="color:#007aff;font-size:18px;"  >
+		                		Log&nbsp;In
+			                </span>
+		                </a>
+		            #end    -->
+					<a href="$!webPath/wap/index.htm" style="color: #007aff"> <span
+						style="position: relative;" class="top_icon"> <i
+							class="iconfont iconzhuye" style="font-size: 20px;"></i>
+					</span>
+					</a> &nbsp;&nbsp;&nbsp; <a href="$!webPath/wap/goods_cart1.htm?op=cart"
+						style="color: #007aff"> <span style="position: relative;"
+						class="top_icon"> <i class="iconfont icongouwuche"
+							style="font-size: 20px;"></i> <i
+							class="iconfont icondanseshixintubiao-"
+							style="position: absolute; top: -11px; left: 23px; font-size: 18px;"></i>
+					</span>
+					</a>
+				</div>
+			</header>
+			<!-- 主题内容 -->
+			<div id="offCanvasContentScroll"
+				class="mui-content mui-scroll-wrapper">
+				<!-- 主体内容 -->
+				<div class="mui-scroll">
+					<!-- 我的 -->
+					<!-- <div class="user_hd">
+			        	<dl>
+			            	#if($!user.headImgUrl)
+			                	#set($user_img="$!user.headImgUrl")
+			                #else
+			                	#set($user_img="$!imageWebServer/$!config.memberIcon.path/$!config.memberIcon.name")
+			                #end
+			                #set($level_name=$integralViewTools.query_user_level_name("$!user.id"))
+			          		#set($level_img=$integralViewTools.query_user_level_img("$!user.id"))
+			            	<dt>
+			            		
+			            	</dt>
+			                <dd>
+				                <p class="name">$!user.trueName</p>
+				                <p>Integral：#if($!{user.integral})$!{user.integral} #else 0 #end</p>
+			                </dd>
+			            </dl>
+			            <div class="message">
+			            	<a href="$!webPath/wap/buyer/message_list.htm">
+					            <img src="$!webPath/resources/style/system/front/wap/images/mess.png" width="30" height="30" /> 
+					            <b>
+					            #if($!msg_size>9)
+					            9+
+					            #else
+					            $!msg_size
+					            #end
+					            </b>
+			            	</a>
+			            </div> 
+			        </div>-->
+					<!-- 订单管理  -->
+					<div class="mui-card">
+						<ul class="mui-table-view">
+							<li class="mui-table-view-divider">My Order</li>
+							<li class="mui-table-view-cell"><a
+								href="$!webPath/wap/buyer/order_list.htm?type=order_nopay"
+								class="mui-navigate-right"> <span
+									class="mui-badge mui-badge-danger">$!order_noship</span>No Pay
+							</a></li>
+							<li class="mui-table-view-cell"><a
+								href="$!webPath/wap/buyer/order_list.htm?type=order_noship"
+								class="mui-navigate-right"> <span
+									class="mui-badge mui-badge-danger">$!order_noship</span>No
+									Shipments
+							</a></li>
+							<li class="mui-table-view-cell"><a
+								href="$!webPath/wap/buyer/order_list.htm?type=order_notake"
+								class="mui-navigate-right"> <span
+									class="mui-badge mui-badge-danger">$!order_notake</span>NO
+									collect
+							</a></li>
+						</ul>
+					</div>
+					<!-- tab 
+				    <div class="collect">
+			        	<div class="tab">
+			            	<ul>
+			                	<li class="this"><a href="javascript:void(0);" id="collect_goods">收藏商品</a></li>
+			                    <li><a href="javascript:void(0);" id="cai">猜你喜欢</a></li>
+			                </ul>
+			            </div>
+			            <script>
+			            	
+			            	function shouchang(id,obj){
+								jQuery(".tab ul li").each(function(index, element) {
+			                        jQuery(element).removeClass("this");
+			                    });
+								jQuery(obj).parent().addClass("this");
+								jQuery(".collect_list ul").each(function(index, element) {
+			                        jQuery(element).hide();
+			                    });
+								jQuery("#"+id).show();
+							}
+							jQuery(function(){
+								#if($!favorite_goods.size()<=0)
+								jQuery("#cai").click();
+								#end
+							});
+			            </script>
+			            <div class="collect_list">
+			            		<ul id="favorite_goods" class="collect_ul">
+					                #foreach($goods in $favorite_goods)
+					                #set($goods_id = "$!goods.goods_id")	
+					                #set($goods_name = "$!goods.goods_name")
+					                #set($goods_price = "$!goods.goods_current_price")
+					                #set($goods_mainphoto_path = "$!goods.goods_photo")
+					                #set($img="$!imageWebServer/$!{goods.goods_photo}")
+					                	<li><a href="$!webPath/wap/goods.htm?id=$!goods_id"><img src="$!img" /><p class="name">$!goods_name</p><p class="price"><b>¥ $!goods_price</b></p></a></li>
+					                #end
+					                #if($!favorite_goods.size() >= 6)
+					                	<li class="see_more" id="goods_more"><a href="$!webPath/wap/buyer/favorite.htm">查看更多>></a></li>
+					                #end
+				                </ul>
+				                <ul class="collect_store" id="favorite_store" style="display:none;">
+					                #foreach($store in $favorite_store)
+					                #if($!config.storeImage)
+					                #set($logo="$!imageWebServer/$!config.storeImage.path/$!config.storeImage.name")
+					                #end
+					                #if($!store.store_logo)
+					                #set($logo="$!imageWebServer/$!store.store_logo.path/$!store.store_logo.name")
+					                #end
+					                	<li><a href="$!webPath/wap/goods_list.htm?store_id=$!{store.id}"><img src="$!logo" /><p>$!store.store_name</p></a></li>
+					                #end 
+					                #if($!favorite_store.size()>=6)
+					                	<li class="see_more" id="store_more"><a href="$!webPath/wap/buyer/favorite_store.htm">查看更多>></a></li>
+					                #end   
+				                </ul>
+				                <ul id="your_like_goods" style="display:none;" class="collect_ul">
+					                #foreach($goods in $your_like_goods)
+					                #set($goods_id = "$!goods.id")	
+					                #set($goods_name = "$!goods.goods_name")
+					                #set($goods_price = "$!goods.store_price")
+					                #set($goods_mainphoto_path = "$!imageWebServer/$!goods.goods_main_photo.path/$!goods.goods_main_photo.name")
+					                	<li><a href="$!webPath/wap/goods.htm?id=$!goods_id"><img src="$!goods_mainphoto_path" /><p class="name">$!goods_name</p><p class="price"><b>¥ $!goods_price</b></p></a></li>
+					                #end  
+				                </ul>
+				        </div>
+			        </div>
+			        -->
+
+					<div style="margin-top: 100px; display: block;"></div>
+				</div>
+			</div>
+			<!-- off-canvas backdrop -->
+			<div class="mui-off-canvas-backdrop"></div>
+		</div>
+
+	</div>
+
+	<script src="$!webPath/resources/wap/mui.js"></script>
+	<script>
+	/*    -------  mui内容   ---------*/
+    mui.init();
+    mui("body").on('tap', '#collect_goods', function (event) {
+    	shouchang('favorite_goods',event)
+    });
+    mui("body").on('tap', '#cai', function (event) {
+    	shouchang('your_like_goods',event);
+    });
+    //侧滑容器父节点
+    var offCanvasWrapper = mui('#offCanvasWrapper');
+    //主界面容器
+    var offCanvasInner = offCanvasWrapper[0].querySelector('.mui-inner-wrap');
+    //菜单容器
+    // var offCanvasSide = document.getElementById("offCanvasSide");
+    // if (!mui.os.android) {
+    //     document.getElementById("move-togger").classList.remove('mui-hidden');
+    //     var spans = document.querySelectorAll('.android-only');
+    //     for (var i = 0, len = spans.length; i < len; i++) {
+    //         spans[i].style.display = "none";
+    //     }
+    // }
+    //移动效果是否为整体移动
+    var moveTogether = false;
+    //侧滑容器的class列表，增加.mui-slide-in即可实现菜单移动、主界面不动的效果；
+    var classList = offCanvasWrapper[0].classList;
+    //关闭侧滑效果
+    	document.getElementsByClassName('mui-inner-wrap')[0].addEventListener('drag', function(event) {
+		　　event.stopPropagation();
+	});
+    //关闭窗口
+    mui(".last_li").on('tap', '#offCanvasHide', function (event) {
+    	 offCanvasWrapper.offCanvas('close');
+    });
+    //主界面和侧滑菜单界面均支持区域滚动；
+    mui('#offCanvasSideScroll').scroll();
+    mui('#offCanvasContentScroll').scroll();
+    //实现ios平台原生侧滑关闭页面；
+    if (mui.os.plus && mui.os.ios) {
+        mui.plusReady(function () { //5+ iOS暂时无法屏蔽popGesture时传递touch事件，故该demo直接屏蔽popGesture功能
+            plus.webview.currentWebview().setStyle({
+                'popGesture': 'none'
+            });
+        });
+    }
+    mui(".tab-view-user").on('tap', '.tab-view-list', function (event) {
+        if ($(event.target).siblings().hasClass("accordion_active") != true) {
+         /* 	$(event.target).after("background: transparent;")  */
+            $(event.target).siblings().addClass("accordion_active")
+        	/* $(event.target).after("background-color: #222;")  */
+            return;
+        }
+        $(event.target).siblings().removeClass("accordion_active");
+       /*  $(event.target).after("background-color: transparent;")  */
+    });
+    
+    mui('body').on('tap','a',function(){document.location.href=this.href;});
+	
+	</script>
+</body>
+
+</html>

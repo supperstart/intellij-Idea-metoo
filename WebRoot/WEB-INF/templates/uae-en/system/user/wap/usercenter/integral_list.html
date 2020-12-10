@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport"
+	content="width=device-width,inital-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style"
+	content="black-translucent">
+<title>积分明细 - $!config.title</title>
+<link href="$!webPath/resources/style/system/front/wap/css/style.css"
+	rel="stylesheet" type="text/css" />
+<script src="$!webPath/resources/js/jquery.shop.common.js"></script>
+<script src="$!webPath/resources/js/wap/jquery-1.10.2.min.js"></script>
+<script>
+
+</script>
+</head>
+
+<body class="user_bg">
+	<div class="user_bar">
+		<a class="back" href="$!webPath/wap/buyer/user_pointcenter.htm"> <img
+			src="$!webPath/resources/style/system/front/wap/images/back_black.png"
+			width="30" height="30" /></a> <span class="fl">我的积分明细</span>
+	</div>
+
+	<div class="order_page">
+		#if($!objs.size()>0)
+		<div class="main">
+			<table class="trade_table cnee_table" cellpadding="0" cellspac="0">
+				<thead style="border-bottom: 1px solid #ddd;">
+					<tr>
+						<th height="40px;">日期</th>
+						<th>数量</th>
+						<th>来源</th>
+					</tr>
+				</thead>
+				<tbody>
+					#foreach($obj in $!objs) #if($!obj.type== 'reg') #set($type="关注赠送")
+					#end #if($!obj.type== 'login') #set($type="登陆赠送") #end
+					#if($!obj.type== 'share') #set($type="分享赠送") #end #if($!obj.type==
+					'order') #set($type="订单消费") #end #if($!obj.type== 'chind_order')
+					#set($type="子会员消费") #end #if($!obj.type== 'third_order')
+					#set($type="会员消费") #end #if($!obj.type== 'present')
+					#set($type="系统赠送") #end #if($!obj.type== 'integral_order')
+					#set($type="积分消费") #end #if($!obj.type== 'integral_rollback')
+					#set($type="积分回退") #end
+					<tr align="center">
+						<td width="40%" height="25px;">$!{obj.addTime}</td>
+						<td width="30%">#if($!{obj.type} == 'integral_order') - #else
+							+ #end $!{obj.integral}</td>
+						<td width="30%">$!{type}</td>
+					</tr>
+					#end
+				</tbody>
+			</table>
+		</div>
+		#else
+		<div class="main">
+			<div class="mt50" style="height: 49px;"></div>
+			<div class="error_page1">
+				<span class="error_img"><img
+					src="$!webPath/resources/style/system/front/default/images/nothing.png" /></span>
+				<p>暂无记录！</p>
+			</div>
+		</div>
+		#end
+		<script>
+function url(url){
+	var type = jQuery("#url").val();
+	window.location.href=url;
+}
+</script>
+		<div class="loading" id="loading" style="display: none">
+			<ul>
+				<li><img
+					src="$!webPath/resources/style/system/front/wap/images/loading.gif"
+					width="16" height="16"></li>
+				<li>正在加载....</li>
+			</ul>
+		</div>
+		<div class="loading" id="loading_none" style="display: none">
+			<ul>
+				<li>没有更多了....</li>
+			</ul>
+		</div>
+		$!httpInclude.include("/wap/footer.htm?op=center")
+	</div>
+
+</body>
+</html>

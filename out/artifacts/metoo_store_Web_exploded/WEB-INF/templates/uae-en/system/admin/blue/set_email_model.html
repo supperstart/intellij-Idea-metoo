@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link
+	href="$!webPath/resources/style/system/manage/$!{config.websiteCss}/template.css"
+	rel="stylesheet" type="text/css" />
+</head>
+
+<script src="$!webPath/resources/js/jquery-1.6.2.js"></script>
+<script>
+
+	function saveForm() {
+		var model_ids = "";
+		var email_temp_ids = "";
+		jQuery(":checkbox:checked").each(function() {
+			if (jQuery(this).val() != "") {
+				if($("#template_id_"+$(this).val()).val() != ""){
+					jQuery(this).attr("checked", false);
+					email_temp_ids = jQuery(this).val() + ":" + $("#template_id_"+$(this).val()).val();　
+					model_ids = email_temp_ids + "," + model_ids;
+				}
+			}
+		});
+		jQuery("#model_ids").val(model_ids);
+		jQuery("#theForm").submit();
+	}
+</script>
+<script>
+$(document).ready(function(){
+	$(":checkbox:not(:checked)").each(function() {
+		if (jQuery(this).val() != "") {
+			$("#template_id_" + $(this).val()).prop('disabled',true);
+		}
+	});
+})
+
+	function OncheckBox(index){
+		if ($(index).attr("checked") == "checked") {
+	       $("#template_id_" + $(index).val()).prop('disabled',false);
+	    }else{
+	    	 $("#template_id_" + $(index).val()).prop('disabled',true);
+	    }
+		
+	}
+</script>
+<style>
+	.email_model{
+		padding: 0 10px;
+	    float: left;
+	    padding-bottom: 10px;
+	    overflow: hidden;
+   		 width: 100%;
+	}
+</style>
+<body>
+	<form name="theForm" id="theForm"
+		action="$!webPath/admin/email_model_save.htm" method="post">
+		<input name="add_url" type="hidden" id="list_url"
+			value="$!webPath/admin/set_email_model.htm" /> <input
+			name="list_url" type="hidden" id="add_url"
+			value="$!webPath/admin/set_email_model.htm" /> <input
+			name="model_ids" type="hidden" id="model_ids" />
+			<input name="objs" id="objs" type="hidden" value="$!objs">
+		<div class="cont">
+			<h1 class="seth">EmailModel设置</h1>
+			<div class="specification">
+				<h2>Api管理</h2>
+				<div class="spec_sports_box">
+					<ul class="spec_sports email_model">
+						#foreach($!obj in $!objs)
+						#set($r=0)
+						#if($!obj.display==true)
+							#set($r=1)
+						#end
+						<li><label><b class="spec_check2"><input
+									name="$!obj.id" type="checkbox" onclick="OncheckBox(this)" id="$!obj.id" value="$!obj.id" 
+									#if($r==1) checked="checked" #end /></b>&nbsp<em>$!obj.name</em>:<em>$!obj.value</em></label>
+							<ul class="">
+								<li>模板类型</li>
+								<li><span class="webnamesec sizese">
+								 <select
+										name="template_id_$!obj.id" id="template_id_$!obj.id">
+											<option value="" >请选择模板...</option>
+											#foreach($tps in $!templates)
+												<option value="$!tps.id">$!tps.mark</option>
+											#end
+									</select>
+								</span></li>
+								#if($r==1) 
+										<script>
+											jQuery("#template_id_$!obj.id").val("$!obj.template_id"); 
+									</script>
+									#end
+							</ul>		
+							</li>
+						#end
+					</ul>
+				</div>
+				<div class="submit">
+					<input name="save" type="button" id="save" value="保存"
+						onclick="saveForm();" />
+				</div>
+			</div>
+		</div>
+	</form>
+</body>
+
+</html>

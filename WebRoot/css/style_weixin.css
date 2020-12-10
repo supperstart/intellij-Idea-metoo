@@ -1,0 +1,255 @@
+@charset "utf-8";
+/* CSS Document */
+* {
+	padding: 0px;
+	margin: 0px;
+	border: 0px none;
+	font-family: "Microsoft Yahei";
+}
+
+.top {
+	width: 100%;
+	height: 40px;
+	background-color: #8CA2F3;
+	color: #FFF;
+	line-height: 40px;
+}
+
+.top_cos {
+	color: #C21143;
+	margin-left: 10px;
+}
+
+.bdt {
+	height: 45px;
+	padding: 0px;
+	clear: both;
+	width: 94%;
+	margin: auto;
+}
+
+.bdd {
+	height: 80px;
+	padding: 0px;
+	clear: both;
+	width: 94%;
+	margin: auto;
+}
+
+.input_style_1 {
+	height: 33px;
+	font-size: 14px;
+	line-height: 40px;
+	padding-left: 32px;
+	font-family: "Microsoft Yahei";
+	color: #666;
+}
+
+.fl {
+	float: left;
+}
+
+.padleft10 {
+	padding-left: 10px !important;
+}
+
+.w60p {
+	width: 55% !important;
+}
+
+.w30p {
+	width: 30% !important;
+}
+
+.private2 {
+	border: 1px solid #CCC;
+}
+
+.b_5 {
+	padding: 5px 20px;
+	height: 40px;
+	font-size: 14px;
+	color: #666;
+	font-family: "Microsoft Yahei";
+	background: #FFF none repeat scroll 0% 0%;
+	cursor: pointer;
+	border: 1px solid #D2D2D2;
+}
+
+.b_span {
+	margin-left: 5px;
+	line-height: 33px;
+}
+
+.b_1 {
+	width: 220px;
+	height: 40px;
+	font-size: 18px;
+	color: #FFF;
+	font-family: "Microsoft Yahei";
+	cursor: pointer;
+	background-color: #50A5C2;
+}
+
+.bds {
+	margin: 0 0 10px 0;
+	padding: 5px 0px 14px 0px;
+	overflow: hidden;
+	zoom: 1;
+	border-bottom: 1px solid #e2e2e2;
+	width: 94%;
+	margin: auto;
+}
+
+.bds p {
+	line-height: 28px;
+	color: #0C0C0C;
+	font-size: 16px;
+}
+
+.bds span {
+	float: left;
+	line-height: 39px;
+	font-size: 14px;
+	padding: 0 10px 0 0;
+	width: 69px;
+	text-align: left;
+	color: #888;
+}
+
+.bds strong {
+	float: left;
+	line-height: 39px;
+	font-size: 14px;
+	padding: 0 10px 0 0;
+	width: 95px;
+	font-weight: normal;
+	text-align: right;
+}
+
+.bds table {
+	font-size: 14px;
+	width: 99%;
+}
+
+.bds table th {
+	border-bottom: 1px solid #e2e2e2;
+	color: #888888;
+	line-height: 40px;
+	font-weight: normal;
+	text-align: left;
+	position: relative;
+}
+
+.bds table th i {
+	color: #444444;
+	font-weight: normal;
+	text-align: left;
+	font-style: normal;
+}
+
+.bds table th b {
+	font-size: 0.8em;
+	font-weight: normal;
+}
+
+.bds table td b {
+	font-size: 0.8em;
+	font-weight: normal;
+	color: #888888;
+}
+
+.bds table td {
+	border-bottom: 1px solid #e2e2e2;
+	color: #666666;
+	text-align: left;
+	line-height: 40px;
+}
+
+.tbd {
+	font-size: 12px;
+	color: #888888;
+	position: absolute;
+	top: -15px;
+	left: 58%;
+}
+
+.bds_se {
+	border: solid 1px #D1D1E9;
+}
+
+.bds_se option {
+	border: none;
+}
+
+.bds_ta {
+	width: 80%;
+	border: solid 1px gray;
+	height: 100px;
+}
+
+.menu {
+	font-family: arial, sans-serif;
+	width: 100%;
+	position: fixed;
+	bottom: 0px;
+	margin: 0 0 2px 0;
+	height: 31px;
+}
+/* remove the bullets and set the margin and padding to zero for the unordered list */
+.menu ul {
+	padding: 0;
+	margin: 0;
+	list-style-type: none;
+}
+/* float the list so that the items are in a line and their position relative so that the drop down list will appear in the right place underneath each list item */
+.menu ul li {
+	float: left;
+	position: relative;
+	width: 33.3%;
+}
+
+/* style the links to be 104px wide by 30px high with a top and right border 1px solid white. Set the background color and the font size. */
+.menu ul li a, .menu ul li a:visited {
+	display: block;
+	text-align: center;
+	text-decoration: none;
+	height: 30px;
+	color: #000;
+	border: 1px solid #fff;
+	border-width: 1px 1px 0 0;
+	background: #c9c9a7;
+	line-height: 35px;
+	font-size: 12px;
+}
+/* make the dropdown ul invisible */
+.menu ul li ul {
+	display: none;
+	width: 100%;
+}
+
+/* specific to non IE browsers */
+/* set the background and foreground color of the main menu li on hover */
+.menu ul li:hover a {
+	color: #fff;
+	background: #b3ab79;
+}
+/* make the sub menu ul visible and position it beneath the main menu list item */
+.menu ul li:hover ul {
+	display: block;
+	position: absolute;
+	bottom: 31px;
+	left: 0;
+	width: 100%;
+}
+/* style the background and foreground color of the submenu links */
+.menu ul li:hover ul li a {
+	display: block;
+	background: #faeec7;
+	color: #000;
+}
+/* style the background and forground colors of the links on hover */
+.menu ul li:hover ul li a:hover {
+	background: #dfc184;
+	color: #000;
+}

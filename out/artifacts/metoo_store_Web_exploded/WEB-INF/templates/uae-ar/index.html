@@ -1,0 +1,115 @@
+
+<script type="text/javascript">
+jQuery(document).ready(function(){
+
+	var head_h = jQuery("#head_h").height();
+	jQuery("#head_unbomb").height(head_h);
+	jQuery(window).scroll(function () {
+	  var top = jQuery(document).scrollTop();
+	  //顶部搜索框跟随
+	  if (top == 0) {
+		console.log(jQuery("#top"))
+	    jQuery("#top").show();
+		/* attr("style", "") */
+	  } else {
+	    jQuery("#top").hide();
+	   /*  attr("style", "position:fixed;top:0px") */
+	  }
+	  if (top > head_h) {
+	    jQuery("#head_h").addClass("head_fixd");
+	    jQuery("#soubt").addClass("sou_top");
+	  } else {
+	    jQuery("#head_h").removeClass("head_fixd");
+	    jQuery("#soubt").removeClass("sou_top");
+	  }
+	  //楼层导航跟随
+	  jQuery("li[floor_id^=floor_] b").css("display", "block");
+	  jQuery("div[id^=floor_]").each(function () {
+	    var floor_top = jQuery(this).offset().top - top;
+	    if (floor_top <= 580 && floor_top >= 0) {
+	      var floor_id = jQuery(this).attr("id");
+	      jQuery("li[floor_id=" + floor_id + "] b").css("display", "none");
+	    }
+	  });
+	});
+	
+  jQuery(".top_pull").mouseover(function(){
+	jQuery(this).find("div").show();
+	jQuery(this).find("em").addClass("em_this");
+	jQuery(this).find("s").addClass("this");
+  	}).mouseleave(function(){
+    jQuery(this).find("div").hide();
+	jQuery(this).find("em").removeClass("em_this");
+	jQuery(this).find("s").removeClass("this");
+  });					
+								});
+var browserEvent = function (obj, url, title) {
+    var e = window.event || arguments.callee.caller.arguments[0];
+    var B = {
+        IE : /MSIE/.test(window.navigator.userAgent) && !window.opera
+        , FF : /Firefox/.test(window.navigator.userAgent)
+        , OP : !!window.opera
+    };
+    obj.onmousedown = null;
+    if (B.IE) {
+        obj.attachEvent("onmouseup", function () {
+            try {
+                window.external.AddFavorite(url, title);
+                window.event.returnValue = false;
+            } catch (exp) {}
+        });
+    } else {
+        if (B.FF || obj.nodeName.toLowerCase() == "a") {
+            obj.setAttribute("rel", "sidebar"), obj.title = title, obj.href = url;
+        } else if (B.OP) {
+            var a = document.createElement("a");
+            a.rel = "sidebar", a.title = title, a.href = url;
+            obj.parentNode.insertBefore(a, obj);
+            a.appendChild(obj);
+            a = null;
+        }
+    }
+};
+</script>
+
+<div class="top" id="top">
+	<div class="top_page">
+		<div class="top_right">
+			#if($!user) <span> #if("$!user.userRole"=="ADMIN") <a
+				href="$!webPath/admin/index.htm">Personal Center</a> #end <a
+				href="$!webPath/koala_logout.htm">Log Out</a>
+			</span> #else <span> <a href="$!webPath/user/login.htm">Log In</a>
+			</span> <span> <a href="$!webPath/register.htm">Ship To <select
+					class="select">
+						<option value="volvo">UAE</option>
+						<option value="saab">Saab</option>
+						<option value="fiat">Fiat</option>
+						<option value="audi">Audi</option>
+				</select>
+			</a>
+			</span> #end <span class="top_pull"> <a
+				href="$!webPath/buyer/order.htm">العربية</a>
+			</span> #set($navs=$!navTools.queryNav(-1,-1)) #if($!navs.size()>0) <span
+				class="top_pull"> <em class="">网站导航<s class=""></s></em>
+				<div class="top_this" style="display: none">
+					<div class="website">
+						<ul>
+							#foreach($nav in $navs)
+							#if($!CommUtil.indexOf("$!nav.url","http://")>0)
+							<li><a href="$!nav.url" #if($!{nav.new_win}==1)target=
+								"_blank"#end rel="nofollow">$!nav.title</a></li> #else
+							<li><a href="$!webPath/$!nav.url"
+								#if($!{nav.new_win}==1)target= "_blank"#end rel="nofollow">$!nav.title</a></li>
+							#end #end
+						</ul>
+					</div>
+				</div>
+			</span> #end
+		</div>
+		#if(!$!user) <span class="top_shop"><a
+			href="$!webPath/seller/login.htm">Sell with Us</a></span> #else
+		#if("$!user.userRole"=="SELLER") <b class="top_b">|</b> <span
+			class="top_shop"><a href="$!webPath/seller/index.htm">Merchant
+				Manage</a></span> #end #end
+	</div>
+</div>

@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+<meta charset="utf-8" />
+<meta name="viewport"
+	content="width=device-width,inital-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+<meta name="apple-wap-web-app-capable" content="yes">
+<meta name="apple-wap-web-app-status-bar-style"
+	content="black-translucent">
+<title>$!config.title</title>
+<link href="$!webPath/resources/wap/css/mui.min.css" rel="stylesheet"
+	type="text/css" />
+<link href="$!webPath/resources/wap/fonts/mui.ttf" rel="stylesheet"
+	type="text/css" />
+<link rel="stylesheet" href="$!webPath/resources/wap/css/mian.css">
+<link rel="stylesheet" href="$!webPath/resources/wap/css/index.css">
+<link rel="stylesheet" href="$!webPath/resources/wap/fonts/iconfont.css">
+<link rel="stylesheet" href="$!webPath/resources/wap/css/animate.css">
+<script src="$!webPath/resources/wap/jquery-3.1.1.min.js"></script>
+<style>
+.canvas-left-bottom {
+	border: none;
+}
+
+.mui-badge-danger {
+	background-color: #007aff;
+}
+
+.mui-table-view-divider {
+	background-color: rgb(252, 251, 244);
+}
+
+input, button, .mui-btn {
+	margin-top: 10px;
+	margin-left: 10px;
+}
+
+.mui-bar .mui-pull-left .mui-icon {
+	padding-right: 5px;
+	font-size: 28px;
+}
+
+.mui-bar .mui-btn {
+	font-weight: normal;
+	font-size: 17px;
+}
+
+.mui-bar .mui-btn-link {
+	top: 1px;
+}
+
+.red_submit {
+	padding: 10px;
+	display: block;
+	margin: 0px auto;
+}
+
+.red_submit>a {
+	color: #fff;
+}
+</style>
+</head>
+
+<body>
+
+	<div id="offCanvasWrapper" class="mui-off-canvas-wrap mui-draggable">
+		<!--侧滑菜单部分-->
+		<aside id="offCanvasSide" class="mui-off-canvas-left">
+			<div id="offCanvasSideScroll" class="mui-scroll-wrapper">
+				<div class="mui-scroll">
+					$!httpInclude.include("/wap/buyer/nav.htm")</div>
+			</div>
+		</aside>
+		<!--主界面部分-->
+		<div class="mui-inner-wrap">
+			<header class="mui-bar mui-bar-nav">
+				<a href="#offCanvasSide"
+					class="mui-icon mui-action-menu mui-icon-bars mui-pull-left"></a>
+				<div class="mui-title">
+					<!-- 	<img src="$!webPath/images/logos.png" alt="" class="logo" > -->
+				</div>
+
+				<div class="meunright mui-pull-right">
+					<!-- #if($!user.userName)
+			            <a class="meunright_a" href="$!webPath/wap/buyer/center.htm?op=center" >
+		                	<span class="" style="color:#007aff;font-size:18px;">
+		                		$!{user.userName}
+			                </span>
+		                </a>
+		            #else
+			            <a href="$!webPath/wap/login.htm" >
+		                	<span class="meunright_a" style="color:#007aff;font-size:18px;"  >
+		                		Log&nbsp;In
+			                </span>
+		                </a>
+		            #end    -->
+					<a href="$!webPath/wap/index.htm" style="color: #007aff"> <span
+						style="position: relative;" class="top_icon"> <i
+							class="iconfont iconzhuye" style="font-size: 20px;"></i>
+					</span>
+					</a> &nbsp;&nbsp;&nbsp; <a href="$!webPath/wap/goods_cart1.htm?op=cart"
+						style="color: #007aff"> <span style="position: relative;"
+						class="top_icon"> <i class="iconfont icongouwuche"
+							style="font-size: 20px;"></i> <i
+							class="iconfont icondanseshixintubiao-"
+							style="position: absolute; top: -11px; left: 23px; font-size: 18px;"></i>
+					</span>
+					</a>
+				</div>
+			</header>
+			<!-- 主题内容 -->
+			<div id="offCanvasContentScroll"
+				class="mui-content mui-scroll-wrapper">
+				<!-- 主体内容 -->
+				<div class="mui-scroll">
+					<div class="mui-card" style="margin-bottom: 35px;">
+						<ul class="mui-table-view">
+							<li class="mui-table-view-cell"><a
+								href="$!webPath/wap/buyer/edit_password.htm"
+								class="mui-navigate-right"> Change Password </a></li>
+							<li class="mui-table-view-cell"><a
+								href="$!webPath/wap/buyer/address.htm"
+								class="mui-navigate-right"> New Increased OR Change Address
+							</a></li>
+							<li class="mui-table-view-cell"><a
+								href="$!webPath/wap/buyer/order_return_list.htm"
+								class="mui-navigate-right"> Return Management </a></li>
+							<li class="mui-table-view-cell"><a
+								href="$!webPath/wap/buyer/order_complaint_list.htm"
+								class="mui-navigate-right"> Complaint Management </a></li>
+						</ul>
+					</div>
+					<button type="button" class="red_submit mui-btn mui-btn-primary">
+						<a href="$!webPath/koala_logout.htm">Quit Account Number</a>
+					</button>
+
+					<div style="margin-top: 100px; display: block;"></div>
+				</div>
+			</div>
+			<!-- off-canvas backdrop -->
+			<div class="mui-off-canvas-backdrop"></div>
+		</div>
+
+	</div>
+
+	<script src="$!webPath/resources/wap/mui.js"></script>
+	<script>
+	/*    -------  mui内容   ---------*/
+    mui.init();
+    mui("body").on('tap', '#collect_goods', function (event) {
+    	shouchang('favorite_goods',event)
+    });
+    mui("body").on('tap', '#cai', function (event) {
+    	shouchang('your_like_goods',event);
+    });
+    //侧滑容器父节点
+    var offCanvasWrapper = mui('#offCanvasWrapper');
+    //主界面容器
+    var offCanvasInner = offCanvasWrapper[0].querySelector('.mui-inner-wrap');
+    //菜单容器
+    // var offCanvasSide = document.getElementById("offCanvasSide");
+    // if (!mui.os.android) {
+    //     document.getElementById("move-togger").classList.remove('mui-hidden');
+    //     var spans = document.querySelectorAll('.android-only');
+    //     for (var i = 0, len = spans.length; i < len; i++) {
+    //         spans[i].style.display = "none";
+    //     }
+    // }
+    //移动效果是否为整体移动
+    var moveTogether = false;
+    //侧滑容器的class列表，增加.mui-slide-in即可实现菜单移动、主界面不动的效果；
+    var classList = offCanvasWrapper[0].classList;
+    //关闭侧滑效果
+    	document.getElementsByClassName('mui-inner-wrap')[0].addEventListener('drag', function(event) {
+		　　event.stopPropagation();
+	});
+    //关闭窗口
+    mui(".last_li").on('tap', '#offCanvasHide', function (event) {
+    	 offCanvasWrapper.offCanvas('close');
+    });
+    //主界面和侧滑菜单界面均支持区域滚动；
+    mui('#offCanvasSideScroll').scroll();
+    mui('#offCanvasContentScroll').scroll();
+    //实现ios平台原生侧滑关闭页面；
+    if (mui.os.plus && mui.os.ios) {
+        mui.plusReady(function () { //5+ iOS暂时无法屏蔽popGesture时传递touch事件，故该demo直接屏蔽popGesture功能
+            plus.webview.currentWebview().setStyle({
+                'popGesture': 'none'
+            });
+        });
+    }
+    mui(".tab-view-user").on('tap', '.tab-view-list', function (event) {
+        if ($(event.target).siblings().hasClass("accordion_active") != true) {
+         /* 	$(event.target).after("background: transparent;")  */
+            $(event.target).siblings().addClass("accordion_active")
+        	/* $(event.target).after("background-color: #222;")  */
+            return;
+        }
+        $(event.target).siblings().removeClass("accordion_active");
+       /*  $(event.target).after("background-color: transparent;")  */
+    });
+    
+    mui('body').on('tap','a',function(){document.location.href=this.href;});
+	
+	</script>
+</body>
+
+</html>

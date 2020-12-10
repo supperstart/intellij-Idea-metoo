@@ -1,0 +1,2581 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>metooTest1-1 - Ebuyair.com - Welcome</title>
+<meta name="keywords" content="" />
+<meta name="description" content="" />
+<meta name="generator" content="" />
+<meta name="author" content="" />
+<meta name="copyright" content="" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<link href="//localhost/resources/style/system/front/default/css/public.css" type="text/css" rel="stylesheet" />
+<link href="//localhost/resources/style/system/front/default/css/goods.css" type="text/css" rel="stylesheet" />
+<link href="//localhost/resources/style/system/front/default/css/public_auto.css" type="text/css" rel="stylesheet" />
+<link href="//localhost/resources/style/common/css/overlay.css" type="text/css" rel="stylesheet" />
+<link href="//localhost/resources/style/common/css/jquery.jqzoom.css" type="text/css" rel="stylesheet" />
+<script src="//localhost/resources/js/jquery-1.6.2.js"></script>
+<script src="//localhost/resources/js/jquery-ui-1.8.21.js"></script>
+<script src="//localhost/resources/js/jquery.shop.common.js"></script>
+<script src="//localhost/resources/js/jquery.validate.min.js"></script>
+<script src="//localhost/resources/js/jquery.jqzoom-core.js"></script>
+<script src="//localhost/resources/js/jquery.lazyload.js"></script>
+<script>
+var act_price=0;
+function img_switch(obj){
+  jQuery(".pro_imgbox a").removeClass("this");
+  jQuery(obj.parentNode.parentNode.parentNode).addClass("this");
+  var src=jQuery(obj).attr("big_img");
+  jQuery("#main_img").attr("src",src);
+}
+  var goods_inventory=100;
+  var store_price=999.00;  
+	   jQuery(document).ready(function(){
+	jQuery(".enjoy_bg_center_img_c b").hide();
+	jQuery(".enjoy_bg_center_img_c b:first").show();
+	jQuery(".enjoy_bg_center_img_c li").click(function(){
+		jQuery(".enjoy_bg_center_img_c b").hide();
+		jQuery(this).find("b").show();
+	});
+	
+   	jQuery('.jqzoom').jqzoom({
+            zoomType: 'standard',
+			zoomWidth:450,
+			zoomHeight:400,
+            lens:true,
+            preloadImages: false,
+            alwaysOn:false,
+			title:true,
+			preloadText:'努力加载'
+        });
+//
+//初始化数据
+  var data='[]';
+  if(data!=""){
+    var properties=eval("("+data+")");
+    jQuery.each(properties,function(index,item){
+        jQuery(".pro_intro_tabone ul").append("<li>"+item.name+":"+item.val+"</li>");
+    });
+  }
+//
+jQuery(".pro_tab_top[id=pro_tab] li").css("cursor","pointer").click(function(){
+  jQuery(".pro_tab_top[id=pro_tab] li").removeClass("this");
+  jQuery(this).addClass("this");
+  var target_id=jQuery(this).attr("target_id");
+  var index=jQuery(".pro_tab_top[id=pro_tab] li").index(jQuery(this));
+    for(var i=0;i<6;i++){
+	 var tem_target_id=jQuery(".pro_tab_top[id=pro_tab] li:eq("+i+")").attr("target_id");
+	 if(i<index){
+	   jQuery("#"+tem_target_id).hide();
+	 }else{
+	   jQuery("#"+tem_target_id).show();
+	 }	 
+  }
+      jQuery("body,html").animate({scrollTop:jQuery("#"+target_id).offset().top-37});
+});
+//
+jQuery(".pro_tab_top[tab_id=goods_evas] li").css("cursor","pointer").click(function(){
+   jQuery(".pro_tab_top[tab_id=goods_evas] li").removeClass("this");
+   jQuery(this).addClass("this");
+   var goods_eva=jQuery(this).attr("goods_eva");
+   jQuery.ajax({type:'POST',url:"//localhost/goods_evaluation.htm",data:{"currentPage":1,"goods_id":"1959","goods_eva":goods_eva},
+			  beforeSend:function(){
+			   },
+			  success:function(data){
+                jQuery("#goods_evas_list").empty();						
+                jQuery("#goods_evas_list").append(data);																								                
+			  }
+		})
+});
+//
+jQuery(".deta_eval_a").click(function(){
+  jQuery(".pro_tab_top[id=pro_tab] li").removeClass("this");;
+  jQuery(".pro_tab_top[id=pro_tab] li[target_id=goods_eva]").addClass("this");
+  jQuery("#goods_detail").hide();
+  jQuery("#goods_eva").show();
+  jQuery("body,html").animate({scrollTop:jQuery("div[id=goods_eva]").offset().top-37});
+});
+//
+var count = 0-0;
+//
+  jQuery(".list_stock").mouseover(function(){
+		jQuery(this).find(".goods_ct").show();
+		jQuery(this).find("i").addClass("active");	
+  }).mouseleave(function(){
+	    jQuery(this).find(".goods_ct").hide();
+		jQuery(this).find("i").removeClass("active");	
+	  });
+  jQuery(".h3_r a").click(function(){
+	jQuery(".goods_ct").hide();	
+	jQuery(".list_stock i").removeClass("active");
+   });
+//运费地区
+jQuery(".h3_r>a").click(function(){
+   jQuery(".Cities").hide();									 
+   jQuery(this).parent().parent().parent().hide();
+});
+//
+jQuery(".item a").click(function(){
+   jQuery(".Cities").hide();								 
+   jQuery(this).parent().find(".Cities").show();
+});
+//
+jQuery(".Cities>ul>li>a").click(function(){
+  var city_name=jQuery(this).attr("city_name");	
+  jQuery.ajax({type:'POST',url:'//localhost/trans_fee.htm',dataType:'json',data:{"city_name":city_name,"goods_id":"1959"},
+			   beforeSend:function(){
+				    jQuery("#current_city_info").html('<img style="padding-top:3px;" src="//localhost/resources/style/common/images/wait.gif" width="14" height="14" />');
+					 				},
+			   success:function(json){
+				    jQuery("#current_city_info").html(json.current_city_info);
+					 				 }
+			  });
+  jQuery(".Cities").hide();	
+  jQuery(".goods_ct").hide();
+  jQuery(".list_stock i").removeClass("active");
+});
+
+  jQuery("input[id^=goods_count]").keyup(function(){
+	var count=jQuery(this).val().replace(/\D/g,'');
+	if(count=="" || count<1){
+       count=1;
+	}
+	if(count>=goods_inventory){
+		count=goods_inventory;        
+	}
+	jQuery(this).val(count);
+  });
+  
+  //
+   var pro_tab_top=jQuery("#pro_tab").offset().top;
+  jQuery(window).scroll(function(){
+      var top= jQuery("#pro_tab").offset().top;
+	  var scrolla=jQuery(window).scrollTop();
+	  var i=top-scrolla;
+	 if(i<=0){
+	   jQuery("#pro_tab").addClass("pro_fixed");	  
+	 }
+	 if(scrolla<pro_tab_top){
+	   jQuery("#pro_tab").removeClass("pro_fixed");
+	 }
+  });
+  //
+  jQuery(".consultation_top_nav li").css("cursor","pointer").live("click",function(){
+	   var consult_type=jQuery(this).attr("consult_type");
+	   jQuery.ajax({type:'POST',url:'//localhost/goods_consult.htm',data:{"goods_id":"1959","consult_type":consult_type},
+				  success:function(data){
+			        jQuery("#goods_consult_list").empty();
+					jQuery("#goods_consult_list").append(data);
+				  }
+	  });
+  });
+   //
+  jQuery(".contrast a").click(function(e){	
+		if(jQuery("#goods_compare_cart dl").size()<4){
+	 e.stopPropagation();
+	 jQuery(".contrast_center").show();
+	 jQuery(".contrast_center_nothing").hide();
+	 jQuery('body').append('<div id="float_img"><img src="https://photo.soarmall.com/upload/store/13/5dd5081b16372spDbv2ATxEVE9UAWvD86.jpeg_small.jpeg" width="50" height="50" /></div');
+	 var x=jQuery(e.target).offset().left;
+	 var y=jQuery(e.target).offset().top;
+	 jQuery("#float_img").css({"left":x,"top":y,"position":"absolute"});
+	 var target_x=jQuery(".contrast_center_center").offset().left+jQuery(".contrast_center_center").width()/2;
+	 var target_y=jQuery(".contrast_center_center").offset().top+50;
+	 jQuery(".contrast").hide();
+	 jQuery(".contrast_off").show();
+	 if(!jQuery("#float_img").is(':animated')){
+	 jQuery("#float_img").animate({'left': target_x,'top': target_y,'opacity': 0},1000,'',
+		function(){
+		  jQuery('#float_img').remove();
+		  jQuery.ajax({type:'POST',url:'//localhost/add_goods_compare_cart.htm',data:{"goods_id":"1959"},
+					  success:function(data){
+		                   jQuery("#goods_compare_cart").empty().append(data);   
+						   if(jQuery("#goods_compare_cart dl").size()>1){
+							  jQuery(".contrast_b_yes a").attr("href","//localhost/goods_compare.htm").attr("target","_blank").css("background","#F00");
+						   }
+						   if(jQuery("#goods_compare_cart dl").size()>0){
+						      jQuery(".contrast_center_center_nothing").hide();
+						   }
+		               }
+		  });
+	  });
+	 }
+	}else{
+	   showDialog("msg_info","","同时最多对比4件商品,请删除对比栏中一件商品！",2,"warning",3,'');
+	}
+	  });
+   jQuery(".contrast_off a").click(function(){
+	 jQuery.ajax({type:'POST',url:'//localhost/remove_goods_compare_cart.htm',data:{"goods_id":"1959"},
+					  success:function(data){
+		                   jQuery("#goods_compare_cart").empty().append(data);  
+						   if(jQuery("#goods_compare_cart dl").size()<2){
+						     jQuery(".contrast_b_yes a").attr("href","javascript:void(0);").removeAttr("target").css("background","#CCC");
+						   }
+						   if(jQuery("#goods_compare_cart dl").size()==0){
+						      jQuery(".contrast_center_center_nothing").show();
+						   }
+						   jQuery(".contrast").show();
+	                       jQuery(".contrast_off").hide();
+		               }
+		  });									
+   });
+   jQuery(".contrast_center_center_close").live("mouseover",function(){
+	     jQuery(this).css("cursor","pointer");
+	  }).live("click",function(){
+      var goods_id=jQuery(this).attr("goods_id");
+	  jQuery.ajax({type:'POST',url:'//localhost/remove_goods_compare_cart.htm',data:{"goods_id":goods_id},
+					  success:function(data){
+		                   jQuery("#goods_compare_cart").empty().append(data);   
+						   if(jQuery("#goods_compare_cart dl").size()<2){
+						     jQuery(".contrast_b_yes a").attr("href","javascript:void(0);").removeAttr("target").css("background","#CCC");
+						   }
+						   if(jQuery("#goods_compare_cart dl").size()==0){
+						      jQuery(".contrast_center_center_nothing").show();
+						   }
+						   if(goods_id==1959){
+						     jQuery(".contrast").show();
+	                         jQuery(".contrast_off").hide();
+						   }
+		               }
+	   });
+   });
+   //
+   jQuery(".contrast_b_clear").click(function(){
+     jQuery.ajax({type:'POST',url:'//localhost/remove_all_goods_compare_cart.htm',data:"",
+					  success:function(){
+		                   jQuery("#goods_compare_cart").empty();        
+                           jQuery(".contrast_b_yes a").attr("href","javascript:void(0);").removeAttr("target").css("background","#CCC");
+						   jQuery(".contrast").show();
+						   jQuery(".contrast_off").hide();
+						   jQuery(".contrast_center_center_nothing").show();
+		               }
+	   });
+   });
+   
+ if(goods_inventory==0 && "all"=="all"){
+	jQuery("#add_car_g").attr("class","add_car_btn_no").removeAttr("onclick");
+	jQuery("#buy_g").attr("class","add_atonce_buy_no").removeAttr("onclick");
+	jQuery("#buy_f").attr("class","add_atonce_buy_no").removeAttr("onclick");
+	jQuery("#goods_inventory").attr("style","color:#F00; font-size:16px");
+	jQuery("#notice").show();
+	}else{
+	jQuery("#add_car_g").attr("class","add_car_btn");
+	jQuery("#buy_g").attr("class","add_atonce_buy");
+	jQuery("#buy_f").attr("class","add_atonce_buy");
+		 jQuery("#add_car_g").attr("onclick","add_cart();");
+	 jQuery("#buy_g").attr("onclick","buy_goods();");
+	 jQuery("#buy_f").attr("onclick","f_cart();");
+		jQuery("#goods_inventory").removeAttr("style");
+	jQuery("#notice").hide();
+}   
+	if(1 == 1 && "15"!="15"){
+		jQuery("#add_car_g").attr("class","add_car_btn_no").removeAttr("onclick");
+		jQuery("#buy_g").attr("class","add_atonce_buy_no").removeAttr("onclick");
+		jQuery("#buy_f").attr("class","add_atonce_buy_no").removeAttr("onclick");
+  	}
+	if(0 == 1){
+		jQuery("#add_car_g").attr("class","add_car_btn_no").removeAttr("onclick");
+		jQuery("#buy_g").attr("class","add_atonce_buy_no").removeAttr("onclick");
+		jQuery("#buy_f").attr("class","add_atonce_buy_no").removeAttr("onclick");
+  	}
+});////
+function satisfy(consult_id,obj){
+ jQuery.ajax({type:'POST',url:'//localhost/goods_consult_satisfy.htm',data:{"consult_id":consult_id},success:function(data){
+		   jQuery(obj).html("满意("+data+")");
+	   }});
+}
+function unsatisfy(consult_id,obj){
+  jQuery.ajax({type:'POST',url:'//localhost/goods_consult_unsatisfy.htm',data:{"consult_id":consult_id},success:function(data){
+		   jQuery(obj).html("不满意("+data+")");
+	   }});
+}
+function add_cart(){
+  var add=true
+  var gsp="";
+  if(jQuery(".product_choose li[mark='spec']").length==0){
+    add=true;
+  }else{
+	jQuery(".product_choose li[mark='spec']").each(function(){
+	   jQuery.each(jQuery(this).find("a[class=this]"),function(){
+		  gsp=jQuery(this).attr("gsp")+","+gsp; 
+		  jQuery(this).parent().parent().attr("status","selected");
+	   });
+       if(jQuery(this).find("a[class=this]").length==0) 
+	   add=false;
+	});
+	if(jQuery(".product_choose li[mark='spec']").length==jQuery(".product_choose li[status='selected']").length){
+		   add=true;
+		}else{
+		   add=false;	
+	    }
+  }
+  var count=jQuery("#goods_count").val();
+  if(count==0){
+    add=false;
+	showDialog("msg_info","","至少购买一件商品！",2,"warning",3,'');
+	return;
+  }
+  if(goods_inventory==0){
+    add=false;
+	showDialog("msg_info","","商品库存为0,不能购买！",2,"warning",3,'');
+	return;
+  }
+  if(1 == 1 && "15"!="15"){
+	add=false;
+	showDialog("msg_info","","商品店铺已停业",2,"warning",3,'');
+	return;
+  } 
+  if(add){
+		jQuery.post("//localhost/add_goods_cart.htm",{"id":"1959","count":count,"price":store_price,"gsp":gsp},
+				function(data){
+							if(data.code==0){
+								  window.location.href="//localhost/goods_cart0.htm?gid=1959";
+								}
+	                    	if(data.code==-1){
+								  showDialog("msg_info","","添加失败，请刷新重试！",2,"warning",3,'');
+								}
+						   if(data.code==-2){
+								  showDialog("msg_info","","商品已下架，添加失败！",2,"warning",3,'');
+								}
+						   if(data.code==-3){
+							  showDialog("msg_info","","库存不足，添加失败！",2,"warning",3,'');
+							}	
+						 },"json");
+  }else{
+   error_show();
+  }
+ }
+
+function buy_goods(){
+  var add=true
+  var gsp="";
+  if(jQuery(".product_choose li[mark='spec']").length==0){
+    add=true;
+  }else{
+	jQuery(".product_choose li[mark='spec']").each(function(){
+	   jQuery.each(jQuery(this).find("a[class=this]"),function(){
+		  gsp=jQuery(this).attr("gsp")+","+gsp; 
+		  jQuery(this).parent().parent().attr("status","selected");
+	   });
+       if(jQuery(this).find("a[class=this]").length==0) 
+	   add=false;
+	});
+	if(jQuery(".product_choose li[mark='spec']").length==jQuery(".product_choose li[status='selected']").length){
+		 add=true;
+		}else{
+		add=false;	
+	    }
+  }
+  var count=jQuery("#goods_count").val();
+  if(count==0){
+    add=false;
+	showDialog("msg_info","","至少购买一件商品！",2,"warning",3,'');
+	return;
+  }
+  if(goods_inventory==0){
+    add=false;
+	showDialog("msg_info","","商品库存为0,不能购买！",2,"warning",3,'');
+	return;
+  }    
+  if(1 == 1 && "15"!="15"){
+	add=false;
+	showDialog("msg_info","","商品店铺已停业",2,"warning",3,'');
+	return;
+  }
+  var buy_type=arguments[0];
+  var combin_ids=arguments[1];
+  if(add){
+	jQuery.post("//localhost/add_goods_cart.htm",{"id":"1959","count":count,"price":store_price,"gsp":gsp,"buy_type":buy_type,"combin_ids":combin_ids},function(data){																																								  				if(data.code==0){
+				   window.location.href="//localhost/goods_cart1.htm";
+				}
+				if(data.code==-1){
+				   showDialog("msg_info","","添加失败，请刷新重试！",2,"warning",3,'');
+				 }
+			   if(data.code==-2){
+				   showDialog("msg_info","","商品已下架，添加失败！",2,"warning",3,'');
+				 }
+			   if(data.code==-3){
+				   showDialog("msg_info","","库存不足，添加失败！",2,"warning",3,'');
+				}	
+	},"json");
+  }else{
+	  error_show();
+  }
+ }
+//
+function goods_count_sub(){
+   var goods_count= jQuery("#goods_count").val();
+   if(goods_count>1){
+		goods_count--;
+		jQuery("#goods_count").val(goods_count);
+	}
+}
+function goods_count_add(){
+   var goods_count= jQuery("#goods_count").val();
+   if(goods_count<goods_inventory){
+		goods_count++;
+		jQuery("#goods_count").val(goods_count);
+	 }
+}
+function error_show(){
+  jQuery(".product_choose").addClass("choose_this");
+}
+function error_hide(){
+  jQuery(".product_choose").removeClass("choose_this");
+}
+function ajaxPage(url,currentPage,obj){
+  var consult_type=jQuery(".consultation_top_nav li[class=this]").attr("consult_type");
+  var goods_eva=jQuery(".pro_tab_top[tab_id=goods_evas] li[class=this]").attr("goods_eva");
+  jQuery.ajax({type:'POST',url:url,data:{"currentPage":currentPage,"goods_id":"1959","id":"13","consult_type":consult_type,"goods_eva":goods_eva},
+			  beforeSend:function(){
+			   },
+			  success:function(data){
+				 var target_id=jQuery(obj).parent().attr("target_id");
+                 jQuery("#"+target_id).empty();						
+                 jQuery("#"+target_id).append(data);																								                
+			  }
+		})
+  }
+function show_bigimg(obj1,obj2){	
+	jQuery(obj1).parent().parent().parent().find(".img_list_dl_img_one_top").removeClass("this");	
+	jQuery(obj1).parent().parent().parent().find(".tm_photos_arrow").hide();
+	jQuery(obj1).parent().parent().find(".tm_photos_arrow").show();
+	jQuery(obj1).parent().addClass("this");
+	var src=jQuery(obj1).find("img").attr("src");
+	jQuery("#eva_bigimg_top_"+obj2).show();
+	jQuery("#eva_bigimg_"+obj2).attr("src",src);
+		
+	var img = new Image();
+	img.src =jQuery('.img').attr("src") ;
+	var w = img.width;
+	var h = img.height;
+	if(w>=h){
+	jQuery("#eva_bigimg_"+obj2).attr("height",h/w*300);
+	jQuery("#eva_bigimg_"+obj2).attr("width",300);
+	}
+	if(w<h){
+	jQuery("#eva_bigimg_"+obj2).attr("width",w/h*300);
+	jQuery("#eva_bigimg_"+obj2).attr("height",300);
+	}	
+}
+function show_addbigimg(obj1,obj2){	
+	jQuery(obj1).parent().parent().parent().find(".img_list_dl_img_one_top").removeClass("this");	
+	jQuery(obj1).parent().parent().parent().find(".tm_photos_arrow").hide();
+	jQuery(obj1).parent().parent().find(".tm_photos_arrow").show();
+	jQuery(obj1).parent().addClass("this");
+	var src=jQuery(obj1).find("img").attr("src");
+	jQuery("#eva_add_bigimg_top_"+obj2).show();
+	jQuery("#eva_add_bigimg_"+obj2).attr("src",src);
+		
+	var img = new Image();
+	img.src =jQuery('.img').attr("src") ;
+	var w = img.width;
+	var h = img.height;
+	if(w>=h){
+	jQuery("#eva_add_bigimg_"+obj2).attr("height",h/w*300);
+	jQuery("#eva_add_bigimg_"+obj2).attr("width",300);
+	}
+	if(w<h){
+	jQuery("#eva_add_bigimg_"+obj2).attr("width",w/h*300);
+	jQuery("#eva_add_bigimg_"+obj2).attr("height",300);
+	}	
+}
+function hideimg(obj){
+	jQuery("#eva_bigimg_top_"+obj).parent().find(".img_list_dl_img_one_top").removeClass("this");	
+	jQuery("#eva_bigimg_top_"+obj).parent().find(".tm_photos_arrow").hide();
+	jQuery("#eva_bigimg_top_"+obj).hide();
+}
+function proimg(obj){
+	var src=jQuery("#eva_bigimg_"+obj).attr("src");
+	window.open(src);
+}
+function hide_addimg(obj){
+	jQuery("#eva_add_bigimg_top_"+obj).parent().find(".img_list_dl_img_one_top").removeClass("this");	
+	jQuery("#eva_add_bigimg_top_"+obj).parent().find(".tm_photos_arrow").hide();
+	jQuery("#eva_add_bigimg_top_"+obj).hide();
+}
+function pro_addimg(obj){
+	var src=jQuery("#eva_add_bigimg_"+obj).attr("src");
+	window.open(src);
+}
+function share_goods(){
+	var share_content=jQuery("#share_content").val();
+	if(share_content.length<=140){
+		jQuery("#max_length").hide();
+	var share_goods_photo=jQuery(".enjoy_bg_center_img_c b:visible").prev().attr("mark");
+	jQuery.ajax({type:'POST',url:"//localhost/share_goods.htm",data:{"share_content":share_content,"share_goods_id":"1959","share_goods_name":"metooTest1-1","share_goods_photo":share_goods_photo},
+			  beforeSend:function(){
+			   },
+			  success:function(data){
+				  if(data){
+					  share_close();
+					  showDialog("msg_info","","商品分享成功！",2,"succeed",3,'');
+					  var share_content=jQuery("#share_content").val("我蛮喜欢这个哦～");
+					  jQuery(".enjoy_bg_center_img_c b").hide();
+					  jQuery(".enjoy_bg_center_img_c b:first").show();
+				  }				  																						                
+			  }
+		});
+	}else{
+		jQuery("#max_length").show();
+	}
+}
+function share_show(){
+	jQuery(".enjoy_bg").show();
+	jQuery(".enjoy_bg_center").show();
+}
+function share_close(){
+	jQuery(".enjoy_bg").hide();
+	jQuery(".enjoy_bg_center").hide();
+}
+</script>
+<style>
+div, h1, h2, h3, h4, h5, h6, b, i, em, strong, a, s, p, dl, dd, dt, ul, li, input, select {
+	behavior: url(ie-css3.htc);
+}
+</style>
+</head>
+<body>
+ 
+
+<!--[if lt IE 9]>
+    <script src="//localhost/resources/js/css3-mediaqueries.js"></script>
+<![endif]-->
+<style>
+.en_text {
+	display: block;
+	text-align: center;
+	padding: 5px 0px;
+}
+
+#entext {
+	position: absolute;
+	background-color: #fff;
+	height: auto;
+	border-radius: 3px;
+	width: 168px;
+	top: 44px;
+	left: 0px;
+}
+
+.sanjio {
+	width: 0;
+	height: 0;
+	border-left: 5px solid transparent;
+	border-right: 5px solid transparent;
+	border-bottom: 10px solid #fff;
+	position: absolute;
+	top: 34px;
+	left: 10px;
+}
+
+.entext_content {
+	
+}
+
+.top_user_ul li a {
+	color: #ff9900;
+}
+
+.top_user_hb {
+	left: -1px;
+}
+
+.top_user_browse span a {
+	width: 71px;
+	margin: 3px 3px;
+	height: 71px;
+}
+
+.top_user_browse span a img {
+	width: 100%;
+	height: inherit;
+}
+
+.top_user_browse span {
+	height: auto;
+}
+
+.top_user_sp_this {
+	padding-left: 40px;
+}
+
+.head_seartxt_s {
+	position: relative;
+}
+
+.login_bt {
+	background-color: #ff9900;
+	border-radius: 3px;
+	color: #FFF !important;
+	width: 68%;
+	margin: 13px auto !important;
+	display: block;
+	font-size: 15px;
+	text-align: center;
+	padding: 8px;
+	overflow: hidden;
+	font-weight: 550;
+}
+
+.top_user_width {
+	width: 234px !important;
+}
+
+.top_ul_list, .top_user_width, .top_user_browse span, .top_user_browse,
+	.top_user {
+	padding: 0px;
+	width: auto;
+}
+
+.top_ul_list>li {
+	display: block;
+	font-size: 12.5px;
+	padding: 10px 13.5px;
+	width: 100%;
+	background: transparent;
+	border-bottom: 1px solid #F0F0F0;
+}
+
+.top_user_hb {
+	padding: 0px;
+}
+
+.top_ul_list>li:hover {
+	background-color: #F0F0F0;
+}
+/* .top_ul_list>li>a:hover{
+	color:#ff9900;
+} */
+#soubt {
+	position: absolute;
+	font-size: 25px;
+	top: 7px;
+	right: 27px;
+	color: #f90;
+}
+
+#keyword:focus {
+	border: 1px solid #dcdcdc;
+	outline: none;
+}
+
+.sousuo {
+	border-top: 1px solid #dcdcdc;
+	border-right: 1px solid #dcdcdc;
+	border-bottom: 1px solid #dcdcdc;
+	position: absolute;
+	right: 0px;
+	top: 0px;
+}
+
+.head_fixd .logo span p img {
+	height: 35px !important;
+	width: auto !important;
+}
+
+.
+.head_seartxt_s {
+	box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .08);
+}
+
+.top_user_browse {
+	margin-bottom: 10px;
+	background: transparent;
+}
+</style>
+<link rel="stylesheet" href="//localhost/resources/wap/fonts/iconfont.css">
+<div class="head_width" id="head_h">
+	<div class="head">
+						<h1 class="logo">
+			<span>
+				<p>
+					<a href="//localhost/index.htm"> <img src="https://photo.soarmall.com/upload/system/5cd3dcc2b5096CiwDarmEcUKMQ0IqdKCO.png" border="0"
+						style="height: 60px; width: 170px;" />
+					</a>
+				</p>
+			</span>
+		</h1>
+		<form action="//localhost/search.htm" method="post" target="_blank"
+			id="searchForm">
+			<input name="type" type="hidden" id="type" value="goods" />
+			<div class="head_search" id="head_search"
+				style="width: 665px; margin-left: 0px;">
+				<span class="head_seartxt_s head_seartxt"> <input
+					name="keyword" type="text" id="keyword"
+					placeholder="What are you looking for?" x-webkit-speech
+					lang="zh-CN" onwebkitspeechchange="jQuery('#searchForm').submit()"
+					class="h_sear_txt"
+					style="padding-left: 22px; width: 641px; font-size: 14px;"
+					autocomplete="off" />
+					<div class="sousuo">
+						<input name="" type="submit" class="h_sear_btn " value="" />
+					</div> <i class="iconfont icon-sousuo" id="soubt"></i>
+				</span> <span class="head_searstr">				</span>
+				<!--搜索历史 -->
+				<div class="head_search_history" id="head_search_history"
+					style="display: none">
+					<dl>
+						<dt>
+							<ul>
+								<li class="head_search_history_top"><span>Search
+										History</span><i><a href="javascript:void(0)"
+										onclick="search_data_del_all()">Delete All</a></i></li>
+							</ul>
+						</dt>
+						<dd>
+							<span class="head_search_history_hot"> Hot search...</span>
+							<ul>
+
+															</ul>
+						</dd>
+					</dl>
+				</div>
+				<!--搜索历史 -->
+				<div class="head_search_history_up" id="head_search_history_up"
+					style="display: none">
+					<dl>
+						<dt>
+							<ul>
+								<li class="head_search_history_top"><span>Search
+										History</span><i><a href=""> Delete All</a></i></li>
+							</ul>
+						</dt>
+						<dd>
+							<span class="head_search_history_hot"> Hot search...</span>
+							<ul>
+
+															</ul>
+						</dd>
+					</dl>
+				</div>
+			</div>
+		</form>
+		<!--语言-->
+		<div class="top_uae">
+			<span class="top_pull"> <a href="#">???????</a>
+			</span>
+		</div>
+		<!--用户中心????-->
+		<div class="top_user" id="top_user">
+			<span class="top_user_sp"
+				style="display: flex; align-items: enter; height: 100%;"
+				id="top_user_sp"> <a href="//localhost/buyer/index.htm"
+				style="display: flex; align-items: center; justify-content: center;">
+					<span> <strong class="top_col">
+							 <span>Hello,Login</span>
+												</strong> <i class="iconfont icon-xiala"></i>
+				</span>
+			</a>
+			</span>
+			<div class="top_user_hid" id="top_user_hid"
+				style="display: none; z-index: 999;"></div>
+		</div>
+
+		<!--购物车结-->
+		<div class="goodscar" id="goodscar">
+			<span class="goodscar_sp" id="goodscar_sp">  <span> <a href="//localhost/user_login.json"
+					style="padding-left: 12px;"> <em class="goodscar_num"><b
+							id="cart_goods_count_top">0</b></em> <strong> <!-- <i class="iconfont icon-gouwuche1" style="font-size: 32px;"></i> -->
+							<img
+							src='//localhost/resources/style/system/front/default/images/gouwuche.png'
+							style="height: 28px; padding-right: 5px;">
+					</strong>
+				</a>
+			</span> 			</span>
+		</div>
+		<!-- 语言切换 -->
+		<!-- <div class="top_uae" id="uae_en" style="right: 34px;">
+			<p><strong>EN</strong>&nbsp;&nbsp;&nbsp;<i class="iconfont iconyuyan"></i></p>
+			<i class="sanjio" style="display:none;"></i>
+			<div id="entext" style="display:none; width:100px;">
+				<a href="#" class="en_text">English-EN</a>
+				<a href="#" class="en_text">Arabic-AE</a>
+			</div>
+		</div> -->
+	</div>
+</div>
+<script src="//localhost/resources/js/jquery.cookie.js"></script>
+<script>
+jQuery(document).ready(function(){
+	$("#soubt").click(function(){
+		 $(".h_sear_btn").trigger("click");
+	});
+		
+	$("#uae_en").click(function(){
+		if(jQuery(".sanjio").is(':hidden')){
+			jQuery(".sanjio").show();
+			jQuery("#entext").show();
+			
+		}else{
+			jQuery(".sanjio").hide();
+			jQuery("#entext").hide();
+		}
+	});
+	search_history_data();
+	var head_h=jQuery("#head_h").height();
+	//搜索框获取焦点
+	jQuery("#keyword").click(function(){
+		var top = jQuery(document).scrollTop();
+		jQuery("div[id^='head_search_goodslist']").hide();
+		if(top>head_h){
+		   jQuery("#head_search_history_up").fadeIn();
+	  	}else{
+		   jQuery("#head_search_history").fadeIn();
+	  	}
+	}).keyup(function(){
+		if(jQuery(this).val()!=''){
+			jQuery("div[id^='head_search_history']").hide();
+		};
+		var keyword = jQuery(this).val();
+		<!--查询分类-->
+		jQuery.post("//localhost/search_goodsclass.htm",{"keyword":keyword},function(data){
+	    	if(data){
+				search_goodsclass_initialize();
+				jQuery.each(data.parent_gc,function(index,item){
+					if(index==0){
+						//构???提示框
+						jQuery("#head_search_goodslist>dl>dt>ul").append("<li class='this'><span><a href='//localhost/store_goods_list_"+item.id+".htm' target='_blank'>"+item.name+"</a></span></li>");
+						var str = "<dd id='head_search_dd_"+item.id+"'><span class='head_search_history_hot' style='margin-bottom:20px; height:25px; line-height:25px;'>"+item.name+"</span><span onclick='search_gc_close()' class='head_search_history_hot' style='margin-bottom:20px; height:25px;float:right; line-height:15px; color:#999;;cursor:pointer'>Close</span><ul></ul></dd>"
+						jQuery("#head_search_goodslist>dl").append(str);
+						//下方的提示框
+						jQuery("#head_search_goodslist_up>dl>dt>ul").append("<li class='this'><span><a href='//localhost/store_goods_list_"+item.id+".htm' target='_blank'>"+item.name+"</a></span></li>");
+						str = "<dd id='head_search_up_dd_"+item.id+"'><span class='head_search_history_hot' style='margin-bottom:20px; height:25px; line-height:25px;'>"+item.name+"</span><span onclick='search_gc_close()' class='head_search_history_hot' style='margin-bottom:20px; height:25px;float:right; line-height:15px; color:#999;;cursor:pointer'>Close</span><ul></ul></dd>"
+						jQuery("#head_search_goodslist_up>dl").append(str);
+					}else{
+						//构???提示框
+						jQuery("#head_search_goodslist>dl>dt>ul").append("<li><span><a href='//localhost/store_goods_list_"+item.id+".htm' target='_blank'>"+item.name+"</a></span></li>");
+						var str = "<dd id='head_search_dd_"+item.id+"' style='display:none'><span class='head_search_history_hot' style='margin-bottom:20px; height:25px; line-height:25px;'>"+item.name+"</span><span onclick='search_gc_close()' class='head_search_history_hot' style='margin-bottom:20px; height:25px;float:right; line-height:15px; color:#999;;cursor:pointer'>Close</span><ul></ul></dd>"
+						jQuery("#head_search_goodslist>dl").append(str);
+						//下方的提示框
+						jQuery("#head_search_goodslist_up>dl>dt>ul").append("<li><span><a href='//localhost/store_goods_list_"+item.id+".htm' target='_blank'>"+item.name+"</a></span></li>");
+						var str = "<dd id='head_search_up_dd_"+item.id+"' style='display:none'><span class='head_search_history_hot' style='margin-bottom:20px; height:25px; line-height:25px;'>"+item.name+"</span><span onclick='search_gc_close()' class='head_search_history_hot' style='margin-bottom:20px; height:25px;float:right; line-height:15px; color:#999;;cursor:pointer'>Close</span><ul></ul></dd>"
+						jQuery("#head_search_goodslist_up>dl").append(str);
+					}
+				})
+				jQuery.each(data.list_child,function(index,childs){
+						jQuery.each(childs,function(i,child){
+							jQuery("#head_search_goodslist>dl>dd").eq(index).find("ul").append("<li><a href='//localhost/store_goods_list_"+child.id+".htm' target='_blank'>"+child.name+"</a></li>");
+							jQuery("#head_search_goodslist_up>dl>dd").eq(index).find("ul").append("<li><a href='//localhost/store_goods_list_"+child.id+".htm' target='_blank'>"+child.name+"</a></li>");
+						})
+				})
+				var top = jQuery(document).scrollTop();
+				if(top>head_h){
+		   			jQuery("#head_search_goodslist_up").fadeIn();
+	  			}else{
+		   			jQuery("#head_search_goodslist").fadeIn();
+	  			}
+				//监听搜索分类提示鼠标上移事件
+				jQuery("div[id^='head_search_goodslist']>dl>dt>ul>li").mouseover(function() {
+                    var index = jQuery(this).index();
+					jQuery("div[id^='head_search_goodslist']>dl>dt>ul>li").removeClass("this");
+					jQuery("#head_search_goodslist>dl>dt>ul>li").eq(index).addClass("this");
+					jQuery("#head_search_goodslist_up>dl>dt>ul>li").eq(index).addClass("this");
+					jQuery("dd[id^='head_search_dd_']").hide();
+					jQuery("dd[id^='head_search_dd_']").eq(index).show();
+					jQuery("dd[id^='head_search_up_dd_']").hide();
+					jQuery("dd[id^='head_search_up_dd_']").eq(index).show();
+                });
+			}else{
+				search_goodsclass_initialize();
+			}
+	  	},"json");
+		<!--查询分类END-->
+	});
+	jQuery("div[id^='head_search_history']").mouseover(function(){
+		jQuery(this).show();
+	});
+	jQuery("div[id^='head_search_history']").mouseout(function(){
+		jQuery(this).hide();
+	});
+	jQuery(window).scroll(function(){
+		var top = jQuery(document).scrollTop();
+		if(top>head_h){
+			if(jQuery("#head_search_history").is(":visible")){
+				jQuery("#head_search_history").hide();
+				jQuery("#head_search_history_up").show();  
+		    };
+			if(jQuery("#head_search_goodslist").is(":visible")){  
+						jQuery("#head_search_goodslist").hide();
+						jQuery("#head_search_goodslist_up").show(); 
+			};
+	  	}else{
+		   if(jQuery("#head_search_history_up").is(":visible")){
+				jQuery("#head_search_history_up").hide();
+				jQuery("#head_search_history").show();
+		   };
+		   if(jQuery("#head_search_goodslist_up").is(":visible")){  
+				jQuery("#head_search_goodslist_up").hide();
+				jQuery("#head_search_goodslist").show(); 
+		   };
+	  	}
+		
+	});
+	//选定某一搜索历史
+	jQuery("#head_search_history").find("dl>dt>ul>li>span").click(function(){
+		jQuery("#keyword").val(jQuery(this).attr("data"));
+		jQuery("#searchForm").submit();
+	});
+	//鼠标经过用户中心
+   jQuery("#top_user_sp").mouseover(function(){
+		if(jQuery("#top_user_hb").size()==0){
+			jQuery.ajax({type:'POST',url:'//localhost/head_ajax_usercenter.htm',data:'',
+						   beforeSend:function(){
+							     jQuery("#top_user_hid").html('<div class="top_user_hb" id="top_user_hb"><span class="top_user_loading"><img src="//localhost/resources/style/system/front/default/images/loading.gif" /></span><b class="top_user_warning">Loading...</b></div>');
+							     jQuery("#top_user_hid").show();
+							   },
+						  success:function(data){
+						     jQuery("#top_user_hid").empty();
+								 jQuery("#top_user_hid").html(data);
+							   }
+						});		
+		}else{
+			jQuery("#top_user_hid").show();
+			}
+	jQuery("#top_user_sp").addClass("top_user_sp_this");
+  	});
+   jQuery("#top_user").mouseleave(function(){
+    jQuery("#top_user_hid").hide();
+	jQuery("#top_user_sp").removeClass("top_user_sp_this");
+  });
+   //鼠标经过购物??
+   jQuery("#goodscar_sp").mouseover(function(){
+			var gstatus =jQuery("#goodscar_con_box").attr("mark");
+			if(gstatus=="none")
+			  jQuery.ajax({type:'POST',url:'//localhost/cart_menu_detail.htm',data:'',
+						   beforeSend:function(){
+							     jQuery("#goodscar_con_box").empty().html(' <div><span class="top_user_loading"><img src="//localhost/resources/style/system/front/default/images/loading.gif" /></span><b class="top_user_warning">加载中，请稍??...</b></div>');
+							     jQuery("#goodscar_con_box").show();
+							   },
+						  success:function(data){
+							  jQuery("#goodscar_con_box").attr("mark","show");
+							     jQuery("#goodscar_con_box").empty();
+								 jQuery("#goodscar_con_box").html(data);
+								
+								 
+							   }
+						});
+			  jQuery("#goodscar_sp").addClass("goodscar_sp_this");
+		   });
+		   jQuery("#goodscar").mouseleave(function(){
+			jQuery("#goodscar_con_box").attr("mark","none");
+			  jQuery("#goodscar_con_box").hide();
+			  jQuery("#goodscar_sp").removeClass("goodscar_sp_this");
+		   });
+});
+//初始化分类搜索提示模??
+function search_goodsclass_initialize(){
+	jQuery("div[class^='head_search_goodslist']").each(function(index,obj) {
+        jQuery(obj).remove();
+    });
+	var str = "<div class='head_search_goodslist' id='head_search_goodslist' style='display:none'><dl><dt><ul></ul></dt></dl></div>";
+	jQuery("#head_search").append(str);
+	str = "<div class='head_search_goodslist_up' id='head_search_goodslist_up' style='display:none'><dl><dt><ul></ul></dt></dl></div>";
+	jQuery("#head_search").append(str);
+}
+
+function search_gc_close(){
+	jQuery("div[id^='head_search_goodslist']").hide();
+}
+//加载搜索历史记录
+function search_history_data(){
+	var data = jQuery.cookie("search_history");
+	if(data==null){
+		jQuery("div[id^='head_search_history']").remove();
+	}else{
+		jQuery.each(data.split(","),function(index,item){
+			if(index<10){
+				jQuery("#head_search_history_up").find("dl>dt>ul").append("<li><span data='"+item+"'><a href='javascript:void(0)'>"+item+"</a></span><i onclick='search_data_del(this)'><a href='javascript:void(0)'>Delete</a></i></li>");
+				jQuery("#head_search_history").find("dl>dt>ul").append("<li><span data='"+item+"'><a href='javascript:void(0)'>"+item+"</a></span><i onclick='search_data_del(this)'><a href='javascript:void(0)'>Delete</a></i></li>");
+			}
+		});
+	}
+}
+//删除某一历史记录
+function search_data_del(obj){
+	var item = jQuery(obj).parent().find("span").attr("data");
+	var data = "";
+	var temp = jQuery.cookie("search_history");	
+	jQuery.each(temp.split(","),function(index,value){
+		if(item!=value){
+			if(data!=""){
+				data =data +","+value;
+			}else{
+				data = value;
+			}
+		}
+	});
+	
+	if(data!=""){
+		jQuery.cookie("search_history",data);
+	}else{
+		jQuery.cookie("search_history",null);
+	}
+	search_html_restore();
+	search_history_data();
+}
+//删除全部历史记录
+function search_data_del_all(){
+	jQuery.cookie("search_history",null);
+	search_html_restore();
+	search_history_data();
+}
+//清空搜索历史下拉数据
+function search_html_restore(){
+	jQuery("#head_search_history_up").find("dl>dt>ul>li").each(function(index, element) {
+       if(index!=0){
+		   jQuery(this).remove();
+	   } 
+    });
+	jQuery("#head_search_history").find("dl>dt>ul>li").each(function(index, element) {
+       if(index!=0){
+		   jQuery(this).remove();
+	   } 
+    });
+}
+function search_form(){
+  var keyword=arguments[0];
+  var type=arguments[1];
+  if(keyword!=""&&keyword!=undefined){
+   jQuery("#keyword").val(keyword);
+  }
+  if(type!=""&&type!=undefined){
+    jQuery("#type").val(type);
+  }
+  jQuery("#searchForm").submit();	
+  jQuery("#keyword").val("");
+}
+		 var total_price=0;
+		 		 		 
+		function menu_cart_remove(id){
+           jQuery.post("//localhost/remove_goods_cart.htm",{"ids":id},function(data){
+		   if(data.code=="100"){		
+		   jQuery(".goodscar_list li[id="+id+"]").remove();
+           jQuery("#cart_goods_count_top").html(data.count);
+		   jQuery("#st_count").html(data.count);
+		   jQuery("#cart_goods_price_top").html(data.total_price);
+		   if(data.count==0){//购物车页面没有商??
+			 jQuery(".goodscar_list").remove();
+			 jQuery("#goodscar_con_box").html("<b class='goodscar_none'>购物车还没有商品!</b>");	
+		   }else{
+			   jQuery("#goodscar_con_box").load("//localhost/cart_menu_detail.htm");
+			   }
+			}
+			 if(data.code=="200"){	
+			   showDialog("msg_info","","系统繁忙，请稍后重试",2,"warning",3,'');	
+			 }
+         
+         },"json");
+       }
+</script>
+ 
+<script>
+
+
+</script>
+
+<script>
+</script>
+
+
+
+<!-- <style>
+.left_menu{
+display: none;
+}
+.left_menu:hover{
+display: block;
+}
+</style> -->
+<link href="//localhost/resources/style/system/front/default/css/nav.css"
+	type="text/css" rel="stylesheet" />
+
+<div id="main_demo">
+	<div class="nav_menu"
+		style="box-shadow: 0 2px 2px rgba(0, 0, 0, 0.05);">
+		<div class="nav_list">
+			<div class="navf">
+				<div class="lists" id="navlist_second">
+					<ul>
+						<li style="width: 229px; margin: 0px;"><strong><a
+								href="//localhost/goods_class.htm" class="meun_a" target="_blank"
+								style="padding: 0px; color: #1E90FF;"><span>All
+										CATEGORIES</span></strong></a></li>
+						<li><a href="#" class="meun_a" target="_blank"><strong>EBUYAIR
+									SHOP</strong></a></li>
+						<li><a href="//localhost/group/index.htm" class="meun_a"
+							target="_blank"><strong>GROUP PURCHASE</strong></a></li>
+					</ul>
+				</div>
+				<div class="box" id="navbox_second"
+					style="height: 0px; opacity: 0; overflow: hidden;"></div>
+			</div>
+
+		</div>
+	</div>
+</div>
+
+
+
+
+
+<div class="main">
+  <div class="product_top">
+  	  <script></script>
+      <!--大图 start -->
+      <div class="product_details_img_big_bg"  style="display:none;"></div>
+      <div class="product_details_img_big_center" style="display:none;">
+       	<div class="img_big_center_close"><a href="">x</a></div>
+      	<div class="img_big_center_left"><a href=""></a></div>
+        <div class="img_big_center_img"><img src="../resources/style/system/front/default/images/zt/img/duibi.png" /></div>
+        <div class="img_big_center_right"><a href=""></a></div>
+        <div class="big_center_right">
+        	<div class="big_center_right_name">2015年春季新款女装纯色宽松百搭休闲立领长袖棉麻白衬衫女衬衣潮</div>
+            <div class="big_center_right_list">
+            	<ul>
+                	<li class="this"><img src="../resources/style/system/front/default/images/005.jpg" /></li>
+                    <li><img src="../resources/style/system/front/default/images/005.jpg" /></li>
+                    <li><img src="../resources/style/system/front/default/images/005.jpg" /></li>
+                    <li><img src="../resources/style/system/front/default/images/005.jpg" /></li>
+                    <li><img src="../resources/style/system/front/default/images/005.jpg" /></li>
+                    <li><img src="../resources/style/system/front/default/images/005.jpg" /></li>
+                </ul>
+            </div>
+            <div>
+            	<ul class="big_product_choose">
+          <li class="big_pro_choose_li">
+          	<span class="big_choose_left"> 选择颜色：</span>
+            <span class="big_choose_right"> <a href="" class="big_choose_one"><img src="../resources/style/system/front/default/images/test/50.jpg" width="30" height="30" /><i></i></a> <a href="" class="big_choose_one this"><img src="../resources/style/system/front/default/images/test/50.jpg" width="30" height="30" /><i></i></a> </span> </li>
+          <li class="big_pro_choose_li"><span class="big_choose_left"> 选择版本：</span> <span class="big_choose_right_other"><a href="" class="big_choose_notype">13.4英寸<i></i></a><a href="" class="big_choose_notype this">13.4英寸<i></i></a></span> </li>
+          <li class="big_pro_choose_li"> <span class="big_choose_left"> 购买数量：</span> <span class="big_choose_right_three"><a href="" class="big_choose_num_up">-</a>
+            <input name="" type="text" class="big_choose_num" />
+            <a href="" class="big_choose_num_down">+</a></span> </li>
+        </ul>
+            </div>
+            <div class="buy_now">
+            	<a href="">加入购物车</a>
+            </div>
+        </div>
+      </div>
+       <!--大图 end --> 
+    <!--大图片开始-->
+    <div class="product_top_left">             <div class="product_details_img">
+        <div class="product_image"> <a href="https://photo.soarmall.com/upload/store/13/5dd5081b16372spDbv2ATxEVE9UAWvD86.jpeg" class="jqzoom"  rel='gal1'  title="商品细节图" > <img src="https://photo.soarmall.com/upload/store/13/5dd5081b16372spDbv2ATxEVE9UAWvD86.jpeg"  title="商品细节图"  id="main_img" width="400" height="400" /> </a> <i class="product_image_f"><img src="//localhost/resources/style/system/front/default/images/product_image_f.png" /></i> </div>
+        <div class="product_imgs"> 
+          <!--小图片开始-->
+          <div class="pro_imgbox"> <a class="zoomThumbActive this" href='javascript:void(0);' rel="{gallery: 'gal1', smallimage: 'https://photo.soarmall.com/upload/store/13/5dd5081b16372spDbv2ATxEVE9UAWvD86.jpeg',largeimage: 'https://photo.soarmall.com/upload/store/13/5dd5081b16372spDbv2ATxEVE9UAWvD86.jpeg'}"><span>
+            <p><img src="https://photo.soarmall.com/upload/store/13/5dd5081b16372spDbv2ATxEVE9UAWvD86.jpeg_small.jpeg" big_img="https://photo.soarmall.com/upload/store/13/5dd5081b16372spDbv2ATxEVE9UAWvD86.jpeg" width="50" height="50"  onmouseover="img_switch(this);"  style="cursor:pointer;"  /></p>
+            </span></a>  </div>
+        </div>
+      </div>
+      <div class="product_top_b">
+        <div class="collect_product"><a href="javascript:void(0);" dialog_uri="//localhost/user_dialog_login.htm" dialog_title="会员登录" dialog_width="430" dialog_height="100" dialog_id="user_login"><i></i>收藏商品(0)</a></div>
+        <div class="enjoy_bg" style="display:none"> </div>
+        <div class="enjoy_bg_center" style="display:none">
+          <div class="enjoy_bg_center_c">
+            <div class="enjoy_bg_center_top">
+              <h3>分享商品</h3>
+              <span><a href="javascript:void(0);" onclick="share_close()">x</a></span></div>
+            <div class="enjoy_bg_center_top_word">
+              <textarea name="share_content"  id="share_content" cols="" rows="">我蛮喜欢这个哦～</textarea>
+              <span style="color:#F00; display:none" id="max_length">最多140字!</span> </div>
+            <div class="enjoy_bg_center_img">
+              <div class="enjoy_bg_center_img_t">选择搭配图：</div>
+              <div class="enjoy_bg_center_img_c">
+                <ul>
+                                                      <li class="this" style="cursor:pointer"> <img src="https://photo.soarmall.com/upload/store/13/5dd5081b16372spDbv2ATxEVE9UAWvD86.jpeg_middle.jpeg" mark="upload/store/13/5dd5081b16372spDbv2ATxEVE9UAWvD86.jpeg_middle.jpeg"/> <b><img src="../resources/style/system/front/default/images/enjoy_bg_center_img_c.png" /></b> </li>
+                                  </ul>
+              </div>
+            </div>
+                        <div class="enjoy_b"> <a href="javascript:void(0);" onclick="share_goods()">分享</a> </div>
+          </div>
+          <div class="enjoy_bg_input"></div>
+        </div>
+        <div class="enjoy_btn">  <a class="enjoy_a" href="javascript:void(0);" dialog_uri="//localhost/user_dialog_login.htm" dialog_title="会员登录" dialog_width="430" dialog_height="100" dialog_id="user_login" >分享商品</a>           <div class="enjoy_box" style="display:none;"> <span class="enjoy_b">
+            <input style="display:none" name="goods_share_btn" type="button" id="goods_share_btn" value="分享商品" dialog_uri="//localhost/user_dialog_login.htm" dialog_title="会员登录" dialog_width="430" dialog_height="100" dialog_id="user_login"  />
+            </span> <span class="enjoy">  </span> </div>
+        </div>
+        <div class="contrast" ><a href="javascript:void(0);"><i></i>加入对比</a></div>
+        <div class="contrast_off" style="display:none;"><a href="javascript:void(0);"><i></i>取消对比</a></div>
+        <!--右侧对比 -->
+        <div class="contrast_center" style="display:none;">
+          <div class="contrast_center_top"><span>对比栏<i><a href="javascript:void(0);" onclick="jQuery('.contrast_center').hide();jQuery('.contrast_center_nothing').show();">隐藏</a></i></span></div>
+          <div class="contrast_center_center">
+            <div id="goods_compare_cart">  </div>
+            <div class="contrast_center_center_nothing"  ></div>
+            <!--没有数据 display:none -->
+            <div class="contrast_b">               <div class="contrast_b_yes"><a href="javascript:void(0);" style="background:#CCC;">对比</a></div>
+                            <div class="contrast_b_clear"><a href="javascript:void(0);">清空</a></div>
+            </div>
+          </div>
+        </div>
+        <!--对比隐藏 -->
+        <div class="contrast_center_nothing"  onclick="jQuery('.contrast_center').show();jQuery('.contrast_center_nothing').hide();"><a href="javascript:void(0);">对比栏</a></div>
+      </div>
+    </div>
+    <div class="product_top_right">
+      <h2 class="product_title">metooTest1-1</h2>
+      <h2 class="product_title_h2">   </h2>
+      <div class="product_data_left">
+        <ul class="pro_details">
+          <li class="pro_details_li"><span class="deta_left">参考价格：</span><span class="deta_right"><s>?1000.00</s></span></li>
+          <li class="pro_details_li"><span class="deta_left" >商城价格：</span><span class="deta_right"><strong class="deta_red" id="store_price">?999.00</strong></span></li>
+                    
+                    <li class="pro_details_li"><span class="deta_left">商品评价：</span><span class="deta_right">
+            <div class="five_star"><b title="好评率：0.0%" style="width:0.0%;"></b></div>
+                         <a href="javascript:void(0);" class="deta_eval_a">(已有0人评价)</a>  </span></li>
+           <li class="pro_details_li"><span class="deta_left">配 送 至：</span><span class="deta_right"> 
+            <!--经过时i加active---> 
+            <b class="list_stock"> <i><span id="current_city_info">IANA</span></i>
+            <div class="goods_ct" style="display:none;">
+              <h3><span class="h3_l">选择你的收货城市</span><span class="h3_r"><a href="javascript:void(0);"><img src="//localhost/resources/style/system/front/default/images/14-14.png" /></a></span></h3>
+              <p>您当前所在地：IANA</p>
+              <div class="Region">
+                <ul>
+                                    <li class="item"> <a  href="javascript:void(0);" area_id="1" area_name="Untied Arab Emirates">Untie...</a>
+                    <div class="Cities" style="display:none;">
+                      <ul>
+                                                <li><a href="javascript:void(0);" city_id="2" city_name="Dubai">Dubai</a></li>
+                                                <li><a href="javascript:void(0);" city_id="3" city_name="Al Ain">Al Ain</a></li>
+                                                <li><a href="javascript:void(0);" city_id="4" city_name="Abu Dhabi">Abu Dhabi</a></li>
+                                                <li><a href="javascript:void(0);" city_id="5" city_name="Ajman">Ajman</a></li>
+                                                <li><a href="javascript:void(0);" city_id="6" city_name="Fujairah">Fujairah</a></li>
+                                                <li><a href="javascript:void(0);" city_id="7" city_name="Sharjah">Sharjah</a></li>
+                                                <li><a href="javascript:void(0);" city_id="8" city_name="Ras Al Khaimah">Ras Al Khaimah</a></li>
+                                                <li><a href="javascript:void(0);" city_id="9" city_name="Um Al Quiwan">Um Al Quiwan</a></li>
+                                              </ul>
+                    </div>
+                  </li>
+                                  </ul>
+              </div>
+            </div>
+            </b> 
+            <!--物流运费--> 
+             <span class="detbt"></span><span>商家承担</span>  </span></li>           <li class="pro_details_li"><span class="deta_left">销售情况：</span><span class="deta_right">售出0件</span></li>
+           <li class="pro_details_li"><span class="deta_left">货到付款：</span><span class="deta_right">支持 </span></li>
+          <li class="pro_details_li"><span class="deta_left">售后服务：</span><span class="deta_right">             由入驻商家发货并提供售后服务
+             </span></li>
+                            </ul>
+        <script>
+			  function goods_spec_set(obj){
+				var spec=jQuery(obj).attr("spec");
+				var gsp="";
+				var sname="";
+				var load=true;
+				var count=0;
+				jQuery(".choose_right a[spec="+spec+"]").removeClass("this");
+			    jQuery(obj).addClass("this");
+				jQuery(".choose_right").each(function(){
+                    jQuery.each(jQuery(this).find("a[class=this]"),function(){									
+					  gsp=jQuery(this).attr("gsp")+","+gsp;
+					  if(count==0){
+					      sname="“"+jQuery(this).attr("sname")+"“";	  
+						  }else{
+						  sname="“"+jQuery(this).attr("sname")+"”,"+sname;	  
+							  }
+					  count++;
+					});
+	            });
+				jQuery(".choose_right").each(function(){
+                     if(jQuery(this).find("a[class=this]").length==0) load=false;
+	             });
+				jQuery("#show_spec_li").show().find("strong").html(sname);
+			  if(load){
+				error_hide(); 
+				jQuery.post("//localhost/load_goods_gsp.htm",{"id":"1959","gsp":gsp},function(data){
+				   goods_inventory=data.count;
+				   store_price=data.price;
+				   if(data.act_price!=null){
+					    act_price = data.act_price;
+					    jQuery("#act_price").html("?"+act_price);
+					}
+					jQuery("#store_price").html("?"+store_price);   
+				    jQuery("#goods_inventory").html(goods_inventory);
+					if(goods_inventory==0){
+						jQuery("#add_car_g").attr("class","add_car_btn_no").removeAttr("onclick");
+						jQuery("#buy_g").attr("class","add_atonce_buy_no").removeAttr("onclick");
+						jQuery("#buy_f").attr("class","add_atonce_buy_no").removeAttr("onclick");
+						jQuery("#goods_inventory").attr("style","color:#F00; font-size:16px");
+						jQuery("#notice").show();
+					}else{
+					    jQuery("#add_car_g").attr("class","add_car_btn");
+						jQuery("#buy_g").attr("class","add_atonce_buy");
+						jQuery("#buy_f").attr("class","add_atonce_buy");
+												 jQuery("#add_car_g").attr("onclick","add_cart();");
+						 jQuery("#buy_g").attr("onclick","buy_goods();");
+						 jQuery("#buy_f").attr("onclick","f_cart();");
+												jQuery("#goods_inventory").removeAttr("style");
+						jQuery("#notice").hide();
+					}
+				  },"json");
+			    }
+			  }
+			  function f_cart(){
+			                        var add=true
+                    var gsp="";
+                   if(jQuery(".product_choose li[mark='spec']").length==0){
+                         add=true;
+                   }else{
+	                   jQuery(".product_choose li[mark='spec']").each(function(){
+	                           jQuery.each(jQuery(this).find("a[class=this]"),function(){
+		                          gsp=jQuery(this).attr("gsp")+","+gsp; 
+		                          jQuery(this).parent().parent().attr("status","selected");
+	                         });
+                           if(jQuery(this).find("a[class=this]").length==0) add=false;
+	                     });
+	              if(jQuery(".product_choose li[mark='spec']").length==jQuery(".product_choose li[status='selected']").length){
+		               add=true;
+		          }else{
+		               add=false;	
+	              }
+                 }
+                 var count=jQuery("#goods_count").val();
+                 if(count==0){
+                    add=false;
+	                showDialog("msg_info","","至少购买一件商品！",2,"warning",3,'');
+	                return;
+                 }
+                 if(goods_inventory==0){
+                    add=false;
+	                showDialog("msg_info","","商品库存为0,不能购买！",2,"warning",3,'');
+	                return;
+                 } 
+                 if(add){
+                      window.location.href="//localhost/f_code_cart.htm?goods_id=1959&gsp="+gsp;
+                 }else{
+                    error_show();
+                  }
+               			  }
+			  //
+			  </script>
+        <ul class="product_choose">
+                    <li class="pro_choose_li"> <span class="choose_left"> 购买数量：</span> <span class="choose_right_three"> <a href="javascript:void(0);" onclick="goods_count_sub();" class="choose_num_up"></a>
+            <input name="goods_count" id="goods_count" value="1" type="text" class="choose_num" />
+            <a href="javascript:void(0);" onclick="goods_count_add();" class="choose_num_down"></a></span> <span class="pro_choose_store">              <span class="stockparts">（库存：<b id="goods_inventory">100</b> 件）<b id="notice" style="display:none; float:right;"><img src="//localhost/resources/style/system/front/default/images/warning.png"  width="25px" height="25px"/></b></span> </span></li>
+          <li class="pro_choose_li red" id="show_spec_li" style="display:none">已选择<strong></strong></li>
+        </ul>
+                 <span class="add_car"> <a href="javascript:void(0);" onclick="add_cart();" class="add_car_btn" id="add_car_g">加入购物车</a> <a href="javascript:void(0);" onclick="buy_goods();" class="add_atonce_buy" id="buy_g">立即购买</a> </span>                 <!--F吗商品--> 
+                
+                         </div>
+      <!--默认规格--> 
+      <script>
+          jQuery(".pro_choose_li[mark='spec']").each(function(){
+			var th = jQuery(this).find("a").first();
+			goods_spec_set(th); 
+		   });
+		  jQuery(function(){ 
+		     jQuery(".value_top").click(function(){
+			     jQuery(".pro_shop_date").slideUp();
+				 jQuery(".value_top").hide();
+				 jQuery(".value_down").show();
+			  });
+			 jQuery(".value_down").click(function(){
+			     jQuery(".pro_shop_date").slideDown();
+				 jQuery(".value_top").show();
+				 jQuery(".value_down").hide();
+			  });
+		  })
+          </script> 
+                  <!--商家店铺-->
+      <div class="product_shop">
+        <h3><span>卖&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;家：</span><b><a href="//localhost/store_13.htm" target="_blank">YSD</a></b></h3>
+        <div class="pro_shop_value"><span>综合评分：</span> <b> <em> 
+          <!--评分改变width的百分数--> 
+                    <div class="scores"> <a class="scores_scroll" href=""> <span class="scroll_gray"></span> <span class="scroll_red" style="width:40.0%;"></span> </a> </div>
+          </em>2.0分</b><i class="value_top"></i><i class="value_down" style="display:none"></i> </div>
+        <ul class="pro_shop_date">
+          <li><span>评分详细</span><b>与同行业相比</b></li>
+          <li><span>描述相符：<strong> 1.0 分</strong></span> <em class="value_strong">5.0%</em></li>
+          <li><span>服务态度：<strong> 2.0 分</strong></span> <em class="value_strong">85.0%</em></li>
+          <li><span>发货速度：<strong> 3.0 分</strong></span> <em class="value_strong">100.0%</em></li>
+        </ul>
+        <div class="pro_shop_online"><span>商城客服：</span><b>  <a href="javascript:void(0);" dialog_uri="//localhost/user_dialog_login.htm" dialog_title="会员登录" dialog_width="430" dialog_height="100" dialog_id="user_login"  class="deta_eval_online">点击咨询</a>  </b></div>
+                <div class="pro_shop_online"><span>在线客服：</span>  <b> <a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=undefined&site=koala&menu=yes"><img border="0" src="http://wpa.qq.com/pa?p=2:undefined:52" alt="点击这里给我发消息" title="点击这里给我发消息"/></a></b>            <b style="padding:3px; border:thin #CCC 1px;"> <a target="_blank" href="http://amos.im.alisoft.com/msg.aw?v=2&uid=undefined&site=cntaobao&s=1&charset=UTF-8" ><img border="0" src="http://amos.im.alisoft.com/online.aw?v=2&uid=undefined&site=cntaobao&s=2&charset=UTF-8" style=" vertical-align: middle;"/></a> </b>  </div>
+                <ul class="pro_shop_botom">
+          <li><span>公司名称：</span><b>undefined </b></li>
+          <li><span>所&nbsp;&nbsp;在&nbsp;地：</span><b> 暂未填写 </b></li>
+        </ul>
+                        <div class="pro_into_shop"><a href="//localhost/store_13.htm" target="_blank">进入商家店铺</a></div>
+      </div>
+       </div>
+  </div>
+  <div class="prodect_bottom">
+    <div class="prodect_b_left">
+      <div class="prodect_bleft_class">
+        <h3><strong>相关分类</strong></h3>
+        <ul>
+                    <li><a href="//localhost/store_goods_list_99.htm" target="_blank">Long-sleeve T-shirt</a></li>
+                    <li><a href="//localhost/store_goods_list_101.htm" target="_blank">Short-sleeved T shirts</a></li>
+                    <li><a href="//localhost/store_goods_list_102.htm" target="_blank">Vest</a></li>
+                    <li><a href="//localhost/store_goods_list_103.htm" target="_blank">Shirt</a></li>
+                    <li><a href="//localhost/store_goods_list_817.htm" target="_blank">Lace shirt/chiffon shirt</a></li>
+                  </ul>
+      </div>
+      <div class="prodfect_bleft_brand">
+        <h3><strong>同类其他品牌</strong></h3>
+        <ul>
+                  </ul>
+      </div>
+      <script>
+      jQuery(document).ready(function(){
+	     jQuery("#rank").find("li").mouseover(function(){
+			jQuery(this).parent().find("li").removeClass("this");
+			jQuery(this).addClass("this");
+			var id = jQuery(this).attr("id");
+	        jQuery(".pro_sort_bottom").hide();
+		    jQuery("#div_"+id).show();								  									  
+	      });							  
+		});
+      </script>
+      <div class="prodect_bleft_sort">
+        <h3><strong>商品排行</strong></h3>
+        <div class="pro_sort_box">
+          <ul id="rank">
+            <li id="sale" style="cursor:pointer;">热销商品排行</li>
+            <li id="fav" class="this" style="cursor:pointer;">热门收藏排行</li>
+          </ul>
+        </div>
+        <div class="pro_sort_bottom" id="div_sale" style="display:none">  </div>
+        <div class="pro_sort_bottom" id="div_fav">  </div>
+      </div>
+      <!--左侧直通车商品-->
+      <div class="left_buy">
+        <h3><strong>商城热卖</strong></h3>
+        <div class="left_buy_box">                               
+                              <ul>
+            <li class="buy_one_img"><span>
+              <p><a href="//localhost/goods_150.htm" target="_blank"><img src="https://photo.soarmall.com/upload/store/22/5d705a5404cd9H5OOWGDa4cKGtFucD7oK.jpeg_small.jpeg" width="150" height="150" /></a></p>
+              </span></li>
+            <li class="buy_one_name"><a href="//localhost/goods_150.htm" target="_blank">Men's Polished Formal Shoes</a></li>
+            <li class="buy_one_price">商城价：<b>?129.00</b></li>
+          </ul>
+                                        
+                              <ul>
+            <li class="buy_one_img"><span>
+              <p><a href="//localhost/goods_151.htm" target="_blank"><img src="https://photo.soarmall.com/upload/store/22/5d705d3895c729RKRGMIubBMeXyoRkjaS.jpeg_small.jpeg" width="150" height="150" /></a></p>
+              </span></li>
+            <li class="buy_one_name"><a href="//localhost/goods_151.htm" target="_blank">Men's rubbing Dress Shoes</a></li>
+            <li class="buy_one_price">商城价：<b>?129.00</b></li>
+          </ul>
+                                        
+                              <ul>
+            <li class="buy_one_img"><span>
+              <p><a href="//localhost/goods_152.htm" target="_blank"><img src="https://photo.soarmall.com/upload/store/22/5d7068eea8609lkJdecSe1ZGjyopzb5Ka.jpeg_small.jpeg" width="150" height="150" /></a></p>
+              </span></li>
+            <li class="buy_one_name"><a href="//localhost/goods_152.htm" target="_blank">Men's Suede Formal Shoes</a></li>
+            <li class="buy_one_price">商城价：<b>?139.00</b></li>
+          </ul>
+                                        
+                              <ul>
+            <li class="buy_one_img"><span>
+              <p><a href="//localhost/goods_153.htm" target="_blank"><img src="https://photo.soarmall.com/upload/store/22/5d706b66ce842TgaEzxlHXfdkYxfZWUZ3.jpeg_small.jpeg" width="150" height="150" /></a></p>
+              </span></li>
+            <li class="buy_one_name"><a href="//localhost/goods_153.htm" target="_blank">Men's Sequin Formal Shoes</a></li>
+            <li class="buy_one_price">商城价：<b>?129.00</b></li>
+          </ul>
+                                        
+                              <ul>
+            <li class="buy_one_img"><span>
+              <p><a href="//localhost/goods_165.htm" target="_blank"><img src="https://photo.soarmall.com/upload/store/22/5d70876698271zCYUkXe53YSNC3GMpxuO.jpeg_small.jpeg" width="150" height="150" /></a></p>
+              </span></li>
+            <li class="buy_one_name"><a href="//localhost/goods_165.htm" target="_blank">Men's Lace-Up Formal Shoes</a></li>
+            <li class="buy_one_price">商城价：<b>?129.00</b></li>
+          </ul>
+                                        
+                              <ul>
+            <li class="buy_one_img"><span>
+              <p><a href="//localhost/goods_167.htm" target="_blank"><img src="https://photo.soarmall.com/upload/store/22/5d70bc04b4e00C4rIXnU26Z2ajjbBMjP9.jpeg_small.jpeg" width="150" height="150" /></a></p>
+              </span></li>
+            <li class="buy_one_name"><a href="//localhost/goods_167.htm" target="_blank">Men's Zipper Casual Leather Shoes</a></li>
+            <li class="buy_one_price">商城价：<b>?120.00</b></li>
+          </ul>
+                                        
+                              <ul>
+            <li class="buy_one_img"><span>
+              <p><a href="//localhost/goods_169.htm" target="_blank"><img src="https://photo.soarmall.com/upload/store/22/5d70c1859b0701lxel1I4MTjpqUR3QKTB.jpeg_small.jpeg" width="150" height="150" /></a></p>
+              </span></li>
+            <li class="buy_one_name"><a href="//localhost/goods_169.htm" target="_blank">Men's Lace-Up Formal Shoes</a></li>
+            <li class="buy_one_price">商城价：<b>?124.00</b></li>
+          </ul>
+                                        
+                              <ul>
+            <li class="buy_one_img"><span>
+              <p><a href="//localhost/goods_170.htm" target="_blank"><img src="https://photo.soarmall.com/upload/store/22/5d70c419c17c0ezpZGruvZyo6toG1Tmyc.jpeg_small.jpeg" width="150" height="150" /></a></p>
+              </span></li>
+            <li class="buy_one_name"><a href="//localhost/goods_170.htm" target="_blank">Men's Mid-Heel Sequined Brogues Lace-Up Shoes</a></li>
+            <li class="buy_one_price">商城价：<b>?239.00</b></li>
+          </ul>
+           </div>
+      </div>
+      <!--左侧直通车商品--> 
+    </div>
+    <div class="prodect_b_right"> 
+      <script>
+    jQuery(document).ready(function(){
+		jQuery("#suit_ul li").mouseover(
+			function(){
+			jQuery("#suit_ul li").removeClass("this");
+			var count =jQuery(this).addClass("this").attr("count");
+			jQuery("div[id^='suit_div_']").hide();
+			jQuery("#suit_div_"+count).show();
+			});	
+		jQuery("#parts_ul li").mouseover(
+			function(){
+			jQuery("#parts_ul li").removeClass("this");
+			var count =jQuery(this).addClass("this").attr("count");
+			jQuery("div[id^='parts_div_']").hide();
+			jQuery("#parts_div_"+count).show();
+			});
+		jQuery("input[mark='parts_ids']:checked").each(function(){
+				jQuery(this).removeAttr("checked");													
+			});
+		jQuery("input[type='checkbox'][mark='parts_ids']").click(function(){
+			var count = 0;
+			var parts_ids ="";
+			jQuery("input[mark='parts_ids']:checked").each(function(){
+					count++;												
+					parts_ids = parts_ids +","+ jQuery(this).val();														
+			     	});
+				jQuery.post("//localhost/getPartsPrice.htm",
+							{"gid":"1959",
+							"parts_ids":parts_ids
+								},function(data){
+									jQuery("i[id^='parts_count_']").html(count);
+									jQuery("b[id^='parts_price_']").html("?"+data);
+									},"text");
+			});
+		});
+	function combin_buy(){
+			var goods_inventory =jQuery("#goods_inventory").html();
+			if(goods_inventory==0){
+			 showDialog("goods_inventory_warning","","商品缺货，不能购买！",2,"warning",3,'');	
+				}else{	
+						 var type=arguments[0];
+			 var combin_ids=arguments[1];
+			 var combin_version=arguments[2];
+			 if(type=="parts"){
+				var combin_ids ="";
+				jQuery("input[mark='parts_ids']:checked").each(function(){												
+						combin_ids = combin_ids +","+ jQuery(this).val();														
+						});	
+				  buy_goods("parts",combin_ids);
+				 }else{
+				 window.location.href="//localhost/goods_cart_combin.htm?id="+1959+"&combin_ids="+combin_ids+"&type="+type+"&combin_version="+combin_version;	 
+					 }
+						}
+	}
+    </script> 
+      <!--组合套装--> 
+            <!--组合配件--> 
+            <div class="pro_introduces">
+        <div class="pro_tab_outbox">
+          <div class="pro_tab_top" id="pro_tab"> <span class="pro_addcar">
+                                 <a href="javascript:void(0);" onclick="add_cart();" class="add_car_btn" id="add_car_g">加入购物车</a> 
+                             </span>
+            <ul >
+              <li class="this"  style="cursor:pointer" target_id="goods_detail" ><a href="javascript:void(0);">商品详情</a></li>
+              <li target_id="goods_eva"><a href="javascript:void(0);">商品评价<b style="color: #005AA0; padding-left:5px;">(0)</b></a></li>
+              <li target_id="goods_pack"><a href="javascript:void(0);">包装清单</a></li>
+              <li target_id="goods_order"><a href="javascript:void(0);">成交记录</a></li>
+              <li target_id="goods_service"><a href="javascript:void(0);">售后保障</a></li>
+                            <li target_id="goods_cousult"><a href="javascript:void(0);">产品咨询</a></li>
+                          </ul>
+          </div>
+        </div>
+        <div class="img_center_load" style="display:none;text-align:center; padding-top:5px;"> <img height="28" width="28" src="//localhost/resources/style/common/images/loader.gif" /> </div>
+        <div> 
+          <!--商品详情-->
+          <div id="goods_detail">
+            <div class="pro_introbox">
+              <div class="pro_intro_tabone">
+                <ul>
+                </ul>
+              </div>
+            </div>
+            <div style="float:left; line-height:26px;"> </div>
+          </div>
+          <!--商品评价--> 
+                              <div  id="goods_eva" class="details_list_dl">
+            <div class="pro_grade">
+              <h3><strong>商品评价</strong></h3>
+              <div class="novalue"> 还没有评价内容 </div>
+            </div>
+          </div>
+                    <!--包装清单-->
+          <div style="float:left;width:100%; line-height:26px;" id="goods_pack">
+            <div class="pro_grade">
+              <h3><strong>包装清单</strong></h3>
+              <div style="padding-left:10px;">  </div>
+            </div>
+          </div>
+          <!--成交记录-->
+          <div class="details_list_dl" id="goods_order">             <div class="pro_grade">
+              <h3><strong>成交记录</strong></h3>
+              <div class="novalue"> 还没有成交记录</div>
+            </div>
+             </div>
+          <!--售后保障-->
+          <div class="pro_service" id="goods_service">
+            <div class="pro_grade">
+              <h3><strong>售后保障</strong></h3>
+              <div class="pro_service_left"><img src="//localhost/resources/style/system/front/default/images/pro_service_left.png" /></div>
+              <div class="pro_service_right"> </div>
+            </div>
+          </div>
+          <!--产品咨询-->
+          <div id="goods_cousult" class="pro_introbox">
+            <div class="consultation" id="goods_consult_list">
+              <div class="consultation_top_nav">
+                <ul>
+                  <li class="this" consult_type="">全部咨询<i>（0）</i></li>
+                  <li consult_type="产品咨询">产品咨询<i>（0）</i></li>
+                  <li consult_type="库存及配送">库存及配送<i>（0）</i></li>
+                  <li consult_type="支付及发票">支付及发票<i>（0）</i></li>
+                  <li consult_type="售后咨询">售后咨询<i>（0）</i></li>
+                  <li consult_type="促销活动">促销活动<i>（0）</i></li>
+                </ul>
+              </div>
+              <div class="consultation_top"  >
+                <div class="pro_prompt">
+                  <div class="pro_prompt_word">因厂家更改商品包装、场地、附配件等不做提前通知，且每位咨询者购买、提问时间等不同。为此，客服给到的回复仅对提问者3天内有效，其他网友仅供参考！给您带来的不变还请谅解，谢谢 </div>
+                                    <div class="consultation_top_t"><span>如有购买问题，请向卖家咨询！</span><i>  <a class="inte_login_btn" href="javascript:void(0)" dialog_uri="//localhost/goods_consult_win.htm?goods_id=1959" dialog_title="产品咨询" dialog_width="430" dialog_height="100" dialog_id="goods_cousult_win"> 我要咨询</a>  </i></div>
+                   </div>
+                                <div class="novalue"> 还没有咨询内容 </div>
+                 </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  ?<style>
+.iconfont img {
+	width: 40px;
+	height: 60px;
+	margin-left: -15px;
+}
+</style>
+<script src="//localhost/resources/wap/lazyload.min.js"></script>
+<script>
+jQuery(document).ready(function(){
+		var tempLengths = 0; //临时变量,当前移动的长度
+		var viewNums = 7; //设置每次显示图片的个数量
+		var moveNums = 7; //每次移动的数量
+		var moveTimes = 500; //移动速度,毫秒
+		var scrollDivs = jQuery(".bottom_rbox_position"); //进行移动动画的容器
+		var scrollItemss = jQuery(".bottom_rbox_position ul"); //移动容器里的集合
+		var moveLengths = (scrollItemss.eq(0).width()+10) * moveNums ; //计算每次移动的长度
+		var countLengths = (scrollItemss.length - viewNums) * (scrollItemss.eq(0).width()+10); //计算总长度,总个数*单个长度(scrollItemss.length - viewNums) * scrollItemss.eq(0).width()
+		var all_lengths=scrollItemss.eq(0).width()*scrollItemss.length;
+		jQuery(".bottom_rbox_position").css("width",all_lengths);
+		//下一张
+		jQuery("#left").bind("click",function(){
+			if(tempLengths < countLengths){
+				if((countLengths - tempLengths) > moveLengths){
+					scrollDivs.animate({left:"-=" + moveLengths + "px"}, moveTimes);
+					tempLengths += moveLengths;
+				}else{
+					scrollDivs.animate({left:"-=" + (countLengths - tempLengths) + "px"}, moveTimes);
+					tempLengths += (countLengths - tempLengths);
+				}
+			}
+		});
+		//上一张
+		jQuery("#right").bind("click",function(){
+			if(tempLengths > 0){
+				if(tempLengths > moveLengths){
+					scrollDivs.animate({left: "+=" + moveLengths + "px"}, moveTimes);
+					tempLengths -= moveLengths;
+				}else{
+					scrollDivs.animate({left: "+=" + tempLengths + "px"}, moveTimes);
+					tempLengths = 0;
+				}
+			}
+		});
+	});  
+</script>
+
+<div class="main_bottom">
+	<div class="main_bottom_right">
+		<h3>Customers Also Viewed</h3>
+		<div class="main_bottom_rbox">
+			<span class="rbox_left"><a href="javascript:void(0);"
+				id="right"><span class="iconfont iconicon_arrow_left-copy"><img
+						src="//localhost/resources/style/common/images/arrow/arrow1.png"></span></a>
+			</span>
+			<div class="bottom_rbox">
+				<div class="bottom_rbox_position">
+
+					 										
+					<ul class="rbox_ul">
+						<li class="rbox_ul_img"><a href="//localhost/goods_512.htm" target="_blank">
+								<span class="img_cspan">
+									<p>
+										<img data-src="https://photo.soarmall.com/upload/store/16/5d7a10b0313a9MoVUhpZ718Rlh3n6no08.jpeg_small.jpeg"
+											src="//localhost/resources/style/common/images/loader.png"
+											width="174" height="174" position="relative" />
+									</p>
+							</span>
+						</a></li>
+						<li class="rbox_ul_name"><a href="//localhost/goods_512.htm"
+							target="_blank">Paperless Pour Over Coffee Maker Reusable Drip Cone Coffee Filter</a></li> 						<!-- <li>
+              <div class="five_star" style="margin-left:40px"><b title="0.0%" style="width:0.0%;"></b></div>
+            </li> -->
+						<!--  <li class="rbox_ul_evaluate">(已有0人评价)</li> -->
+						<li class="rbox_ul_price">34.30<small>AED</small></li>
+						<li class="sale_two_price">
+							<h5>
+								<strong>18.00&nbsp;</strong><small>AED</small>
+							</h5>
+						</li>
+					</ul>
+					 										
+					<ul class="rbox_ul">
+						<li class="rbox_ul_img"><a href="//localhost/goods_12.htm" target="_blank">
+								<span class="img_cspan">
+									<p>
+										<img data-src="https://photo.soarmall.com/upload/store/16/5d6500903270aKTt8AH4a6z4Q7aorHp1v.jpeg_small.jpeg"
+											src="//localhost/resources/style/common/images/loader.png"
+											width="174" height="174" position="relative" />
+									</p>
+							</span>
+						</a></li>
+						<li class="rbox_ul_name"><a href="//localhost/goods_12.htm"
+							target="_blank">Monolayer Portable Multi-function Electric Heating and heat preservation Lunch Box Y-DFH1</a></li> 						<!-- <li>
+              <div class="five_star" style="margin-left:40px"><b title="0.0%" style="width:0.0%;"></b></div>
+            </li> -->
+						<!--  <li class="rbox_ul_evaluate">(已有0人评价)</li> -->
+						<li class="rbox_ul_price">150.00<small>AED</small></li>
+						<li class="sale_two_price">
+							<h5>
+								<strong>180.00&nbsp;</strong><small>AED</small>
+							</h5>
+						</li>
+					</ul>
+					 										
+					<ul class="rbox_ul">
+						<li class="rbox_ul_img"><a href="//localhost/goods_1362.htm" target="_blank">
+								<span class="img_cspan">
+									<p>
+										<img data-src="https://photo.soarmall.com/upload/store/16/5d88333c09e85bfDr9YfkaxT6nes5Zfa4.jpeg_small.jpeg"
+											src="//localhost/resources/style/common/images/loader.png"
+											width="174" height="174" position="relative" />
+									</p>
+							</span>
+						</a></li>
+						<li class="rbox_ul_name"><a href="//localhost/goods_1362.htm"
+							target="_blank">Plates for Baby Feeding 26*26*2.5cm， Wheat Straw Degradable Healthy BPA Free Tableware Plate for Toddler Baby Kids，Dishwasher Safe Lunch Dinner Dishes</a></li> 						<!-- <li>
+              <div class="five_star" style="margin-left:40px"><b title="0.0%" style="width:0.0%;"></b></div>
+            </li> -->
+						<!--  <li class="rbox_ul_evaluate">(已有0人评价)</li> -->
+						<li class="rbox_ul_price">18.13<small>AED</small></li>
+						<li class="sale_two_price">
+							<h5>
+								<strong>18.10&nbsp;</strong><small>AED</small>
+							</h5>
+						</li>
+					</ul>
+					 										
+					<ul class="rbox_ul">
+						<li class="rbox_ul_img"><a href="//localhost/goods_1412.htm" target="_blank">
+								<span class="img_cspan">
+									<p>
+										<img data-src="https://photo.soarmall.com/upload/store/16/5d8852a7583872q4bplGsGq75RPKPhOjO.jpeg_small.jpeg"
+											src="//localhost/resources/style/common/images/loader.png"
+											width="174" height="174" position="relative" />
+									</p>
+							</span>
+						</a></li>
+						<li class="rbox_ul_name"><a href="//localhost/goods_1412.htm"
+							target="_blank">6 pieces/box Professional White Ping Pong Balls Table Tennis Balls</a></li> 						<!-- <li>
+              <div class="five_star" style="margin-left:40px"><b title="0.0%" style="width:0.0%;"></b></div>
+            </li> -->
+						<!--  <li class="rbox_ul_evaluate">(已有0人评价)</li> -->
+						<li class="rbox_ul_price">13.25<small>AED</small></li>
+						<li class="sale_two_price">
+							<h5>
+								<strong>13.24&nbsp;</strong><small>AED</small>
+							</h5>
+						</li>
+					</ul>
+					 										
+					<ul class="rbox_ul">
+						<li class="rbox_ul_img"><a href="//localhost/goods_1420.htm" target="_blank">
+								<span class="img_cspan">
+									<p>
+										<img data-src="https://photo.soarmall.com/upload/store/16/5d8855c21098eQg8KWxYapRVcdXHok1yE.jpeg_small.jpeg"
+											src="//localhost/resources/style/common/images/loader.png"
+											width="174" height="174" position="relative" />
+									</p>
+							</span>
+						</a></li>
+						<li class="rbox_ul_name"><a href="//localhost/goods_1420.htm"
+							target="_blank">Chrildren play house toy pink rabbit twisted egg machine Y</a></li> 						<!-- <li>
+              <div class="five_star" style="margin-left:40px"><b title="0.0%" style="width:0.0%;"></b></div>
+            </li> -->
+						<!--  <li class="rbox_ul_evaluate">(已有0人评价)</li> -->
+						<li class="rbox_ul_price">25.53<small>AED</small></li>
+						<li class="sale_two_price">
+							<h5>
+								<strong>25.50&nbsp;</strong><small>AED</small>
+							</h5>
+						</li>
+					</ul>
+					 										
+					<ul class="rbox_ul">
+						<li class="rbox_ul_img"><a href="//localhost/goods_355.htm" target="_blank">
+								<span class="img_cspan">
+									<p>
+										<img data-src="https://photo.soarmall.com/upload/store/16/5d790c7fe41c2jCjrlzDTacMZckgQG3wW.jpeg_small.jpeg"
+											src="//localhost/resources/style/common/images/loader.png"
+											width="174" height="174" position="relative" />
+									</p>
+							</span>
+						</a></li>
+						<li class="rbox_ul_name"><a href="//localhost/goods_355.htm"
+							target="_blank">Cat Collar</a></li> 						<!-- <li>
+              <div class="five_star" style="margin-left:40px"><b title="0.0%" style="width:0.0%;"></b></div>
+            </li> -->
+						<!--  <li class="rbox_ul_evaluate">(已有0人评价)</li> -->
+						<li class="rbox_ul_price">123.00<small>AED</small></li>
+						<li class="sale_two_price">
+							<h5>
+								<strong>123.00&nbsp;</strong><small>AED</small>
+							</h5>
+						</li>
+					</ul>
+					 										
+					<ul class="rbox_ul">
+						<li class="rbox_ul_img"><a href="//localhost/goods_768.htm" target="_blank">
+								<span class="img_cspan">
+									<p>
+										<img data-src="https://photo.soarmall.com/upload/store/16/5d7f2c8fed314wSsy09JkL8bWPG7JXjB4.jpeg_small.jpeg"
+											src="//localhost/resources/style/common/images/loader.png"
+											width="174" height="174" position="relative" />
+									</p>
+							</span>
+						</a></li>
+						<li class="rbox_ul_name"><a href="//localhost/goods_768.htm"
+							target="_blank">Bamboo Fiber Tableware Small Dish 12*9.5*2</a></li> 						<!-- <li>
+              <div class="five_star" style="margin-left:40px"><b title="0.0%" style="width:0.0%;"></b></div>
+            </li> -->
+						<!--  <li class="rbox_ul_evaluate">(已有0人评价)</li> -->
+						<li class="rbox_ul_price">13.35<small>AED</small></li>
+						<li class="sale_two_price">
+							<h5>
+								<strong>13.34&nbsp;</strong><small>AED</small>
+							</h5>
+						</li>
+					</ul>
+					 										
+					<ul class="rbox_ul">
+						<li class="rbox_ul_img"><a href="//localhost/goods_235.htm" target="_blank">
+								<span class="img_cspan">
+									<p>
+										<img data-src="https://photo.soarmall.com/upload/store/16/5d785c00effcdmofQb2g3UnPN0QMIJFHJ.jpeg_small.jpeg"
+											src="//localhost/resources/style/common/images/loader.png"
+											width="174" height="174" position="relative" />
+									</p>
+							</span>
+						</a></li>
+						<li class="rbox_ul_name"><a href="//localhost/goods_235.htm"
+							target="_blank">MATEUS Cat Pole - Blue-Beige</a></li> 						<!-- <li>
+              <div class="five_star" style="margin-left:40px"><b title="0.0%" style="width:0.0%;"></b></div>
+            </li> -->
+						<!--  <li class="rbox_ul_evaluate">(已有0人评价)</li> -->
+						<li class="rbox_ul_price">670.06<small>AED</small></li>
+						<li class="sale_two_price">
+							<h5>
+								<strong>569.55&nbsp;</strong><small>AED</small>
+							</h5>
+						</li>
+					</ul>
+					 										
+					<ul class="rbox_ul">
+						<li class="rbox_ul_img"><a href="//localhost/goods_513.htm" target="_blank">
+								<span class="img_cspan">
+									<p>
+										<img data-src="https://photo.soarmall.com/upload/store/16/5d7a10eb5cf55qVsm6F0x2abZ3vPXx1ST.jpeg_small.jpeg"
+											src="//localhost/resources/style/common/images/loader.png"
+											width="174" height="174" position="relative" />
+									</p>
+							</span>
+						</a></li>
+						<li class="rbox_ul_name"><a href="//localhost/goods_513.htm"
+							target="_blank">Punching ball scratching post</a></li> 						<!-- <li>
+              <div class="five_star" style="margin-left:40px"><b title="0.0%" style="width:0.0%;"></b></div>
+            </li> -->
+						<!--  <li class="rbox_ul_evaluate">(已有0人评价)</li> -->
+						<li class="rbox_ul_price">403.40<small>AED</small></li>
+						<li class="sale_two_price">
+							<h5>
+								<strong>372.36&nbsp;</strong><small>AED</small>
+							</h5>
+						</li>
+					</ul>
+					 										
+					<ul class="rbox_ul">
+						<li class="rbox_ul_img"><a href="//localhost/goods_1917.htm" target="_blank">
+								<span class="img_cspan">
+									<p>
+										<img data-src="https://photo.soarmall.com/upload/store/16/5d9e9bc43dc5bgx45s5xVkXNbxW6bdB5E.jpeg_small.jpeg"
+											src="//localhost/resources/style/common/images/loader.png"
+											width="174" height="174" position="relative" />
+									</p>
+							</span>
+						</a></li>
+						<li class="rbox_ul_name"><a href="//localhost/goods_1917.htm"
+							target="_blank">Silicone Anti Snore Device Nasal Dilators Apnea Sleep Aid Stop Snoring Stopper Nose Clip Anti-snore Clean Air Purifier</a></li> 						<!-- <li>
+              <div class="five_star" style="margin-left:40px"><b title="0.0%" style="width:0.0%;"></b></div>
+            </li> -->
+						<!--  <li class="rbox_ul_evaluate">(已有0人评价)</li> -->
+						<li class="rbox_ul_price">20.00<small>AED</small></li>
+						<li class="sale_two_price">
+							<h5>
+								<strong>10.00&nbsp;</strong><small>AED</small>
+							</h5>
+						</li>
+					</ul>
+					 										
+					<ul class="rbox_ul">
+						<li class="rbox_ul_img"><a href="//localhost/goods_13.htm" target="_blank">
+								<span class="img_cspan">
+									<p>
+										<img data-src="https://photo.soarmall.com/upload/store/20/5d66384b5ccd5HbTmuMuTulwty68syddW.jpeg_small.jpeg"
+											src="//localhost/resources/style/common/images/loader.png"
+											width="174" height="174" position="relative" />
+									</p>
+							</span>
+						</a></li>
+						<li class="rbox_ul_name"><a href="//localhost/goods_13.htm"
+							target="_blank">Men’s Sneakers Lightweight Outdoor Walking Shoes</a></li> 						<!-- <li>
+              <div class="five_star" style="margin-left:40px"><b title="0.0%" style="width:0.0%;"></b></div>
+            </li> -->
+						<!--  <li class="rbox_ul_evaluate">(已有0人评价)</li> -->
+						<li class="rbox_ul_price">178.00<small>AED</small></li>
+						<li class="sale_two_price">
+							<h5>
+								<strong>89.00&nbsp;</strong><small>AED</small>
+							</h5>
+						</li>
+					</ul>
+					 										
+					<ul class="rbox_ul">
+						<li class="rbox_ul_img"><a href="//localhost/goods_14.htm" target="_blank">
+								<span class="img_cspan">
+									<p>
+										<img data-src="https://photo.soarmall.com/upload/store/20/5d803a8f6d55ascpEyW6sn69nHJwyRhRG.jpeg_small.jpeg"
+											src="//localhost/resources/style/common/images/loader.png"
+											width="174" height="174" position="relative" />
+									</p>
+							</span>
+						</a></li>
+						<li class="rbox_ul_name"><a href="//localhost/goods_14.htm"
+							target="_blank">Walking Shoes Fashion Breathable Sneakers Casual Athletic Lightweight Outdoor Sports Shoes</a></li> 						<!-- <li>
+              <div class="five_star" style="margin-left:40px"><b title="0.0%" style="width:0.0%;"></b></div>
+            </li> -->
+						<!--  <li class="rbox_ul_evaluate">(已有0人评价)</li> -->
+						<li class="rbox_ul_price">198.00<small>AED</small></li>
+						<li class="sale_two_price">
+							<h5>
+								<strong>99.00&nbsp;</strong><small>AED</small>
+							</h5>
+						</li>
+					</ul>
+					 										
+					<ul class="rbox_ul">
+						<li class="rbox_ul_img"><a href="//localhost/goods_15.htm" target="_blank">
+								<span class="img_cspan">
+									<p>
+										<img data-src="https://photo.soarmall.com/upload/store/20/5d803c171c338FOjcSfs3X0Ul0A3xTml8.jpeg_small.jpeg"
+											src="//localhost/resources/style/common/images/loader.png"
+											width="174" height="174" position="relative" />
+									</p>
+							</span>
+						</a></li>
+						<li class="rbox_ul_name"><a href="//localhost/goods_15.htm"
+							target="_blank">Men's Sneakers Outdoor Walking Shoes High Top Casual Lace Up Skateboard Shoes</a></li> 						<!-- <li>
+              <div class="five_star" style="margin-left:40px"><b title="0.0%" style="width:0.0%;"></b></div>
+            </li> -->
+						<!--  <li class="rbox_ul_evaluate">(已有0人评价)</li> -->
+						<li class="rbox_ul_price">186.00<small>AED</small></li>
+						<li class="sale_two_price">
+							<h5>
+								<strong>93.00&nbsp;</strong><small>AED</small>
+							</h5>
+						</li>
+					</ul>
+					 										
+					<ul class="rbox_ul">
+						<li class="rbox_ul_img"><a href="//localhost/goods_21.htm" target="_blank">
+								<span class="img_cspan">
+									<p>
+										<img data-src="https://photo.soarmall.com/upload/store/20/5d67271c1ecf5gcjPNoAMtE0sTEkRlsJe.jpeg_small.jpeg"
+											src="//localhost/resources/style/common/images/loader.png"
+											width="174" height="174" position="relative" />
+									</p>
+							</span>
+						</a></li>
+						<li class="rbox_ul_name"><a href="//localhost/goods_21.htm"
+							target="_blank">Men's Sneakers Breathable Lightweight Running Shoes</a></li> 						<!-- <li>
+              <div class="five_star" style="margin-left:40px"><b title="0.0%" style="width:0.0%;"></b></div>
+            </li> -->
+						<!--  <li class="rbox_ul_evaluate">(已有0人评价)</li> -->
+						<li class="rbox_ul_price">218.00<small>AED</small></li>
+						<li class="sale_two_price">
+							<h5>
+								<strong>109.00&nbsp;</strong><small>AED</small>
+							</h5>
+						</li>
+					</ul>
+					 										
+					<ul class="rbox_ul">
+						<li class="rbox_ul_img"><a href="//localhost/goods_23.htm" target="_blank">
+								<span class="img_cspan">
+									<p>
+										<img data-src="https://photo.soarmall.com/upload/store/20/5d673942a0147KU9ltBVrVIPcomJ4xQrO.jpeg_small.jpeg"
+											src="//localhost/resources/style/common/images/loader.png"
+											width="174" height="174" position="relative" />
+									</p>
+							</span>
+						</a></li>
+						<li class="rbox_ul_name"><a href="//localhost/goods_23.htm"
+							target="_blank">Men's Sneakers Mesh Ultra Lightweight Running Shoes</a></li> 						<!-- <li>
+              <div class="five_star" style="margin-left:40px"><b title="0.0%" style="width:0.0%;"></b></div>
+            </li> -->
+						<!--  <li class="rbox_ul_evaluate">(已有0人评价)</li> -->
+						<li class="rbox_ul_price">166.00<small>AED</small></li>
+						<li class="sale_two_price">
+							<h5>
+								<strong>83.00&nbsp;</strong><small>AED</small>
+							</h5>
+						</li>
+					</ul>
+					 										
+					<ul class="rbox_ul">
+						<li class="rbox_ul_img"><a href="//localhost/goods_24.htm" target="_blank">
+								<span class="img_cspan">
+									<p>
+										<img data-src="https://photo.soarmall.com/upload/store/20/5d674142eb5ffos21G0tUsqL6q9OjCBej.jpeg_small.jpeg"
+											src="//localhost/resources/style/common/images/loader.png"
+											width="174" height="174" position="relative" />
+									</p>
+							</span>
+						</a></li>
+						<li class="rbox_ul_name"><a href="//localhost/goods_24.htm"
+							target="_blank">Men's Running Lightweight Breathable Casual Sports Shoes Fashion Sneakers Walking Shoes</a></li> 						<!-- <li>
+              <div class="five_star" style="margin-left:40px"><b title="0.0%" style="width:0.0%;"></b></div>
+            </li> -->
+						<!--  <li class="rbox_ul_evaluate">(已有0人评价)</li> -->
+						<li class="rbox_ul_price">186.00<small>AED</small></li>
+						<li class="sale_two_price">
+							<h5>
+								<strong>93.00&nbsp;</strong><small>AED</small>
+							</h5>
+						</li>
+					</ul>
+					 										
+					<ul class="rbox_ul">
+						<li class="rbox_ul_img"><a href="//localhost/goods_26.htm" target="_blank">
+								<span class="img_cspan">
+									<p>
+										<img data-src="https://photo.soarmall.com/upload/store/20/5d688d09c4d97oTNrjBFjLD0lfEVoXoD0.jpeg_small.jpeg"
+											src="//localhost/resources/style/common/images/loader.png"
+											width="174" height="174" position="relative" />
+									</p>
+							</span>
+						</a></li>
+						<li class="rbox_ul_name"><a href="//localhost/goods_26.htm"
+							target="_blank">Men's Walking Shoes Breathable Running Sneakers</a></li> 						<!-- <li>
+              <div class="five_star" style="margin-left:40px"><b title="0.0%" style="width:0.0%;"></b></div>
+            </li> -->
+						<!--  <li class="rbox_ul_evaluate">(已有0人评价)</li> -->
+						<li class="rbox_ul_price">198.00<small>AED</small></li>
+						<li class="sale_two_price">
+							<h5>
+								<strong>99.00&nbsp;</strong><small>AED</small>
+							</h5>
+						</li>
+					</ul>
+					 										
+					<ul class="rbox_ul">
+						<li class="rbox_ul_img"><a href="//localhost/goods_27.htm" target="_blank">
+								<span class="img_cspan">
+									<p>
+										<img data-src="https://photo.soarmall.com/upload/store/20/5d68967494876u1JFCD5BICZA2r5DdyVH.jpeg_small.jpeg"
+											src="//localhost/resources/style/common/images/loader.png"
+											width="174" height="174" position="relative" />
+									</p>
+							</span>
+						</a></li>
+						<li class="rbox_ul_name"><a href="//localhost/goods_27.htm"
+							target="_blank">Men's Sneakers Lightweight Sports Running Shoes</a></li> 						<!-- <li>
+              <div class="five_star" style="margin-left:40px"><b title="0.0%" style="width:0.0%;"></b></div>
+            </li> -->
+						<!--  <li class="rbox_ul_evaluate">(已有0人评价)</li> -->
+						<li class="rbox_ul_price">198.00<small>AED</small></li>
+						<li class="sale_two_price">
+							<h5>
+								<strong>99.00&nbsp;</strong><small>AED</small>
+							</h5>
+						</li>
+					</ul>
+					 										
+					<ul class="rbox_ul">
+						<li class="rbox_ul_img"><a href="//localhost/goods_32.htm" target="_blank">
+								<span class="img_cspan">
+									<p>
+										<img data-src="https://photo.soarmall.com/upload/store/16/5d69c8d1ab605j3FKaI928bnthrtCASZX.jpeg_small.jpeg"
+											src="//localhost/resources/style/common/images/loader.png"
+											width="174" height="174" position="relative" />
+									</p>
+							</span>
+						</a></li>
+						<li class="rbox_ul_name"><a href="//localhost/goods_32.htm"
+							target="_blank">Men's handbag, business computer bag</a></li> 						<!-- <li>
+              <div class="five_star" style="margin-left:40px"><b title="0.0%" style="width:0.0%;"></b></div>
+            </li> -->
+						<!--  <li class="rbox_ul_evaluate">(已有0人评价)</li> -->
+						<li class="rbox_ul_price">85.00<small>AED</small></li>
+						<li class="sale_two_price">
+							<h5>
+								<strong>65.00&nbsp;</strong><small>AED</small>
+							</h5>
+						</li>
+					</ul>
+					 										
+					<ul class="rbox_ul">
+						<li class="rbox_ul_img"><a href="//localhost/goods_33.htm" target="_blank">
+								<span class="img_cspan">
+									<p>
+										<img data-src="https://photo.soarmall.com/upload/store/16/5d69ca184083cARxCo0sgMnkHrMhvhURy.jpeg_small.jpeg"
+											src="//localhost/resources/style/common/images/loader.png"
+											width="174" height="174" position="relative" />
+									</p>
+							</span>
+						</a></li>
+						<li class="rbox_ul_name"><a href="//localhost/goods_33.htm"
+							target="_blank">Men's leather shoulder bag casual IPAD bag</a></li> 						<!-- <li>
+              <div class="five_star" style="margin-left:40px"><b title="0.0%" style="width:0.0%;"></b></div>
+            </li> -->
+						<!--  <li class="rbox_ul_evaluate">(已有0人评价)</li> -->
+						<li class="rbox_ul_price">80.00<small>AED</small></li>
+						<li class="sale_two_price">
+							<h5>
+								<strong>45.00&nbsp;</strong><small>AED</small>
+							</h5>
+						</li>
+					</ul>
+					
+				</div>
+			</div>
+			<span class="rbox_right"><a href="javascript:void(0);"
+				id="left"><span class="iconfont iconjiantouyou"><img
+						src="//localhost/resources/style/common/images/arrow/arrow3.png"></span></a></span>
+		</div>
+	</div>
+</div>
+
+
+
+
+
+
+
+
+
+<script>
+jQuery(document).ready(function(){
+		var tempLengths = 0; //临时变量,当前移动的长度
+		var viewNums = 7; //设置每次显示图片的个数量
+		var moveNums = 7; //每次移动的数量
+		var moveTimes = 500; //移动速度,毫秒
+		var scrollDivs = jQuery(".bottom_rbox_positions"); //进行移动动画的容器
+		var scrollItemss = jQuery(".bottom_rbox_positions ul"); //移动容器里的集合
+		var moveLengths = (scrollItemss.eq(0).width()+10) * moveNums ; //计算每次移动的长度
+		var countLengths = (scrollItemss.length - viewNums) * (scrollItemss.eq(0).width()+10); //计算总长度,总个数*单个长度(scrollItemss.length - viewNums) * scrollItemss.eq(0).width()
+		var all_lengths=scrollItemss.eq(0).width()*scrollItemss.length;
+		jQuery(".bottom_rbox_positions").css("width",all_lengths);
+		//下一张
+		jQuery("#left").bind("click",function(){
+			if(tempLengths < countLengths){
+				if((countLengths - tempLengths) > moveLengths){
+					scrollDivs.animate({left:"-=" + moveLengths + "px"}, moveTimes);
+					tempLengths += moveLengths;
+				}else{
+					scrollDivs.animate({left:"-=" + (countLengths - tempLengths) + "px"}, moveTimes);
+					tempLengths += (countLengths - tempLengths);
+				}
+			}
+		});
+		//上一张
+		jQuery("#right").bind("click",function(){
+			if(tempLengths > 0){
+				if(tempLengths > moveLengths){
+					scrollDivs.animate({left: "+=" + moveLengths + "px"}, moveTimes);
+					tempLengths -= moveLengths;
+				}else{
+					scrollDivs.animate({left: "+=" + tempLengths + "px"}, moveTimes);
+					tempLengths = 0;
+				}
+			}
+		});
+	});  
+</script>
+
+<!-- <div class="main_bottom">
+  <div class="main_bottom_right">
+    <h3>You?may?like</h3>
+    <div class="main_bottom_rbox"> <span class="rbox_left"><a href="javascript:void(0);" id="right"><span class="iconfont iconicon_arrow_left-copy"></span></a> </span>
+      <div class="bottom_rbox">
+        <div  class="bottom_rbox_positions"> 
+        
+        	                              
+                                    
+		  <ul class="rbox_ul" >
+            <li class="rbox_ul_img"><a href="//localhost/goods_512.htm" target="_blank">
+            <span class="img_cspan">
+              <p><img src="https://photo.soarmall.com/upload/store/16/5d7a10b0313a9MoVUhpZ718Rlh3n6no08.jpeg_small.jpeg" width="174" height="174" /></p>
+              </span></a></li>
+            <li class="rbox_ul_name"><a href="//localhost/goods_512.htm" target="_blank">Paperless Pour Over Coffee Maker Reusable Drip Cone Coffee Filter</a></li>
+                        <li>
+              <div class="five_star" style="margin-left:40px"><b title="0.0%" style="width:0.0%;"></b></div>
+            </li>
+            <li class="rbox_ul_evaluate">(已有0人评价)</li>
+            <li class="rbox_ul_price" >34.30<small>AED</small></li>
+            <li class="sale_two_price" >
+            	<h5><strong>18.00&nbsp;</strong><small>AED</small></h5>
+            </li>
+          </ul>
+                                        
+                                    
+		  <ul class="rbox_ul" >
+            <li class="rbox_ul_img"><a href="//localhost/goods_12.htm" target="_blank">
+            <span class="img_cspan">
+              <p><img src="https://photo.soarmall.com/upload/store/16/5d6500903270aKTt8AH4a6z4Q7aorHp1v.jpeg_small.jpeg" width="174" height="174" /></p>
+              </span></a></li>
+            <li class="rbox_ul_name"><a href="//localhost/goods_12.htm" target="_blank">Monolayer Portable Multi-function Electric Heating and heat preservation Lunch Box Y-DFH1</a></li>
+                        <li>
+              <div class="five_star" style="margin-left:40px"><b title="0.0%" style="width:0.0%;"></b></div>
+            </li>
+            <li class="rbox_ul_evaluate">(已有0人评价)</li>
+            <li class="rbox_ul_price" >150.00<small>AED</small></li>
+            <li class="sale_two_price" >
+            	<h5><strong>180.00&nbsp;</strong><small>AED</small></h5>
+            </li>
+          </ul>
+                                        
+                                    
+		  <ul class="rbox_ul" >
+            <li class="rbox_ul_img"><a href="//localhost/goods_1362.htm" target="_blank">
+            <span class="img_cspan">
+              <p><img src="https://photo.soarmall.com/upload/store/16/5d88333c09e85bfDr9YfkaxT6nes5Zfa4.jpeg_small.jpeg" width="174" height="174" /></p>
+              </span></a></li>
+            <li class="rbox_ul_name"><a href="//localhost/goods_1362.htm" target="_blank">Plates for Baby Feeding 26*26*2.5cm， Wheat Straw Degradable Healthy BPA Free Tableware Plate for Toddler Baby Kids，Dishwasher Safe Lunch Dinner Dishes</a></li>
+                        <li>
+              <div class="five_star" style="margin-left:40px"><b title="0.0%" style="width:0.0%;"></b></div>
+            </li>
+            <li class="rbox_ul_evaluate">(已有0人评价)</li>
+            <li class="rbox_ul_price" >18.13<small>AED</small></li>
+            <li class="sale_two_price" >
+            	<h5><strong>18.10&nbsp;</strong><small>AED</small></h5>
+            </li>
+          </ul>
+                                        
+                                    
+		  <ul class="rbox_ul" >
+            <li class="rbox_ul_img"><a href="//localhost/goods_1412.htm" target="_blank">
+            <span class="img_cspan">
+              <p><img src="https://photo.soarmall.com/upload/store/16/5d8852a7583872q4bplGsGq75RPKPhOjO.jpeg_small.jpeg" width="174" height="174" /></p>
+              </span></a></li>
+            <li class="rbox_ul_name"><a href="//localhost/goods_1412.htm" target="_blank">6 pieces/box Professional White Ping Pong Balls Table Tennis Balls</a></li>
+                        <li>
+              <div class="five_star" style="margin-left:40px"><b title="0.0%" style="width:0.0%;"></b></div>
+            </li>
+            <li class="rbox_ul_evaluate">(已有0人评价)</li>
+            <li class="rbox_ul_price" >13.25<small>AED</small></li>
+            <li class="sale_two_price" >
+            	<h5><strong>13.24&nbsp;</strong><small>AED</small></h5>
+            </li>
+          </ul>
+                                        
+                                    
+		  <ul class="rbox_ul" >
+            <li class="rbox_ul_img"><a href="//localhost/goods_1420.htm" target="_blank">
+            <span class="img_cspan">
+              <p><img src="https://photo.soarmall.com/upload/store/16/5d8855c21098eQg8KWxYapRVcdXHok1yE.jpeg_small.jpeg" width="174" height="174" /></p>
+              </span></a></li>
+            <li class="rbox_ul_name"><a href="//localhost/goods_1420.htm" target="_blank">Chrildren play house toy pink rabbit twisted egg machine Y</a></li>
+                        <li>
+              <div class="five_star" style="margin-left:40px"><b title="0.0%" style="width:0.0%;"></b></div>
+            </li>
+            <li class="rbox_ul_evaluate">(已有0人评价)</li>
+            <li class="rbox_ul_price" >25.53<small>AED</small></li>
+            <li class="sale_two_price" >
+            	<h5><strong>25.50&nbsp;</strong><small>AED</small></h5>
+            </li>
+          </ul>
+                                        
+                                    
+		  <ul class="rbox_ul" >
+            <li class="rbox_ul_img"><a href="//localhost/goods_355.htm" target="_blank">
+            <span class="img_cspan">
+              <p><img src="https://photo.soarmall.com/upload/store/16/5d790c7fe41c2jCjrlzDTacMZckgQG3wW.jpeg_small.jpeg" width="174" height="174" /></p>
+              </span></a></li>
+            <li class="rbox_ul_name"><a href="//localhost/goods_355.htm" target="_blank">Cat Collar</a></li>
+                        <li>
+              <div class="five_star" style="margin-left:40px"><b title="0.0%" style="width:0.0%;"></b></div>
+            </li>
+            <li class="rbox_ul_evaluate">(已有0人评价)</li>
+            <li class="rbox_ul_price" >123.00<small>AED</small></li>
+            <li class="sale_two_price" >
+            	<h5><strong>123.00&nbsp;</strong><small>AED</small></h5>
+            </li>
+          </ul>
+                                        
+                                    
+		  <ul class="rbox_ul" >
+            <li class="rbox_ul_img"><a href="//localhost/goods_768.htm" target="_blank">
+            <span class="img_cspan">
+              <p><img src="https://photo.soarmall.com/upload/store/16/5d7f2c8fed314wSsy09JkL8bWPG7JXjB4.jpeg_small.jpeg" width="174" height="174" /></p>
+              </span></a></li>
+            <li class="rbox_ul_name"><a href="//localhost/goods_768.htm" target="_blank">Bamboo Fiber Tableware Small Dish 12*9.5*2</a></li>
+                        <li>
+              <div class="five_star" style="margin-left:40px"><b title="0.0%" style="width:0.0%;"></b></div>
+            </li>
+            <li class="rbox_ul_evaluate">(已有0人评价)</li>
+            <li class="rbox_ul_price" >13.35<small>AED</small></li>
+            <li class="sale_two_price" >
+            	<h5><strong>13.34&nbsp;</strong><small>AED</small></h5>
+            </li>
+          </ul>
+                                        
+                                    
+		  <ul class="rbox_ul" >
+            <li class="rbox_ul_img"><a href="//localhost/goods_235.htm" target="_blank">
+            <span class="img_cspan">
+              <p><img src="https://photo.soarmall.com/upload/store/16/5d785c00effcdmofQb2g3UnPN0QMIJFHJ.jpeg_small.jpeg" width="174" height="174" /></p>
+              </span></a></li>
+            <li class="rbox_ul_name"><a href="//localhost/goods_235.htm" target="_blank">MATEUS Cat Pole - Blue-Beige</a></li>
+                        <li>
+              <div class="five_star" style="margin-left:40px"><b title="0.0%" style="width:0.0%;"></b></div>
+            </li>
+            <li class="rbox_ul_evaluate">(已有0人评价)</li>
+            <li class="rbox_ul_price" >670.06<small>AED</small></li>
+            <li class="sale_two_price" >
+            	<h5><strong>569.55&nbsp;</strong><small>AED</small></h5>
+            </li>
+          </ul>
+                                        
+                                    
+		  <ul class="rbox_ul" >
+            <li class="rbox_ul_img"><a href="//localhost/goods_513.htm" target="_blank">
+            <span class="img_cspan">
+              <p><img src="https://photo.soarmall.com/upload/store/16/5d7a10eb5cf55qVsm6F0x2abZ3vPXx1ST.jpeg_small.jpeg" width="174" height="174" /></p>
+              </span></a></li>
+            <li class="rbox_ul_name"><a href="//localhost/goods_513.htm" target="_blank">Punching ball scratching post</a></li>
+                        <li>
+              <div class="five_star" style="margin-left:40px"><b title="0.0%" style="width:0.0%;"></b></div>
+            </li>
+            <li class="rbox_ul_evaluate">(已有0人评价)</li>
+            <li class="rbox_ul_price" >403.40<small>AED</small></li>
+            <li class="sale_two_price" >
+            	<h5><strong>372.36&nbsp;</strong><small>AED</small></h5>
+            </li>
+          </ul>
+                                        
+                                    
+		  <ul class="rbox_ul" >
+            <li class="rbox_ul_img"><a href="//localhost/goods_1917.htm" target="_blank">
+            <span class="img_cspan">
+              <p><img src="https://photo.soarmall.com/upload/store/16/5d9e9bc43dc5bgx45s5xVkXNbxW6bdB5E.jpeg_small.jpeg" width="174" height="174" /></p>
+              </span></a></li>
+            <li class="rbox_ul_name"><a href="//localhost/goods_1917.htm" target="_blank">Silicone Anti Snore Device Nasal Dilators Apnea Sleep Aid Stop Snoring Stopper Nose Clip Anti-snore Clean Air Purifier</a></li>
+                        <li>
+              <div class="five_star" style="margin-left:40px"><b title="0.0%" style="width:0.0%;"></b></div>
+            </li>
+            <li class="rbox_ul_evaluate">(已有0人评价)</li>
+            <li class="rbox_ul_price" >20.00<small>AED</small></li>
+            <li class="sale_two_price" >
+            	<h5><strong>10.00&nbsp;</strong><small>AED</small></h5>
+            </li>
+          </ul>
+                                        
+                                    
+		  <ul class="rbox_ul" >
+            <li class="rbox_ul_img"><a href="//localhost/goods_13.htm" target="_blank">
+            <span class="img_cspan">
+              <p><img src="https://photo.soarmall.com/upload/store/20/5d66384b5ccd5HbTmuMuTulwty68syddW.jpeg_small.jpeg" width="174" height="174" /></p>
+              </span></a></li>
+            <li class="rbox_ul_name"><a href="//localhost/goods_13.htm" target="_blank">Men’s Sneakers Lightweight Outdoor Walking Shoes</a></li>
+                        <li>
+              <div class="five_star" style="margin-left:40px"><b title="0.0%" style="width:0.0%;"></b></div>
+            </li>
+            <li class="rbox_ul_evaluate">(已有0人评价)</li>
+            <li class="rbox_ul_price" >178.00<small>AED</small></li>
+            <li class="sale_two_price" >
+            	<h5><strong>89.00&nbsp;</strong><small>AED</small></h5>
+            </li>
+          </ul>
+                                        
+                                    
+		  <ul class="rbox_ul" >
+            <li class="rbox_ul_img"><a href="//localhost/goods_14.htm" target="_blank">
+            <span class="img_cspan">
+              <p><img src="https://photo.soarmall.com/upload/store/20/5d803a8f6d55ascpEyW6sn69nHJwyRhRG.jpeg_small.jpeg" width="174" height="174" /></p>
+              </span></a></li>
+            <li class="rbox_ul_name"><a href="//localhost/goods_14.htm" target="_blank">Walking Shoes Fashion Breathable Sneakers Casual Athletic Lightweight Outdoor Sports Shoes</a></li>
+                        <li>
+              <div class="five_star" style="margin-left:40px"><b title="0.0%" style="width:0.0%;"></b></div>
+            </li>
+            <li class="rbox_ul_evaluate">(已有0人评价)</li>
+            <li class="rbox_ul_price" >198.00<small>AED</small></li>
+            <li class="sale_two_price" >
+            	<h5><strong>99.00&nbsp;</strong><small>AED</small></h5>
+            </li>
+          </ul>
+                                        
+                                    
+		  <ul class="rbox_ul" >
+            <li class="rbox_ul_img"><a href="//localhost/goods_15.htm" target="_blank">
+            <span class="img_cspan">
+              <p><img src="https://photo.soarmall.com/upload/store/20/5d803c171c338FOjcSfs3X0Ul0A3xTml8.jpeg_small.jpeg" width="174" height="174" /></p>
+              </span></a></li>
+            <li class="rbox_ul_name"><a href="//localhost/goods_15.htm" target="_blank">Men's Sneakers Outdoor Walking Shoes High Top Casual Lace Up Skateboard Shoes</a></li>
+                        <li>
+              <div class="five_star" style="margin-left:40px"><b title="0.0%" style="width:0.0%;"></b></div>
+            </li>
+            <li class="rbox_ul_evaluate">(已有0人评价)</li>
+            <li class="rbox_ul_price" >186.00<small>AED</small></li>
+            <li class="sale_two_price" >
+            	<h5><strong>93.00&nbsp;</strong><small>AED</small></h5>
+            </li>
+          </ul>
+                                        
+                                    
+		  <ul class="rbox_ul" >
+            <li class="rbox_ul_img"><a href="//localhost/goods_21.htm" target="_blank">
+            <span class="img_cspan">
+              <p><img src="https://photo.soarmall.com/upload/store/20/5d67271c1ecf5gcjPNoAMtE0sTEkRlsJe.jpeg_small.jpeg" width="174" height="174" /></p>
+              </span></a></li>
+            <li class="rbox_ul_name"><a href="//localhost/goods_21.htm" target="_blank">Men's Sneakers Breathable Lightweight Running Shoes</a></li>
+                        <li>
+              <div class="five_star" style="margin-left:40px"><b title="0.0%" style="width:0.0%;"></b></div>
+            </li>
+            <li class="rbox_ul_evaluate">(已有0人评价)</li>
+            <li class="rbox_ul_price" >218.00<small>AED</small></li>
+            <li class="sale_two_price" >
+            	<h5><strong>109.00&nbsp;</strong><small>AED</small></h5>
+            </li>
+          </ul>
+                                        
+                                    
+		  <ul class="rbox_ul" >
+            <li class="rbox_ul_img"><a href="//localhost/goods_23.htm" target="_blank">
+            <span class="img_cspan">
+              <p><img src="https://photo.soarmall.com/upload/store/20/5d673942a0147KU9ltBVrVIPcomJ4xQrO.jpeg_small.jpeg" width="174" height="174" /></p>
+              </span></a></li>
+            <li class="rbox_ul_name"><a href="//localhost/goods_23.htm" target="_blank">Men's Sneakers Mesh Ultra Lightweight Running Shoes</a></li>
+                        <li>
+              <div class="five_star" style="margin-left:40px"><b title="0.0%" style="width:0.0%;"></b></div>
+            </li>
+            <li class="rbox_ul_evaluate">(已有0人评价)</li>
+            <li class="rbox_ul_price" >166.00<small>AED</small></li>
+            <li class="sale_two_price" >
+            	<h5><strong>83.00&nbsp;</strong><small>AED</small></h5>
+            </li>
+          </ul>
+                                        
+                                    
+		  <ul class="rbox_ul" >
+            <li class="rbox_ul_img"><a href="//localhost/goods_24.htm" target="_blank">
+            <span class="img_cspan">
+              <p><img src="https://photo.soarmall.com/upload/store/20/5d674142eb5ffos21G0tUsqL6q9OjCBej.jpeg_small.jpeg" width="174" height="174" /></p>
+              </span></a></li>
+            <li class="rbox_ul_name"><a href="//localhost/goods_24.htm" target="_blank">Men's Running Lightweight Breathable Casual Sports Shoes Fashion Sneakers Walking Shoes</a></li>
+                        <li>
+              <div class="five_star" style="margin-left:40px"><b title="0.0%" style="width:0.0%;"></b></div>
+            </li>
+            <li class="rbox_ul_evaluate">(已有0人评价)</li>
+            <li class="rbox_ul_price" >186.00<small>AED</small></li>
+            <li class="sale_two_price" >
+            	<h5><strong>93.00&nbsp;</strong><small>AED</small></h5>
+            </li>
+          </ul>
+                                        
+                                    
+		  <ul class="rbox_ul" >
+            <li class="rbox_ul_img"><a href="//localhost/goods_26.htm" target="_blank">
+            <span class="img_cspan">
+              <p><img src="https://photo.soarmall.com/upload/store/20/5d688d09c4d97oTNrjBFjLD0lfEVoXoD0.jpeg_small.jpeg" width="174" height="174" /></p>
+              </span></a></li>
+            <li class="rbox_ul_name"><a href="//localhost/goods_26.htm" target="_blank">Men's Walking Shoes Breathable Running Sneakers</a></li>
+                        <li>
+              <div class="five_star" style="margin-left:40px"><b title="0.0%" style="width:0.0%;"></b></div>
+            </li>
+            <li class="rbox_ul_evaluate">(已有0人评价)</li>
+            <li class="rbox_ul_price" >198.00<small>AED</small></li>
+            <li class="sale_two_price" >
+            	<h5><strong>99.00&nbsp;</strong><small>AED</small></h5>
+            </li>
+          </ul>
+                                        
+                                    
+		  <ul class="rbox_ul" >
+            <li class="rbox_ul_img"><a href="//localhost/goods_27.htm" target="_blank">
+            <span class="img_cspan">
+              <p><img src="https://photo.soarmall.com/upload/store/20/5d68967494876u1JFCD5BICZA2r5DdyVH.jpeg_small.jpeg" width="174" height="174" /></p>
+              </span></a></li>
+            <li class="rbox_ul_name"><a href="//localhost/goods_27.htm" target="_blank">Men's Sneakers Lightweight Sports Running Shoes</a></li>
+                        <li>
+              <div class="five_star" style="margin-left:40px"><b title="0.0%" style="width:0.0%;"></b></div>
+            </li>
+            <li class="rbox_ul_evaluate">(已有0人评价)</li>
+            <li class="rbox_ul_price" >198.00<small>AED</small></li>
+            <li class="sale_two_price" >
+            	<h5><strong>99.00&nbsp;</strong><small>AED</small></h5>
+            </li>
+          </ul>
+                                        
+                                    
+		  <ul class="rbox_ul" >
+            <li class="rbox_ul_img"><a href="//localhost/goods_32.htm" target="_blank">
+            <span class="img_cspan">
+              <p><img src="https://photo.soarmall.com/upload/store/16/5d69c8d1ab605j3FKaI928bnthrtCASZX.jpeg_small.jpeg" width="174" height="174" /></p>
+              </span></a></li>
+            <li class="rbox_ul_name"><a href="//localhost/goods_32.htm" target="_blank">Men's handbag, business computer bag</a></li>
+                        <li>
+              <div class="five_star" style="margin-left:40px"><b title="0.0%" style="width:0.0%;"></b></div>
+            </li>
+            <li class="rbox_ul_evaluate">(已有0人评价)</li>
+            <li class="rbox_ul_price" >85.00<small>AED</small></li>
+            <li class="sale_two_price" >
+            	<h5><strong>65.00&nbsp;</strong><small>AED</small></h5>
+            </li>
+          </ul>
+                                        
+                                    
+		  <ul class="rbox_ul" >
+            <li class="rbox_ul_img"><a href="//localhost/goods_33.htm" target="_blank">
+            <span class="img_cspan">
+              <p><img src="https://photo.soarmall.com/upload/store/16/5d69ca184083cARxCo0sgMnkHrMhvhURy.jpeg_small.jpeg" width="174" height="174" /></p>
+              </span></a></li>
+            <li class="rbox_ul_name"><a href="//localhost/goods_33.htm" target="_blank">Men's leather shoulder bag casual IPAD bag</a></li>
+                        <li>
+              <div class="five_star" style="margin-left:40px"><b title="0.0%" style="width:0.0%;"></b></div>
+            </li>
+            <li class="rbox_ul_evaluate">(已有0人评价)</li>
+            <li class="rbox_ul_price" >80.00<small>AED</small></li>
+            <li class="sale_two_price" >
+            	<h5><strong>45.00&nbsp;</strong><small>AED</small></h5>
+            </li>
+          </ul>
+                    
+          </div>
+      </div>
+      <span class="rbox_right"><a href="javascript:void(0);" id="left"><span class="iconfont iconjiantouyou"></span></a></span> </div>
+  </div>
+</div> --> 
+   </div>
+</body>
+</html>

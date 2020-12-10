@@ -1,0 +1,26 @@
+#if($!user.userName)
+<ul class="goods_vehicle_list">
+	#foreach($obj in $cart)
+	#set($img="$!imageWebServer/$!{config.goodsImage.path}/$!{config.goodsImage.name}")
+	#if($!obj.goods.goods_main_photo)
+	#set($img="$!imageWebServer/$!{obj.goods.goods_main_photo.path}/$!{obj.goods.goods_main_photo.name}_small.$!{obj.goods.goods_main_photo.ext}")
+	#end
+	<li><img src="$!{img}" />
+		<div>
+			<h5>
+				<small>$!obj.goods.goods_name</small>
+			</h5>
+			<span class="small-cart-qty"><small>QTY : $!obj.count</small></span>
+		</div></li> #end
+</ul>
+#else
+<div
+	style="display: block; margin-top: 50%; text-align: center; font-weight: bold;">
+	<span>You haven't logged in yet</span> <a
+		href="$!webPath/wap/login.htm" style="display: block;"> <span
+		class="meunright_a" style="color: #007aff; font-size: 16px;">
+			Log&nbsp;In </span>
+	</a>
+</div>
+#end
+

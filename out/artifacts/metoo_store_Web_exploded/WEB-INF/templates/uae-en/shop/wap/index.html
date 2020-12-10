@@ -1,0 +1,1122 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+<meta charset="utf-8" />
+<meta name="viewport"
+	content="width=device-width,inital-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+<meta name="apple-wap-web-app-capable" content="yes">
+<meta name="apple-wap-web-app-status-bar-style"
+	content="black-translucent">
+<title>$!config.title</title>
+<link href="$!webPath/resources/wap/css/mui.min.css" rel="stylesheet"
+	type="text/css" />
+<link href="$!webPath/resources/wap/fonts/mui.ttf" rel="stylesheet"
+	type="text/css" />
+<link
+	href="$!webPath/resources/style/system/front/wap/v2.0/css/v2.0style.css"
+	rel="stylesheet" type="text/css" />
+
+<link rel="stylesheet" href="$!webPath/resources/wap/css/swiper.css">
+<link rel="stylesheet" href="$!webPath/resources/wap/css/index.css">
+<link rel="stylesheet" href="$!webPath/resources/wap/fonts/iconfont.css">
+<link rel="stylesheet" href="$!webPath/resources/wap/css/animate.css">
+
+<script src="$!webPath/resources/wap/jquery-3.1.1.min.js"></script>
+<script src="$!webPath/resources/js/TouchSlide.1.1.js"></script>
+<script src="$!webPath/resources/js/jquery.SuperSlide.2.1.1.js"></script>
+
+<style>
+.goods-img-slide, .goods-slide, .good-img-class, .goods_list_one,
+	.goods_list_two, .goods_list_three, .goods_list_hot, .goods_list_new {
+	width: 98%;
+	margin: 0px auto;
+}
+
+html, body {
+	background-color: #efeff4;
+}
+
+.mui-off-canvas-left {
+	background-color: #f7f7fa;
+}
+
+p {
+	text-indent: 22px;
+}
+
+.meunright {
+	width: 30%;
+	justify-content: flex-end;
+	position: relative;
+	z-index: 999;
+	display: flex;
+	align-items: center;
+	height: 100%;
+}
+
+.meunright_a {
+	width: 88%;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
+}
+
+.focusBox {
+	margin: 0px;
+}
+
+span.mui-icon {
+	font-size: 14px;
+	color: #007aff;
+	margin-left: -15px;
+	padding-right: 10px;
+}
+
+.mui-off-canvas-left {
+	color: #fff;
+}
+
+.title+.content {
+	margin: 10px 15px 35px;
+	color: #bbb;
+	text-indent: 1em;
+	font-size: 14px;
+	line-height: 24px;
+}
+
+input {
+	color: #000;
+}
+
+.mui-preview-image.mui-fullscreen {
+	position: fixed;
+	z-index: 20;
+	background-color: #000;
+}
+
+.mui-preview-header, .mui-preview-footer {
+	position: absolute;
+	width: 100%;
+	left: 0;
+	z-index: 10;
+}
+
+.mui-preview-header {
+	height: 44px;
+	top: 0;
+}
+
+.mui-preview-footer {
+	height: 50px;
+	bottom: 0px;
+}
+
+.mui-preview-header .mui-preview-indicator {
+	display: block;
+	line-height: 25px;
+	color: #fff;
+	text-align: center;
+	margin: 15px auto 4;
+	width: 70px;
+	background-color: rgba(0, 0, 0, 0.4);
+	border-radius: 12px;
+	font-size: 16px;
+}
+
+.mui-preview-image {
+	display: none;
+	-webkit-animation-duration: 0.5s;
+	animation-duration: 0.5s;
+	-webkit-animation-fill-mode: both;
+	animation-fill-mode: both;
+}
+
+.mui-preview-image.mui-preview-in {
+	-webkit-animation-name: fadeIn;
+	animation-name: fadeIn;
+}
+
+.mui-preview-image.mui-preview-out {
+	background: none;
+	-webkit-animation-name: fadeOut;
+	animation-name: fadeOut;
+}
+
+.mui-preview-image.mui-preview-out .mui-preview-header,
+	.mui-preview-image.mui-preview-out .mui-preview-footer {
+	display: none;
+}
+
+.mui-zoom-scroller {
+	position: absolute;
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-box-align: center;
+	-webkit-align-items: center;
+	align-items: center;
+	-webkit-box-pack: center;
+	-webkit-justify-content: center;
+	justify-content: center;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	-webkit-backface-visibility: hidden;
+}
+
+.mui-zoom {
+	-webkit-transform-style: preserve-3d;
+	transform-style: preserve-3d;
+}
+
+.mui-slider .mui-slider-group .mui-slider-item img {
+	width: auto;
+	height: auto;
+	max-width: 100%;
+	max-height: 100%;
+}
+
+.mui-android-4-1 .mui-slider .mui-slider-group .mui-slider-item img {
+	width: 100%;
+}
+
+.mui-android-4-1 .mui-slider.mui-preview-image .mui-slider-group .mui-slider-item
+	{
+	display: inline-table;
+}
+
+.mui-android-4-1 .mui-slider.mui-preview-image .mui-zoom-scroller img {
+	display: table-cell;
+	vertical-align: middle;
+}
+
+.mui-preview-loading {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+	display: none;
+}
+
+.mui-preview-loading.mui-active {
+	display: block;
+}
+
+.mui-preview-loading .mui-spinner-white {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	margin-left: -25px;
+	margin-top: -25px;
+	height: 50px;
+	width: 50px;
+}
+
+.mui-preview-image img.mui-transitioning {
+	-webkit-transition: -webkit-transform 0.5s ease, opacity 0.5s ease;
+	transition: transform 0.5s ease, opacity 0.5s ease;
+}
+
+@
+-webkit-keyframes fadeIn { 0% {
+	opacity: 0;
+}
+
+100%
+{
+opacity
+
+
+:
+
+ 
+
+1;
+}
+}
+@
+keyframes fadeIn { 0% {
+	opacity: 0;
+}
+
+100%
+{
+opacity
+
+
+:
+
+ 
+
+1;
+}
+}
+@
+-webkit-keyframes fadeOut { 0% {
+	opacity: 1;
+}
+
+100%
+{
+opacity
+
+
+:
+
+ 
+
+0;
+}
+}
+@
+keyframes fadeOut { 0% {
+	opacity: 1;
+}
+
+100%
+{
+opacity
+
+
+:
+
+ 
+
+0;
+}
+}
+p img {
+	max-width: 100%;
+	height: auto;
+}
+
+.good_img_content {
+	border: #cccccc solid 1px;
+}
+
+.mui-zoom-wrapper {
+	display: none;
+	overflow: hidden;
+}
+
+.breviary {
+	display: flex;
+	justify-content: center;
+	overflow: hidden;
+}
+
+.breviary li {
+	overflow: hidden;
+	float: left;
+	width: 65px;
+	height: 45px;
+	padding: 0px 10px 0px 10px;
+}
+
+.breviary li img {
+	border: 1px solid #8d8d8d;
+	padding: 2px;
+	width: 100%;
+}
+
+.tab-view-list {
+	position: relative;
+	padding-left: 15px;
+	border-bottom: 1px solid #e2e5f1;
+	background-color: #fff;
+}
+
+.tab-view-list:first-child {
+	border-top: 1px solid #e2e5f1;
+	box-shadow: 0 0 1px rgba(0, 0, 0, 0.04);
+}
+
+.accordion {
+	
+}
+
+.mui-off-canvas-left {
+	color: #initial;
+}
+
+.tab-view-list>a {
+	height: 38px;
+	display: flex;
+	align-items: center;
+}
+
+.logo, .mui-title {
+	overflow: auto;
+	margin: auto;
+	position: absolute;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+}
+/*canvas-left-content*/
+.canvas-left-content, .canvas-left-top {
+	overflow: hidden;
+	display: block;
+}
+
+.canvas-left-top, .canvas-left-bottom {
+	padding: 12px 15px;
+}
+
+.canvas-left-bottom {
+	border-top: 1px solid #f7f7fa;
+	border-bottom: 1px solid #e2e5f1;
+}
+
+.canvas-left-top>p>img {
+	height: 24px;
+}
+
+.canvas-left-bottom>ul {
+	overflow: hidden;
+	display: flex;
+}
+
+.canvas-left-bottom>ul>li {
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-align-items: center;
+	-webkit-box-align: center;
+	-ms-flex-align: center;
+	align-items: center;
+	-webkit-box-pack: center;
+	-webkit-justify-content: center;
+	-ms-flex-pack: center;
+	justify-content: center;
+	color: #fff;
+	text-align: center;
+	flex: 1;
+}
+
+.canvas-left-bottom>ul>li>span {
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-align-items: center;
+	-webkit-box-align: center;
+	-ms-flex-align: center;
+	align-items: center;
+	-webkit-box-pack: center;
+	-webkit-justify-content: center;
+	-ms-flex-pack: center;
+	justify-content: center;
+	width: 32px;
+	height: 32px;
+	color: #fff;
+	background-color: #007aff;
+	border-radius: 3px;
+}
+
+.canvas-left-bottom>ul>li>span>a>i {
+	color: #fff;
+}
+
+.canvas-left-top>p {
+	display: flex;
+}
+
+.account_info>p, .canvas-left-top>p {
+	text-indent: 0px;
+	color: #404553;
+	font-weight: bold;
+}
+
+.canvas-left-top>p>i {
+	flex: 1;
+	color: initial;
+	text-align: right;
+}
+
+.account_info {
+	display: block;
+}
+
+.account_style {
+	display: block;
+	font-weight: normal;
+	font-size: 12px;
+	color: #7e859b;
+}
+
+#theForm {
+	width: 100%;
+}
+</style>
+</head>
+
+<body>
+
+	<div id="offCanvasWrapper" class="mui-off-canvas-wrap mui-draggable">
+		<!--侧滑菜单部分-->
+		<aside id="offCanvasSide" class="mui-off-canvas-left">
+			<div id="offCanvasSideScroll" class="mui-scroll-wrapper">
+				<div class="mui-scroll">
+					$!httpInclude.include("/wap/index_left.htm")</div>
+			</div>
+		</aside>
+		<!--主界面部分-->
+		<div class="mui-inner-wrap">
+			<header class="mui-bar mui-bar-nav">
+				$!httpInclude.include("/wap/top.htm") </header>
+			<!-- 主题内容 -->
+			<div id="offCanvasContentScroll"
+				class="mui-content mui-scroll-wrapper">
+				<!-- 搜索栏 -->
+				<div class="sousuo_content">
+					<form name="theForm" id="theForm" action="$!webPath/search.json"
+						method="post">
+						<div class="sousuo_class" id="search_box">
+
+							<!-- <div class="search_line">
+								<span> <input type="text" placeholder="输入商品名称" name="keyword"
+									id="keyword" value="$!keyword" style="height: 32px;" /> </span
+									
+									>
+							</div>
+							<a href="javascript:void(0);" onclick="clickSearch();">
+								<img align="right" style="margin :10px;" id="search_btn" 
+									src="$!webPath/resources/style/system/front/wap/v2.0/images/search.png">
+							</a> -->
+							<input type="search" id="keyword" value="$!keyword"
+								class="sousuo_class_input" name="keyword"
+								placeholder="What are you looking for?" autocomplete="off"
+								tabindex="-1">
+							<div class="sousuo_class_buttom" onclick="clickSearch();">
+								<i class="iconfont iconsousuo"></i>
+							</div>
+							<div class="search-auto-results hide"></div>
+						</div>
+					</form>
+				</div>
+				<!-- 主体内容 -->
+				<div class="mui-scroll">
+					<div class="focusBox" id="focusBox">
+						<script src="$!webPath/advert_invoke.htm?id=1"></script>
+					</div>
+					<!-- 头部幻灯片
+                  <div class="head_slide_s p_padding">
+                      <div class="swiper-wrapper  head_slide">
+                          <div class="swiper-slide">
+                              
+                              <a href="#" class="slide_txt">
+                                  <span>wenzi</span>
+                              </a>
+                          </div>
+                          <div class="swiper-slide">
+                              <a href="#" class="sidel_img">
+                               
+                              </a>
+                              <a href="#" class="slide_txt">
+                                  <span>wenzi</span>
+                              </a>
+                          </div>
+                          <div class="swiper-slide">
+                              <a href="#" class="sidel_img">
+                                
+                              </a>
+                              <a href="#" class="slide_txt">
+                                  <span>wenzi</span>
+                              </a>
+                          </div>
+                      </div>
+                  </div> -->
+					<div class="swiper-pagination p_padding" style="width: 100%;"></div>
+					<!-- 商品无限滚动 -->
+					<!-- #set($goodscases=$!goodsCaseViewTools.queryGoodsCase("index_top")) #if($!goodscases.size()>0)
+
+			                #set($first=1) #foreach($obj in $goodscases)
+			                <div class="index_sale_box" #if($!first==1) #set($first=0) #else style="display:none" #end id="index_sale_box_$!obj.id">
+			                    #set($case_list=$!goodsCaseViewTools.queryCaseGoods($obj.case_content))
+			                    	<div class="index_sale_con" id="index_sale_con_$!obj.id">
+			                    		#foreach($!casegoods in $case_list)
+					                        <ul class="index_sale_two">
+					                            #if($!casegoods.goods_main_photo) #set($img="$!imageWebServer/$!{casegoods.goods_main_photo.path}/$!{casegoods.goods_main_photo.name}_middle.$!{casegoods.goods_main_photo.ext}")
+					                            #else #set($img="$!imageWebServer/$!{config.goodsImage.path}/$!{config.goodsImage.name}") #end
+					                            #set($goods_url="$!webPath/goods_$!{casegoods.id}_gcase.htm") #if($!config.second_domain_open
+					                            && $!casegoods.goods_type==1 && $!casegoods.goods_store.store_second_domain!="") #set($goods_url="http://$!{casegoods.goods_store.store_second_domain}.$!{domainPath}/goods_$!{casegoods.id}_gcase.htm")
+					                            #end
+					                            <li class="sale_two_img">
+					                                <a href="$!goods_url" target="_blank">
+					                                    <span class="img_cspan">
+					                                        <p>
+					                                            <img original="$!img" onerror="this.src='$!imageWebServer/$!{config.goodsImage.path}/$!{config.goodsImage.name}';" src="$!webPath/resources/style/common/images/loader.gif"
+					                                                width="28" height="28" />
+					                                        </p>
+					                                    </span>
+					                                </a>
+					                            </li>
+					                            <li class="sale_two_name">
+					                                <a href="$!goods_url" target="_blank">$!casegoods.goods_name</a>
+					                            </li>
+					                            <li class="sale_two_price">售价：
+					                                <strong>¥$!casegoods.goods_current_price</strong>
+					                            </li>
+					                        </ul>
+				                         #end
+			                      </div>
+			                </div>
+			                #end #end  -->
+					<!-- #foreach($!casegoods in $case_list)
+			                        <ul class="index_sale_two">
+			                            #if($!casegoods.goods_main_photo) #set($img="$!imageWebServer/$!{casegoods.goods_main_photo.path}/$!{casegoods.goods_main_photo.name}_middle.$!{casegoods.goods_main_photo.ext}")
+			                            #else #set($img="$!imageWebServer/$!{config.goodsImage.path}/$!{config.goodsImage.name}") #end
+			                            #set($goods_url="$!webPath/goods_$!{casegoods.id}_gcase.htm") #if($!config.second_domain_open
+			                            && $!casegoods.goods_type==1 && $!casegoods.goods_store.store_second_domain!="") #set($goods_url="http://$!{casegoods.goods_store.store_second_domain}.$!{domainPath}/goods_$!{casegoods.id}_gcase.htm")
+			                            #end
+			                            <li class="sale_two_img">
+			                                <a href="$!goods_url" target="_blank">
+			                                    <span class="img_cspan">
+			                                        <p>
+			                                            <img original="$!img" onerror="this.src='$!imageWebServer/$!{config.goodsImage.path}/$!{config.goodsImage.name}';" src="$!webPath/resources/style/common/images/loader.gif"
+			                                                width="28" height="28" />
+			                                        </p>
+			                                    </span>
+			                                </a>
+			                            </li>
+			                            <li class="sale_two_name">
+			                                <a href="$!goods_url" target="_blank">$!casegoods.goods_name</a>
+			                            </li>
+			                            <li class="sale_two_price">售价：
+			                                <strong>¥$!casegoods.goods_current_price</strong>
+			                            </li>
+			                        </ul>
+				                 #end -->
+
+
+					<!-- NEW -->
+					<span class="Brand_List_content flex_center">
+						<h5>NEW</h5> <em><a href="#" />VIEW ALL</a></em>
+					</span>
+					<div class="goods_list_new "
+						style="height: 286px; margin-top: 10px;">
+						<div class="swiper-wrapper">
+							#foreach($goods in
+							$goodsViewTools.query_with_gc("$gcs.get(0).id",50) )
+							#if($!goods.goods_main_photo)
+							#set($img="$!imageWebServer/$!{goods.goods_main_photo.path}/$!{goods.goods_main_photo.name}_small.$!{goods.goods_main_photo.ext}")
+							#else
+							#set($img="$!imageWebServer/$!{config.goodsImage.path}/$!{config.goodsImage.name}")
+							#end
+							<div class="swiper-slide  goods_card">
+								<a href="/metoo/wap/goods.htm?id=$!goods.id"> <!--  商品图片 -->
+									<div class="goods_sidel_img">
+										<img src="$img" alt="">
+									</div>
+									<div class="goods_list_padding">
+										<!-- 商品标题 -->
+										<div class="goods_title">
+											<h6>$!goods.goods_name</h6>
+										</div>
+										<!-- 商品评分 -->
+										<div class="rating"></div>
+										<!-- 折扣价格 -->
+										<h5 class="discount_price">
+											<small>AED</small>$!goods.goods_current_price
+										</h5>
+										<!-- 价格 -->
+										<h5 class="cash_price">
+											<small>AED</small>$!goods.goods_current_price
+										</h5>
+										<!-- 	#if($!store)
+									    #set($store_url="$!webPath/store_$!{store.id}.htm")
+									    #if($!config.second_domain_open && $!store.store_second_domain!="")
+									    #set($store_url="http://$!{store.store_second_domain}.$!{domainPath}")
+									    #end 
+									    ll
+									    #end -->
+									</div>
+								</a>
+							</div>
+							#end
+						</div>
+					</div>
+					<div class="goods_list_new_pagination"
+						style="height: 5px; width: 100%;"></div>
+					<!-- HOT -->
+					<span class="Brand_List_content flex_center">
+						<h5>HOT</h5> <em><a href="#" />VIEW ALL</a></em>
+					</span>
+					<div class="goods_list_hot "
+						style="height: 286px; margin-top: 10px;">
+						<div class="swiper-wrapper">
+							#foreach($goods in
+							$goodsViewTools.query_with_gc("$gcs.get(0).id",50) )
+							#if($!goods.goods_main_photo)
+							#set($img="$!imageWebServer/$!{goods.goods_main_photo.path}/$!{goods.goods_main_photo.name}_small.$!{goods.goods_main_photo.ext}")
+							#else
+							#set($img="$!imageWebServer/$!{config.goodsImage.path}/$!{config.goodsImage.name}")
+							#end
+							<div class="swiper-slide  goods_card">
+								<a href="$!webPath/goods.htm?id=$!goods.id"> <!--  商品图片 -->
+									<div class="goods_sidel_img">
+										<img src="$img" alt="">
+									</div>
+									<div class="goods_list_padding">
+										<!-- 商品标题 -->
+										<div class="goods_title">
+											<h6>$!goods.goods_name</h6>
+										</div>
+										<!-- 商品评分 -->
+										<div class="rating"></div>
+										<!-- 折扣价格 -->
+										<h5 class="discount_price">
+											<small>AED</small>$!goods.goods_current_price
+										</h5>
+										<!-- 价格 -->
+										<h5 class="cash_price">
+											<small>AED</small>$!goods.goods_current_price
+										</h5>
+									</div>
+								</a>
+							</div>
+							#end
+						</div>
+					</div>
+					<div class="goods_list_hot_pagination"
+						style="height: 5px; width: 100%;"></div>
+					<!-- 商品图片滚动 -->
+					<span class="Brand_List_content flex_center">
+						<h5>Brand List</h5> <em><a href="$!webPath/wap/brand.htm" />Know
+							more</a></em>
+					</span>
+					<div class="goods-img-slide " style="margin-top: 10px;">
+						<div class="swiper-wrapper">
+							#foreach($gb in $!goodsBrands)
+							#set($gb_url="$!webPath/brand_goods_$!{gb.id}.htm")
+							#if($!{gb.brandLogo})
+							<div class="swiper-slide goods_card">
+								<a href="$!gb_url" target="_blank"> <img
+									src="$!imageWebServer/$!{gb.brandLogo.path}/$!{gb.brandLogo.name}"
+									width="128" height="70" /> <span></span>
+								</a>
+							</div>
+							#end #end
+						</div>
+					</div>
+
+					<!-- 商品分类 -->
+					<span class="Brand_List_content flex_center">
+						<h5>Brand List</h5> <em><a href="$!webPath/wap/brand.htm" />Know
+							more</a></em>
+					</span>
+					<div class="good-img-class">
+						<!--  -->
+						<ul>
+							<li><a href="">
+									<div class="goods_describe">Fresh finds | Food cupboard</div>
+							</a></li>
+							<li><a href="">
+									<div class="goods_describe">Fresh finds | Food cupboard</div>
+							</a></li>
+							<li><a href="">
+									<div class="goods_describe">Fresh finds | Food cupboard</div>
+							</a></li>
+							<li><a href="">
+									<div class="goods_describe">Fresh finds | Food cupboard</div>
+							</a></li>
+						</ul>
+					</div>
+					<!-- 滚动商品1 -->
+					<span class="Brand_List_content flex_center">
+						<h5>$gcs.get(0).className</h5> <em><a href="#" />VIEW ALL</a></em>
+					</span>
+					<div class="goods_list_one "
+						style="height: 286px; margin-top: 10px;">
+						<div class="swiper-wrapper">
+							#foreach($goods in
+							$goodsViewTools.query_with_gc("$gcs.get(0).id",50) )
+							#if($!goods.goods_main_photo)
+							#set($img="$!imageWebServer/$!{goods.goods_main_photo.path}/$!{goods.goods_main_photo.name}_small.$!{goods.goods_main_photo.ext}")
+							#else
+							#set($img="$!imageWebServer/$!{config.goodsImage.path}/$!{config.goodsImage.name}")
+							#end
+							<div class="swiper-slide  goods_card">
+								<a href="/metoo/wap/goods.htm?id=$!goods.id"> <!--  商品图片 -->
+									<div class="goods_sidel_img">
+										<img src="$img" alt="">
+									</div>
+									<div class="goods_list_padding">
+										<!-- 商品标题 -->
+										<div class="goods_title">
+											<h6>$!goods.goods_name</h6>
+										</div>
+										<!-- 商品评分 -->
+										<div class="rating"></div>
+										<!-- 折扣价格 -->
+										<h5 class="discount_price">
+											<small>AED</small>$!goods.goods_current_price
+										</h5>
+										<!-- 价格 -->
+										<h5 class="cash_price">
+											<small>AED</small>$!goods.goods_current_price
+										</h5>
+									</div>
+								</a>
+							</div>
+							#end
+						</div>
+					</div>
+					<div class="goods_list_one_pagination"
+						style="height: 5px; width: 100%;"></div>
+					<!-- 滚动商品2 -->
+					<span class="Brand_List_content flex_center">
+						<h5>$gcs.get(1).className</h5> <em><a href="#" />VIEW ALL</a></em>
+					</span>
+					<div class="goods_list_two"
+						style="height: 286px; margin-top: 10px;">
+						<div class="swiper-wrapper">
+							#foreach($goods in
+							$goodsViewTools.query_with_gc("$gcs.get(0).id",50) )
+							#if($!goods.goods_main_photo)
+							#set($img="$!imageWebServer/$!{goods.goods_main_photo.path}/$!{goods.goods_main_photo.name}_small.$!{goods.goods_main_photo.ext}")
+							#else
+							#set($img="$!imageWebServer/$!{config.goodsImage.path}/$!{config.goodsImage.name}")
+							#end
+							<div class="swiper-slide  goods_card">
+								<a href="/metoo/wap/goods.htm?id=$!goods.id"> <!--  商品图片 -->
+									<div class="goods_sidel_img">
+										<img src="$img" alt="">
+									</div>
+									<div class="goods_list_padding">
+										<!-- 商品标题 -->
+										<div class="goods_title">
+											<h6>$!goods.goods_name</h6>
+										</div>
+										<!-- 商品评分 -->
+										<div class="rating"></div>
+										<!-- 折扣价格 -->
+										<h5 class="discount_price">
+											<small>AED</small>$!goods.goods_current_price
+										</h5>
+										<!-- 价格 -->
+										<h5 class="cash_price">
+											<small>AED</small>$!goods.goods_current_price
+										</h5>
+									</div>
+								</a>
+							</div>
+							#end
+						</div>
+					</div>
+
+					<div class="goods_list_two_pagination"
+						style="height: 5px; width: 100%;"></div>
+					<!-- 商品滚动3 -->
+					<span class="Brand_List_content flex_center">
+						<h5>$gcs.get(2).className</h5> <em><a href="#" />VIEW ALL</a></em>
+					</span>
+					<div class="goods_list_three"
+						style="height: 286px; margin-top: 10px;">
+						<div class="swiper-wrapper">
+							#foreach($goods in
+							$goodsViewTools.query_with_gc("$gcs.get(0).id",50) )
+							#if($!goods.goods_main_photo)
+							#set($img="$!imageWebServer/$!{goods.goods_main_photo.path}/$!{goods.goods_main_photo.name}_small.$!{goods.goods_main_photo.ext}")
+							#else
+							#set($img="$!imageWebServer/$!{config.goodsImage.path}/$!{config.goodsImage.name}")
+							#end
+							<div class="swiper-slide  goods_card">
+								<a href="/metoo/wap/goods.htm?id=$!goods.id"> <!--  商品图片 -->
+									<div class="goods_sidel_img">
+										<img src="$img" alt="">
+									</div>
+									<div class="goods_list_padding">
+										<!-- 商品标题 -->
+										<div class="goods_title">
+											<h6>$!goods.goods_name</h6>
+										</div>
+										<!-- 商品评分 -->
+										<div class="rating"></div>
+										<!-- 折扣价格 -->
+										<h5 class="discount_price">
+											<small>AED</small>$!goods.goods_current_price
+										</h5>
+										<!-- 价格 -->
+										<h5 class="cash_price">
+											<small>AED</small>$!goods.goods_current_price
+										</h5>
+									</div>
+								</a>
+							</div>
+							#end
+						</div>
+					</div>
+					<div class="goods_list_three_pagination"
+						style="height: 5px; width: 100%;"></div>
+
+
+
+
+					$!httpInclude.include("/footer.htm")
+					<div style="margin-top: 100px; display: block;"></div>
+				</div>
+			</div>
+			<!-- off-canvas backdrop -->
+			<div class="mui-off-canvas-backdrop"></div>
+		</div>
+		<!--购物车列表-->
+		<aside id="offCanvasSides" class="mui-off-canvas-right"
+			style="background: #fff;">
+			<div id="offCanvasSideScroll" class="mui-scroll-wrapper">
+				<div class="mui-scroll">
+					$!httpInclude.include("/wap/cart_right.htm")</div>
+			</div>
+		</aside>
+
+	</div>
+
+	<script src="$!webPath/resources/wap/swiper.min.js"></script>
+	<script src="$!webPath/resources/wap/mui.js"></script>
+	<!--  	<script src="$!webPath/resources/wap/mui.lazyload.img.js"></script>
+ 	<script src="$!webPath/resources/wap/mui.lazyload.js"></script>  -->
+	<script src="$!webPath/resources/js/jquery.SuperSlide.2.1.1.js"></script>
+	<script>
+	
+	function clickSearch(){
+		jQuery("#theForm").submit();
+	}
+	/* -------轮播图----- */
+/* 	var head_slide = new Swiper('.head_slide_s', {
+        autoplay: true,
+        loop: true,
+        pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+        }
+    }) */
+    var goods_slide = new Swiper('.goods-slide', {
+        slidesPerView: 2,
+        spaceBetween : 2.5,
+        // freeMode:false,
+        pagination: {
+            el: '.goods-pagination',
+            // type: 'bullets',
+            // type: 'fraction',
+            type: 'progressbar',
+            //type : 'custom',
+        },
+        passiveListeners : false,
+        touchStartForcePreventDefault : false,
+
+    });
+    var goodslistone = new Swiper('.goods_list_one', {
+        slidesPerView: 2,
+        spaceBetween : 10,
+        // freeMode:false,
+        pagination: {
+            el: '.goods_list_one_pagination',
+            // type: 'bullets',
+            // type: 'fraction',
+            type: 'progressbar',
+            //type : 'custom',
+        },
+        passiveListeners : false,
+        touchStartForcePreventDefault : false,
+
+    });
+    var goodslistone = new Swiper('.goods_list_two', {
+        slidesPerView: 2,
+        spaceBetween : 10,
+        // freeMode:false,
+        pagination: {
+            el: '.goods_list_two_pagination',
+            // type: 'bullets',
+            // type: 'fraction',
+            type: 'progressbar',
+            //type : 'custom',
+        },
+    });
+    var goodslistone = new Swiper('.goods_list_three', {
+        slidesPerView: 2,
+        spaceBetween : 10,
+        // freeMode:false,
+        pagination: {
+            el: '.goods_list_three_pagination',
+            // type: 'bullets',
+            // type: 'fraction',
+            type: 'progressbar',
+            //type : 'custom',
+        },
+    });
+	var goods_img = new Swiper('.goods-img-slide', {
+        slidesPerView:3.5,
+        spaceBetween : 10,
+    });
+	/*new hot*/
+	var goods_list_new = new Swiper('.goods_list_new', {
+		slidesPerView: 2,
+        spaceBetween : 10,
+        simulateTouch : false,//禁止鼠标模拟
+        // freeMode:false,
+        pagination: {
+            el: '.goods_list_new_pagination',
+            // type: 'bullets',
+            // type: 'fraction',
+            type: 'progressbar',
+            //type : 'custom',
+        },
+    });
+	var goods_list_hot = new Swiper('.goods_list_hot', {
+		slidesPerView: 2,
+        spaceBetween : 10,
+        // freeMode:false,
+        pagination: {
+            el: '.goods_list_hot_pagination',
+            // type: 'bullets',
+            // type: 'fraction',
+            type: 'progressbar',
+            //type : 'custom',
+        },
+    });
+	
+	/*    -------  mui内容   ---------*/
+    mui.init();
+    //侧滑容器父节点
+    var offCanvasWrapper = mui('#offCanvasWrapper');
+    //主界面容器
+    var offCanvasInner = offCanvasWrapper[0].querySelector('.mui-inner-wrap');
+    //菜单容器
+    // var offCanvasSide = document.getElementById("offCanvasSide");
+    // if (!mui.os.android) {
+    //     document.getElementById("move-togger").classList.remove('mui-hidden');
+    //     var spans = document.querySelectorAll('.android-only');
+    //     for (var i = 0, len = spans.length; i < len; i++) {
+    //         spans[i].style.display = "none";
+    //     }
+    // }
+    //移动效果是否为整体移动
+    var moveTogether = false;
+    //侧滑容器的class列表，增加.mui-slide-in即可实现菜单移动、主界面不动的效果；
+    var classList = offCanvasWrapper[0].classList;
+    //关闭侧滑效果
+    	document.getElementsByClassName('mui-inner-wrap')[0].addEventListener('drag', function(event) {
+		　　event.stopPropagation();
+	});
+    //关闭窗口
+    mui(".last_li").on('tap', '#offCanvasHide', function (event) {
+    	 offCanvasWrapper.offCanvas('close');
+    });
+    //主界面和侧滑菜单界面均支持区域滚动；
+    mui('#offCanvasSideScroll').scroll();
+    mui('#offCanvasContentScroll').scroll();
+    //实现ios平台原生侧滑关闭页面；
+    if (mui.os.plus && mui.os.ios) {
+        mui.plusReady(function () { //5+ iOS暂时无法屏蔽popGesture时传递touch事件，故该demo直接屏蔽popGesture功能
+            plus.webview.currentWebview().setStyle({
+                'popGesture': 'none'
+            });
+        });
+    }
+    
+    mui("#search_box").on('tap', '.sousuo_class_buttom', function (event) {
+    	clickSearch();
+    });
+    
+    mui(".tab-view-user").on('tap', '.tab-view-list', function (event) {
+        if ($(event.target).siblings().hasClass("accordion_active") != true) {
+         /* 	$(event.target).after("background: transparent;")  */
+            $(event.target).siblings().addClass("accordion_active")
+        	/* $(event.target).after("background-color: #222;")  */
+            return;
+        }
+        $(event.target).siblings().removeClass("accordion_active");
+       /*  $(event.target).after("background-color: transparent;")  */
+    });
+    
+    
+    
+    mui('body').on('tap','a',function(){document.location.href=this.href;});
+		/* $(function () {
+
+			$("#search_btn").click(function () {
+				$("#main_title").hide();
+				$("#search_form").slideToggle(2000);
+			});
+
+			$(".group_top>ul>li").click(function () {
+				$(this).siblings('li').removeClass("this");
+				$(this).addClass("this");
+			});
+		});
+
+		function search_form() {
+			jQuery("#theForm").submit();
+		}
+		function isWeiXin() {
+			var ua = window.navigator.userAgent.toLowerCase();
+			if (ua.match(/MicroMessenger/i) == 'micromessenger') {
+				return true;
+			} else {
+				return false;
+			}
+		} */
+		// <script>
+		/* $(document).ready(function () {
+			mui.init();
+
+			//侧滑容器父节点
+			var offCanvasWrapper = mui('#offCanvasWrapper');
+			//主界面容器
+			var offCanvasInner = offCanvasWrapper[0].querySelector('.mui-inner-wrap');
+			// //菜单容器
+			// var offCanvasSide = document.getElementById("offCanvasSide");
+			// if (!mui.os.android) {
+			// 	document.getElementById("move-togger").classList.remove('mui-hidden');
+			// 	var spans = document.querySelectorAll('.android-only');
+			// 	for (var i = 0, len = spans.length; i < len; i++) {
+			// 		spans[i].style.display = "none";
+			// 	}
+			// }
+			//移动效果是否为整体移动
+			var moveTogether = false;
+			//侧滑容器的class列表，增加.mui-slide-in即可实现菜单移动、主界面不动的效果；
+			var classList = offCanvasWrapper[0].classList;
+
+			//主界面‘显示侧滑菜单’按钮的点击事件
+			// document.getElementById('offCanvasShow').addEventListener('tap', function () {
+			// 	offCanvasWrapper.offCanvas('show');
+			// });
+			$("#offCanvasShow").click(function () {
+				offCanvasWrapper.offCanvas('show');
+			})
+
+			$(".list_son").click(function () {
+				console.log("123")
+				offCanvasWrapper.offCanvas('close');
+			});
+
+			//主界面和侧滑菜单界面均支持区域滚动；
+			mui('#offCanvasSideScroll').scroll();
+			mui('#offCanvasContentScroll').scroll();
+			//实现ios平台原生侧滑关闭页面；
+			if (mui.os.plus && mui.os.ios) {
+				mui.plusReady(function () { //5+ iOS暂时无法屏蔽popGesture时传递touch事件，故该demo直接屏蔽popGesture功能
+					plus.webview.currentWebview().setStyle({
+						'popGesture': 'none'
+					});
+				});
+			}
+
+		});
+ */
+
+	</script>
+
+</body>
+
+</html>

@@ -1,0 +1,998 @@
+<style>
+#swiper-container {
+	padding: 10px 20px;
+	box-sizing: border-box;
+}
+
+#swiper-slide {
+	width: 177.5px !important;
+}
+</style>
+#if($floors.size()>0)
+<!-- //1 -->
+<div class="goods_box">
+	<div class="title_goods2">
+		<p style="width: 20%"></p>
+		<p class="title_goods2_r">
+			<span class="title_goods_z"></span> <span class="title_goods_w">$floors.get(0).childs.get(0).gf_name</span>
+			<span class="title_goods_z"></span>
+		</p>
+		<span class="title_goods_w title_goods_wr"><a
+			href="$!webPath/store_goods_list_2.htm">View more</a></span>
+	</div>
+	<div class="swiper-container goods1" id="swiper-container">
+		#set( $goodslist =
+		$gf_tools.generic_goods("$floors.get(0).childs.get(0).gf_gc_goods") )
+		<div class="swiper-wrapper">
+			#foreach( $goodsto in $!goodslist) #if($!goodsto)
+			#if($!goodsto.goods_main_photo)
+			#set($img="$!imageWebServer/$!{goodsto.goods_main_photo.path}/$!{goodsto.goods_main_photo.name}_small.$!{goodsto.goods_main_photo.ext}")
+			#else
+			#set($img="$!imageWebServer/$!{config.goodsImage.path}/$!{config.goodsImage.name}")
+			#end #set($goods_url="$!webPath/goods_$!{goodsto.id}_digital.htm")
+			#if($!config.second_domain_open && $!goodsto.goods_type==1 &&
+			$!goodsto.goods_store.store_second_domain!="")
+			#set($goods_url="http://$!{goodsto.goods_store.store_second_domain}.$!{domainPath}/goods_$!{goodsto.id}_digital.htm")
+			#end
+			<div class="swiper-slide" id="swiper-slide">
+				<div class="goods_content">
+					<p class="img_cspan">
+						<a href="$!goods_url" target="_blank" class="sale_two_img">
+							#if($!goodsto.goods_type==0)
+							#set($imga="$!imageWebServer/$!{config.websiteLogo.path}/$!{config.websiteLogo.name}")
+							<img src="$!imga" border="0"
+							style="height: 20px; width: 40px; position: absolute; z-index: 1; left: 0;" />
+							#end <img data-src="$!img"
+							src="$!webPath/resources/style/common/images/loader.png"
+							width="170" height="170" />
+						</a>
+					</p>
+					<div class="goods_list_bottom">
+						<a href="$!goods_url"><span class="sale_two_name">$!{goodsto.goods_name}</span></a>
+						<a href="$!goods_url">
+							<p class="sale_pingfen">
+								#set($well_evaluate =
+								$!CommUtil.null2Double($!{goodsto.well_evaluate})*100)
+								#if($!well_evaluate>0) <span class="five_star"><b
+									title="好评率：$!{well_evaluate}%" style="width: $!{well_evaluate}"></b></span>
+								#end #set($eva_count=0) #foreach($eva in $goodsto.evaluates)
+								#if($!eva.evaluate_status==0) #set($eva_count= $!eva_count + 1)
+								#end #end #if($!eva_count > 0) <a href="javascript:void(0);"
+									class="deta_eval_a">($!{eva_count})</a> #end #if(!$!store) #end
+							</p>
+						</a> #if( $!{goodsto.goods_price} > $!{goodsto.goods_current_price})
+						#set($pro
+						=(($!{goodsto.goods_price}-$!{goodsto.goods_current_price})/$!{goodsto.goods_price})*100)
+						#set($bigdecimal = $!CommUtil.bigDeCimal($pro)) <a
+							href="$!goods_url"
+							style="display: flex; justify-content: space-between;"><span
+							class="was">&nbsp;$!{goodsto.goods_price}&nbsp;AED</span><span
+							class="was_pro"> $!{bigdecimal}% off</span></a> #else <a
+							href="$!goods_url"><span class="was"></span></a> #end <a
+							href="$!goods_url"> <span class="sale_two_price">
+								<h5>
+									<strong>$!{goodsto.goods_current_price}&nbsp;</strong><small>AED</small>
+								</h5>
+						</span>
+						</a> <a href="$!goods_url"><span class="sale_two_price"></span></a>
+					</div>
+				</div>
+			</div>
+			#end #end
+		</div>
+		<!--宸︾澶�-->
+		<div class="swiper-button-prev arrows1">
+			<img src="$!webPath/resources/style/common/images/arrow/arrow1.png">
+		</div>
+		<!--鍙崇澶�-->
+		<div class="swiper-button-next arrows1">
+			<img src="$!webPath/resources/style/common/images/arrow/arrow3.png">
+		</div>
+	</div>
+</div>
+<!-- //2 -->
+<div class="goods_box">
+	<div class="title_goods2">
+		<p style="width: 20%"></p>
+		<p class="title_goods2_r">
+			<span class="title_goods_z"></span> <span class="title_goods_w">$floors.get(0).childs.get(1).gf_name</span>
+			<span class="title_goods_z"></span>
+		</p>
+		<span class="title_goods_w title_goods_wr"><a
+			href="$!webPath/store_goods_list_10.htm">View more</a></span>
+	</div>
+	<div class="swiper-container goods2" id="swiper-container">
+		#set( $goodslist =
+		$gf_tools.generic_goods("$floors.get(0).childs.get(1).gf_gc_goods") )
+		<div class="swiper-wrapper">
+			#foreach( $goodsto in $!goodslist) #if($!goodsto)
+			#if($!goodsto.goods_main_photo)
+			#set($img="$!imageWebServer/$!{goodsto.goods_main_photo.path}/$!{goodsto.goods_main_photo.name}_small.$!{goodsto.goods_main_photo.ext}")
+			#else
+			#set($img="$!imageWebServer/$!{config.goodsImage.path}/$!{config.goodsImage.name}")
+			#end #set($goods_url="$!webPath/goods_$!{goodsto.id}_digital.htm")
+			#if($!config.second_domain_open && $!goodsto.goods_type==1 &&
+			$!goodsto.goods_store.store_second_domain!="")
+			#set($goods_url="http://$!{goodsto.goods_store.store_second_domain}.$!{domainPath}/goods_$!{goodsto.id}_digital.htm")
+			#end
+			<div class="swiper-slide" id="swiper-slide">
+				<div class="goods_content">
+					<p class="img_cspan">
+						<a href="$!goods_url" target="_blank" class="sale_two_img">
+							#if($!goodsto.goods_type==0)
+							#set($imga="$!imageWebServer/$!{config.websiteLogo.path}/$!{config.websiteLogo.name}")
+							<img src="$!imga" border="0"
+							style="height: 20px; width: 40px; position: absolute; z-index: 1; left: 0;" />
+							#end <img data-src="$!img"
+							src="$!webPath/resources/style/common/images/loader.png"
+							width="170" height="170" />
+						</a>
+					</p>
+					<div class="goods_list_bottom">
+						<a href="$!goods_url"><span class="sale_two_name">$!{goodsto.goods_name}</span></a>
+						<a href="$!goods_url">
+							<p class="sale_pingfen">
+								#set($well_evaluate =
+								$!CommUtil.null2Double($!{goodsto.well_evaluate})*100)
+								#if($!well_evaluate>0) <span class="five_star"><b
+									title="好评率：$!{well_evaluate}%" style="width: $!{well_evaluate}"></b></span>
+								#end #set($eva_count=0) #foreach($eva in $goodsto.evaluates)
+								#if($!eva.evaluate_status==0) #set($eva_count= $!eva_count + 1)
+								#end #end #if($!eva_count > 0) <a href="javascript:void(0);"
+									class="deta_eval_a">($!{eva_count})</a> #end #if(!$!store) #end
+							</p>
+						</a> #if( $!{goodsto.goods_price} > $!{goodsto.goods_current_price})
+						#set($pro
+						=(($!{goodsto.goods_price}-$!{goodsto.goods_current_price})/$!{goodsto.goods_price})*100)
+						#set($bigdecimal = $!CommUtil.bigDeCimal($pro)) <a
+							href="$!goods_url"
+							style="display: flex; justify-content: space-between;"><span
+							class="was">&nbsp;$!{goodsto.goods_price}&nbsp;AED</span><span
+							class="was_pro"> $!{bigdecimal}% off</span></a> #else <a
+							href="$!goods_url"><span class="was"></span></a> #end <a
+							href="$!goods_url"> <span class="sale_two_price">
+								<h5>
+									<strong>$!{goodsto.goods_current_price}&nbsp;</strong><small>AED</small>
+								</h5>
+						</span>
+						</a> <a href="$!goods_url"><span class="sale_two_price"></span></a>
+					</div>
+				</div>
+			</div>
+			#end #end
+		</div>
+		<!--宸︾澶�-->
+		<div class="swiper-button-prev arrows2">
+			<img src="$!webPath/resources/style/common/images/arrow/arrow1.png">
+		</div>
+		<!--鍙崇澶�-->
+		<div class="swiper-button-next arrows2">
+			<img src="$!webPath/resources/style/common/images/arrow/arrow3.png">
+		</div>
+	</div>
+</div>
+<!-- 妤煎眰3-->
+<div class="goods_box">
+	<div class="title_goods2">
+		<p style="width: 20%"></p>
+		<p class="title_goods2_r">
+			<span class="title_goods_z"></span> <span class="title_goods_w">$floors.get(0).childs.get(2).gf_name</span>
+			<span class="title_goods_z"></span>
+		</p>
+		<span class="title_goods_w title_goods_wr"><a
+			href="$!webPath/store_goods_list_10.htm">View more</a></span>
+	</div>
+	<div class="swiper-container goods3" id="swiper-container">
+		#set( $goodslist =
+		$gf_tools.generic_goods("$floors.get(0).childs.get(2).gf_gc_goods") )
+		<div class="swiper-wrapper">
+			#foreach( $goodsto in $!goodslist) #if($!goodsto)
+			#if($!goodsto.goods_main_photo)
+			#set($img="$!imageWebServer/$!{goodsto.goods_main_photo.path}/$!{goodsto.goods_main_photo.name}_small.$!{goodsto.goods_main_photo.ext}")
+			#else
+			#set($img="$!imageWebServer/$!{config.goodsImage.path}/$!{config.goodsImage.name}")
+			#end #set($goods_url="$!webPath/goods_$!{goodsto.id}_digital.htm")
+			#if($!config.second_domain_open && $!goodsto.goods_type==1 &&
+			$!goodsto.goods_store.store_second_domain!="")
+			#set($goods_url="http://$!{goodsto.goods_store.store_second_domain}.$!{domainPath}/goods_$!{goodsto.id}_digital.htm")
+			#end
+			<div class="swiper-slide" id="swiper-slide">
+				<div class="goods_content">
+					<p class="img_cspan">
+						<a href="$!goods_url" target="_blank" class="sale_two_img">
+							#if($!goodsto.goods_type==0)
+							#set($imga="$!imageWebServer/$!{config.websiteLogo.path}/$!{config.websiteLogo.name}")
+							<img src="$!imga" border="0"
+							style="height: 20px; width: 40px; position: absolute; z-index: 1; left: 0;" />
+							#end <img data-src="$!img"
+							src="$!webPath/resources/style/common/images/loader.png"
+							width="170" height="170" />
+						</a>
+					</p>
+					<div class="goods_list_bottom">
+						<a href="$!goods_url"><span class="sale_two_name">$!{goodsto.goods_name}</span></a>
+						<a href="$!goods_url">
+							<p class="sale_pingfen">
+								#set($well_evaluate =
+								$!CommUtil.null2Double($!{goodsto.well_evaluate})*100)
+								#if($!well_evaluate>0) <span class="five_star"><b
+									title="好评率：$!{well_evaluate}%" style="width: $!{well_evaluate}"></b></span>
+								#end #set($eva_count=0) #foreach($eva in $goodsto.evaluates)
+								#if($!eva.evaluate_status==0) #set($eva_count= $!eva_count + 1)
+								#end #end #if($!eva_count > 0) <a href="javascript:void(0);"
+									class="deta_eval_a">($!{eva_count})</a> #end #if(!$!store) #end
+							</p>
+						</a> #if( $!{goodsto.goods_price} > $!{goodsto.goods_current_price})
+						#set($pro
+						=(($!{goodsto.goods_price}-$!{goodsto.goods_current_price})/$!{goodsto.goods_price})*100)
+						#set($bigdecimal = $!CommUtil.bigDeCimal($pro)) <a
+							href="$!goods_url"
+							style="display: flex; justify-content: space-between;"><span
+							class="was">&nbsp;$!{goodsto.goods_price}&nbsp;AED</span><span
+							class="was_pro"> $!{bigdecimal}% off</span></a> #else <a
+							href="$!goods_url"><span class="was"></span></a> #end <a
+							href="$!goods_url"> <span class="sale_two_price">
+								<h5>
+									<strong>$!{goodsto.goods_current_price}&nbsp;</strong><small>AED</small>
+								</h5>
+						</span>
+						</a> <a href="$!goods_url"><span class="sale_two_price"></span></a>
+					</div>
+				</div>
+			</div>
+			#end #end
+		</div>
+		<!--宸︾澶�-->
+		<div class="swiper-button-prev arrows3">
+			<img src="$!webPath/resources/style/common/images/arrow/arrow1.png">
+		</div>
+		<!--鍙崇澶�-->
+		<div class="swiper-button-next arrows3">
+			<img src="$!webPath/resources/style/common/images/arrow/arrow3.png">
+		</div>
+	</div>
+</div>
+<!-- 妤煎眰4 -->
+<div class="goods_box">
+	<div class="title_goods2">
+		<p style="width: 20%"></p>
+		<p class="title_goods2_r">
+			<span class="title_goods_z"></span> <span class="title_goods_w">$floors.get(0).childs.get(3).gf_name</span>
+			<span class="title_goods_z"></span>
+		</p>
+		<span class="title_goods_w title_goods_wr"><a
+			href="$!webPath/store_goods_list_9.htm">View more</a></span>
+	</div>
+	<div class="swiper-container goods4" id="swiper-container">
+		#set( $goodslist =
+		$gf_tools.generic_goods("$floors.get(0).childs.get(3).gf_gc_goods") )
+		<div class="swiper-wrapper">
+			#foreach( $goodsto in $!goodslist) #if($!goodsto)
+			#if($!goodsto.goods_main_photo)
+			#set($img="$!imageWebServer/$!{goodsto.goods_main_photo.path}/$!{goodsto.goods_main_photo.name}_small.$!{goodsto.goods_main_photo.ext}")
+			#else
+			#set($img="$!imageWebServer/$!{config.goodsImage.path}/$!{config.goodsImage.name}")
+			#end #set($goods_url="$!webPath/goods_$!{goodsto.id}_digital.htm")
+			#if($!config.second_domain_open && $!goodsto.goods_type==1 &&
+			$!goodsto.goods_store.store_second_domain!="")
+			#set($goods_url="http://$!{goodsto.goods_store.store_second_domain}.$!{domainPath}/goods_$!{goodsto.id}_digital.htm")
+			#end
+			<div class="swiper-slide" id="swiper-slide">
+				<div class="goods_content">
+					<p class="img_cspan">
+						<a href="$!goods_url" target="_blank" class="sale_two_img">
+							#if($!goodsto.goods_type==0)
+							#set($imga="$!imageWebServer/$!{config.websiteLogo.path}/$!{config.websiteLogo.name}")
+							<img src="$!imga" border="0"
+							style="height: 20px; width: 40px; position: absolute; z-index: 1; left: 0;" />
+							#end <img data-src="$!img"
+							src="$!webPath/resources/style/common/images/loader.png"
+							width="170" height="170" />
+						</a>
+					</p>
+					<div class="goods_list_bottom">
+						<a href="$!goods_url"><span class="sale_two_name">$!{goodsto.goods_name}</span></a>
+						<a href="$!goods_url">
+							<p class="sale_pingfen">
+								#set($well_evaluate =
+								$!CommUtil.null2Double($!{goodsto.well_evaluate})*100)
+								#if($!well_evaluate>0) <span class="five_star"><b
+									title="好评率：$!{well_evaluate}%" style="width: $!{well_evaluate}"></b></span>
+								#end #set($eva_count=0) #foreach($eva in $goodsto.evaluates)
+								#if($!eva.evaluate_status==0) #set($eva_count= $!eva_count + 1)
+								#end #end #if($!eva_count > 0) <a href="javascript:void(0);"
+									class="deta_eval_a">($!{eva_count})</a> #end #if(!$!store) #end
+							</p>
+						</a> #if( $!{goodsto.goods_price} > $!{goodsto.goods_current_price})
+						#set($pro
+						=(($!{goodsto.goods_price}-$!{goodsto.goods_current_price})/$!{goodsto.goods_price})*100)
+						#set($bigdecimal = $!CommUtil.bigDeCimal($pro)) <a
+							href="$!goods_url"
+							style="display: flex; justify-content: space-between;"><span
+							class="was">&nbsp;$!{goodsto.goods_price}&nbsp;AED</span><span
+							class="was_pro"> $!{bigdecimal}% off</span></a> #else <a
+							href="$!goods_url"><span class="was"></span></a> #end <a
+							href="$!goods_url"> <span class="sale_two_price">
+								<h5>
+									<strong>$!{goodsto.goods_current_price}&nbsp;</strong><small>AED</small>
+								</h5>
+						</span>
+						</a> <a href="$!goods_url"><span class="sale_two_price"></span></a>
+					</div>
+				</div>
+			</div>
+			#end #end
+		</div>
+		<!--宸︾澶�-->
+		<div class="swiper-button-prev arrows4">
+			<img src="$!webPath/resources/style/common/images/arrow/arrow1.png">
+		</div>
+		<!--鍙崇澶�-->
+		<div class="swiper-button-next arrows4">
+			<img src="$!webPath/resources/style/common/images/arrow/arrow3.png">
+		</div>
+	</div>
+</div>
+
+<!-- 妤煎眰5 -->
+<div class="goods_box">
+	<div class="title_goods2">
+		<p style="width: 20%"></p>
+		<p class="title_goods2_r">
+			<span class="title_goods_z"></span> <span class="title_goods_w">$floors.get(1).childs.get(0).gf_name</span>
+			<span class="title_goods_z"></span>
+		</p>
+		<span class="title_goods_w title_goods_wr"><a
+			href="$!webPath/store_goods_list_9.htm">View more</a></span>
+	</div>
+	<div class="swiper-container goods5" id="swiper-container">
+		#set( $goodslist =
+		$gf_tools.generic_goods("$floors.get(1).childs.get(0).gf_gc_goods") )
+		<div class="swiper-wrapper">
+			#foreach( $goodsto in $!goodslist) #if($!goodsto)
+			#if($!goodsto.goods_main_photo)
+			#set($img="$!imageWebServer/$!{goodsto.goods_main_photo.path}/$!{goodsto.goods_main_photo.name}_small.$!{goodsto.goods_main_photo.ext}")
+			#else
+			#set($img="$!imageWebServer/$!{config.goodsImage.path}/$!{config.goodsImage.name}")
+			#end #set($goods_url="$!webPath/goods_$!{goodsto.id}_digital.htm")
+			#if($!config.second_domain_open && $!goodsto.goods_type==1 &&
+			$!goodsto.goods_store.store_second_domain!="")
+			#set($goods_url="http://$!{goodsto.goods_store.store_second_domain}.$!{domainPath}/goods_$!{goodsto.id}_digital.htm")
+			#end
+			<div class="swiper-slide" id="swiper-slide">
+				<div class="goods_content">
+					<p class="img_cspan">
+						<a href="$!goods_url" target="_blank" class="sale_two_img">
+							#if($!goodsto.goods_type==0)
+							#set($imga="$!imageWebServer/$!{config.websiteLogo.path}/$!{config.websiteLogo.name}")
+							<img src="$!imga" border="0"
+							style="height: 20px; width: 40px; position: absolute; z-index: 1; left: 0;" />
+							#end <img data-src="$!img"
+							src="$!webPath/resources/style/common/images/loader.png"
+							width="170" height="170" />
+						</a>
+					</p>
+					<div class="goods_list_bottom">
+						<a href="$!goods_url"><span class="sale_two_name">$!{goodsto.goods_name}</span></a>
+						<a href="$!goods_url">
+							<p class="sale_pingfen">
+								#set($well_evaluate =
+								$!CommUtil.null2Double($!{goodsto.well_evaluate})*100)
+								#if($!well_evaluate>0) <span class="five_star"><b
+									title="好评率：$!{well_evaluate}%" style="width: $!{well_evaluate}"></b></span>
+								#end #set($eva_count=0) #foreach($eva in $goodsto.evaluates)
+								#if($!eva.evaluate_status==0) #set($eva_count= $!eva_count + 1)
+								#end #end #if($!eva_count > 0) <a href="javascript:void(0);"
+									class="deta_eval_a">($!{eva_count})</a> #end #if(!$!store) #end
+							</p>
+						</a> #if( $!{goodsto.goods_price} > $!{goodsto.goods_current_price})
+						#set($pro
+						=(($!{goodsto.goods_price}-$!{goodsto.goods_current_price})/$!{goodsto.goods_price})*100)
+						#set($bigdecimal = $!CommUtil.bigDeCimal($pro)) <a
+							href="$!goods_url"
+							style="display: flex; justify-content: space-between;"><span
+							class="was">&nbsp;$!{goodsto.goods_price}&nbsp;AED</span><span
+							class="was_pro"> $!{bigdecimal}% off</span></a> #else <a
+							href="$!goods_url"><span class="was"></span></a> #end <a
+							href="$!goods_url"> <span class="sale_two_price">
+								<h5>
+									<strong>$!{goodsto.goods_current_price}&nbsp;</strong><small>AED</small>
+								</h5>
+						</span>
+						</a> <a href="$!goods_url"><span class="sale_two_price"></span></a>
+					</div>
+				</div>
+			</div>
+			#end #end
+		</div>
+		<!--宸︾澶�-->
+		<div class="swiper-button-prev arrows5">
+			<img src="$!webPath/resources/style/common/images/arrow/arrow1.png">
+		</div>
+		<!--鍙崇澶�-->
+		<div class="swiper-button-next arrows5">
+			<img src="$!webPath/resources/style/common/images/arrow/arrow3.png">
+		</div>
+	</div>
+</div>
+<!-- 妤煎眰6 -->
+<div class="goods_box">
+	<div class="title_goods2">
+		<p style="width: 20%"></p>
+		<p class="title_goods2_r">
+			<span class="title_goods_z"></span> <span class="title_goods_w">$floors.get(1).childs.get(1).gf_name</span>
+			<span class="title_goods_z"></span>
+		</p>
+		<span class="title_goods_w title_goods_wr"><a
+			href="$!webPath/store_goods_list_2.htm">View more</a></span>
+	</div>
+	<div class="swiper-container goods6" id="swiper-container">
+		#set( $goodslist =
+		$gf_tools.generic_goods("$floors.get(1).childs.get(1).gf_gc_goods") )
+		<div class="swiper-wrapper">
+			#foreach( $goodsto in $!goodslist) #if($!goodsto)
+			#if($!goodsto.goods_main_photo)
+			#set($img="$!imageWebServer/$!{goodsto.goods_main_photo.path}/$!{goodsto.goods_main_photo.name}_small.$!{goodsto.goods_main_photo.ext}")
+			#else
+			#set($img="$!imageWebServer/$!{config.goodsImage.path}/$!{config.goodsImage.name}")
+			#end #set($goods_url="$!webPath/goods_$!{goodsto.id}_digital.htm")
+			#if($!config.second_domain_open && $!goodsto.goods_type==1 &&
+			$!goodsto.goods_store.store_second_domain!="")
+			#set($goods_url="http://$!{goodsto.goods_store.store_second_domain}.$!{domainPath}/goods_$!{goodsto.id}_digital.htm")
+			#end
+			<div class="swiper-slide" id="swiper-slide">
+				<div class="goods_content">
+					<p class="img_cspan">
+						<a href="$!goods_url" target="_blank" class="sale_two_img">
+							#if($!goodsto.goods_type==0)
+							#set($imga="$!imageWebServer/$!{config.websiteLogo.path}/$!{config.websiteLogo.name}")
+							<img src="$!imga" border="0"
+							style="height: 20px; width: 40px; position: absolute; z-index: 1; left: 0;" />
+							#end <img data-src="$!img"
+							src="$!webPath/resources/style/common/images/loader.png"
+							width="170" height="170" />
+						</a>
+					</p>
+					<div class="goods_list_bottom">
+						<a href="$!goods_url"><span class="sale_two_name">$!{goodsto.goods_name}</span></a>
+						<a href="$!goods_url">
+							<p class="sale_pingfen">
+								#set($well_evaluate =
+								$!CommUtil.null2Double($!{goodsto.well_evaluate})*100)
+								#if($!well_evaluate>0) <span class="five_star"><b
+									title="好评率：$!{well_evaluate}%" style="width: $!{well_evaluate}"></b></span>
+								#end #set($eva_count=0) #foreach($eva in $goodsto.evaluates)
+								#if($!eva.evaluate_status==0) #set($eva_count= $!eva_count + 1)
+								#end #end #if($!eva_count > 0) <a href="javascript:void(0);"
+									class="deta_eval_a">($!{eva_count})</a> #end #if(!$!store) #end
+							</p>
+						</a> #if( $!{goodsto.goods_price} > $!{goodsto.goods_current_price})
+						#set($pro
+						=(($!{goodsto.goods_price}-$!{goodsto.goods_current_price})/$!{goodsto.goods_price})*100)
+						#set($bigdecimal = $!CommUtil.bigDeCimal($pro)) <a
+							href="$!goods_url"
+							style="display: flex; justify-content: space-between;"><span
+							class="was">&nbsp;$!{goodsto.goods_price}&nbsp;AED</span><span
+							class="was_pro"> $!{bigdecimal}% off</span></a> #else <a
+							href="$!goods_url"><span class="was"></span></a> #end <a
+							href="$!goods_url"> <span class="sale_two_price">
+								<h5>
+									<strong>$!{goodsto.goods_current_price}&nbsp;</strong><small>AED</small>
+								</h5>
+						</span>
+						</a> <a href="$!goods_url"><span class="sale_two_price"></span></a>
+					</div>
+				</div>
+			</div>
+			#end #end
+		</div>
+		<!--宸︾澶�-->
+		<div class="swiper-button-prev arrows6">
+			<img src="$!webPath/resources/style/common/images/arrow/arrow1.png">
+		</div>
+		<!--鍙崇澶�-->
+		<div class="swiper-button-next arrows6">
+			<img src="$!webPath/resources/style/common/images/arrow/arrow3.png">
+		</div>
+	</div>
+</div>
+<!-- 妤煎眰7 -->
+<div class="goods_box">
+	<div class="title_goods2">
+		<p style="width: 20%"></p>
+		<p class="title_goods2_r">
+			<span class="title_goods_z"></span> <span class="title_goods_w">$floors.get(1).childs.get(2).gf_name</span>
+			<span class="title_goods_z"></span>
+		</p>
+		<span class="title_goods_w title_goods_wr"><a
+			href="$!webPath/store_goods_list_9.htm">View more</a></span>
+	</div>
+	<div class="swiper-container goods7" id="swiper-container">
+		#set( $goodslist =
+		$gf_tools.generic_goods("$floors.get(1).childs.get(2).gf_gc_goods") )
+		<div class="swiper-wrapper">
+			#foreach( $goodsto in $!goodslist) #if($!goodsto)
+			#if($!goodsto.goods_main_photo)
+			#set($img="$!imageWebServer/$!{goodsto.goods_main_photo.path}/$!{goodsto.goods_main_photo.name}_small.$!{goodsto.goods_main_photo.ext}")
+			#else
+			#set($img="$!imageWebServer/$!{config.goodsImage.path}/$!{config.goodsImage.name}")
+			#end #set($goods_url="$!webPath/goods_$!{goodsto.id}_digital.htm")
+			#if($!config.second_domain_open && $!goodsto.goods_type==1 &&
+			$!goodsto.goods_store.store_second_domain!="")
+			#set($goods_url="http://$!{goodsto.goods_store.store_second_domain}.$!{domainPath}/goods_$!{goodsto.id}_digital.htm")
+			#end
+			<div class="swiper-slide" id="swiper-slide">
+				<div class="goods_content">
+					<p class="img_cspan">
+						<a href="$!goods_url" target="_blank" class="sale_two_img">
+							#if($!goodsto.goods_type==0)
+							#set($imga="$!imageWebServer/$!{config.websiteLogo.path}/$!{config.websiteLogo.name}")
+							<img src="$!imga" border="0"
+							style="height: 20px; width: 40px; position: absolute; z-index: 1; left: 0;" />
+							#end <img data-src="$!img"
+							src="$!webPath/resources/style/common/images/loader.png"
+							width="170" height="170" />
+						</a>
+					</p>
+					<div class="goods_list_bottom">
+						<a href="$!goods_url"><span class="sale_two_name">$!{goodsto.goods_name}</span></a>
+						<a href="$!goods_url">
+							<p class="sale_pingfen">
+								#set($well_evaluate =
+								$!CommUtil.null2Double($!{goodsto.well_evaluate})*100)
+								#if($!well_evaluate>0) <span class="five_star"><b
+									title="好评率：$!{well_evaluate}%" style="width: $!{well_evaluate}"></b></span>
+								#end #set($eva_count=0) #foreach($eva in $goodsto.evaluates)
+								#if($!eva.evaluate_status==0) #set($eva_count= $!eva_count + 1)
+								#end #end #if($!eva_count > 0) <a href="javascript:void(0);"
+									class="deta_eval_a">($!{eva_count})</a> #end #if(!$!store) #end
+							</p>
+						</a> #if( $!{goodsto.goods_price} > $!{goodsto.goods_current_price})
+						#set($pro
+						=(($!{goodsto.goods_price}-$!{goodsto.goods_current_price})/$!{goodsto.goods_price})*100)
+						#set($bigdecimal = $!CommUtil.bigDeCimal($pro)) <a
+							href="$!goods_url"
+							style="display: flex; justify-content: space-between;"><span
+							class="was">&nbsp;$!{goodsto.goods_price}&nbsp;AED</span><span
+							class="was_pro"> $!{bigdecimal}% off</span></a> #else <a
+							href="$!goods_url"><span class="was"></span></a> #end <a
+							href="$!goods_url"> <span class="sale_two_price">
+								<h5>
+									<strong>$!{goodsto.goods_current_price}&nbsp;</strong><small>AED</small>
+								</h5>
+						</span>
+						</a> <a href="$!goods_url"><span class="sale_two_price"></span></a>
+					</div>
+				</div>
+			</div>
+			#end #end
+		</div>
+		<!--宸︾澶�-->
+		<div class="swiper-button-prev arrows7">
+			<img src="$!webPath/resources/style/common/images/arrow/arrow1.png">
+		</div>
+		<!--鍙崇澶�-->
+		<div class="swiper-button-next arrows7">
+			<img src="$!webPath/resources/style/common/images/arrow/arrow3.png">
+		</div>
+	</div>
+</div>
+<!-- 妤煎眰8 -->
+<div class="goods_box">
+	<div class="title_goods2">
+		<p style="width: 20%"></p>
+		<p class="title_goods2_r">
+			<span class="title_goods_z"></span> <span class="title_goods_w">$floors.get(1).childs.get(3).gf_name</span>
+			<span class="title_goods_z"></span>
+		</p>
+		<span class="title_goods_w title_goods_wr"><a
+			href="$!webPath/store_goods_list_9.htm">View more</a></span>
+	</div>
+	<div class="swiper-container goods8" id="swiper-container">
+		#set( $goodslist =
+		$gf_tools.generic_goods("$floors.get(1).childs.get(3).gf_gc_goods") )
+		<div class="swiper-wrapper">
+			#foreach( $goodsto in $!goodslist) #if($!goodsto)
+			#if($!goodsto.goods_main_photo)
+			#set($img="$!imageWebServer/$!{goodsto.goods_main_photo.path}/$!{goodsto.goods_main_photo.name}_small.$!{goodsto.goods_main_photo.ext}")
+			#else
+			#set($img="$!imageWebServer/$!{config.goodsImage.path}/$!{config.goodsImage.name}")
+			#end #set($goods_url="$!webPath/goods_$!{goodsto.id}_digital.htm")
+			#if($!config.second_domain_open && $!goodsto.goods_type==1 &&
+			$!goodsto.goods_store.store_second_domain!="")
+			#set($goods_url="http://$!{goodsto.goods_store.store_second_domain}.$!{domainPath}/goods_$!{goodsto.id}_digital.htm")
+			#end
+			<div class="swiper-slide" id="swiper-slide">
+				<div class="goods_content">
+					<p class="img_cspan">
+						<a href="$!goods_url" target="_blank" class="sale_two_img">
+							#if($!goodsto.goods_type==0)
+							#set($imga="$!imageWebServer/$!{config.websiteLogo.path}/$!{config.websiteLogo.name}")
+							<img src="$!imga" border="0"
+							style="height: 20px; width: 40px; position: absolute; z-index: 1; left: 0;" />
+							#end <img data-src="$!img"
+							src="$!webPath/resources/style/common/images/loader.png"
+							width="170" height="170" />
+						</a>
+					</p>
+					<div class="goods_list_bottom">
+						<a href="$!goods_url"><span class="sale_two_name">$!{goodsto.goods_name}</span></a>
+						<a href="$!goods_url">
+							<p class="sale_pingfen">
+								#set($well_evaluate =
+								$!CommUtil.null2Double($!{goodsto.well_evaluate})*100)
+								#if($!well_evaluate>0) <span class="five_star"><b
+									title="好评率：$!{well_evaluate}%" style="width: $!{well_evaluate}"></b></span>
+								#end #set($eva_count=0) #foreach($eva in $goodsto.evaluates)
+								#if($!eva.evaluate_status==0) #set($eva_count= $!eva_count + 1)
+								#end #end #if($!eva_count > 0) <a href="javascript:void(0);"
+									class="deta_eval_a">($!{eva_count})</a> #end #if(!$!store) #end
+							</p>
+						</a> #if( $!{goodsto.goods_price} > $!{goodsto.goods_current_price})
+						#set($pro
+						=(($!{goodsto.goods_price}-$!{goodsto.goods_current_price})/$!{goodsto.goods_price})*100)
+						#set($bigdecimal = $!CommUtil.bigDeCimal($pro)) <a
+							href="$!goods_url"
+							style="display: flex; justify-content: space-between;"><span
+							class="was">&nbsp;$!{goodsto.goods_price}&nbsp;AED</span><span
+							class="was_pro"> $!{bigdecimal}% off</span></a> #else <a
+							href="$!goods_url"><span class="was"></span></a> #end <a
+							href="$!goods_url"> <span class="sale_two_price">
+								<h5>
+									<strong>$!{goodsto.goods_current_price}&nbsp;</strong><small>AED</small>
+								</h5>
+						</span>
+						</a> <a href="$!goods_url"><span class="sale_two_price"></span></a>
+					</div>
+				</div>
+			</div>
+			#end #end
+		</div>
+		<!--宸︾澶�-->
+		<div class="swiper-button-prev arrows8">
+			<img src="$!webPath/resources/style/common/images/arrow/arrow1.png">
+		</div>
+		<!--鍙崇澶�-->
+		<div class="swiper-button-next arrows8">
+			<img src="$!webPath/resources/style/common/images/arrow/arrow3.png">
+		</div>
+	</div>
+</div>
+<!-- 妤煎眰9 -->
+<div class="goods_box">
+	<div class="title_goods2">
+		<p style="width: 20%"></p>
+		<p class="title_goods2_r">
+			<span class="title_goods_z"></span> <span class="title_goods_w">$floors.get(2).childs.get(0).gf_name</span>
+			<span class="title_goods_z"></span>
+		</p>
+		<span class="title_goods_w title_goods_wr"><a
+			href="$!webPath/store_goods_list_9.htm">View more</a></span>
+	</div>
+	<div class="swiper-container goods9" id="swiper-container">
+		#set( $goodslist =
+		$gf_tools.generic_goods("$floors.get(2).childs.get(0).gf_gc_goods") )
+		<div class="swiper-wrapper">
+			#foreach( $goodsto in $!goodslist) #if($!goodsto)
+			#if($!goodsto.goods_main_photo)
+			#set($img="$!imageWebServer/$!{goodsto.goods_main_photo.path}/$!{goodsto.goods_main_photo.name}_small.$!{goodsto.goods_main_photo.ext}")
+			#else
+			#set($img="$!imageWebServer/$!{config.goodsImage.path}/$!{config.goodsImage.name}")
+			#end #set($goods_url="$!webPath/goods_$!{goodsto.id}_digital.htm")
+			#if($!config.second_domain_open && $!goodsto.goods_type==1 &&
+			$!goodsto.goods_store.store_second_domain!="")
+			#set($goods_url="http://$!{goodsto.goods_store.store_second_domain}.$!{domainPath}/goods_$!{goodsto.id}_digital.htm")
+			#end
+			<div class="swiper-slide" id="swiper-slide">
+				<div class="goods_content">
+					<p class="img_cspan">
+						<a href="$!goods_url" target="_blank" class="sale_two_img">
+							#if($!goodsto.goods_type==0)
+							#set($imga="$!imageWebServer/$!{config.websiteLogo.path}/$!{config.websiteLogo.name}")
+							<img src="$!imga" border="0"
+							style="height: 20px; width: 40px; position: absolute; z-index: 1; left: 0;" />
+							#end <img data-src="$!img"
+							src="$!webPath/resources/style/common/images/loader.png"
+							width="170" height="170" />
+						</a>
+					</p>
+					<div class="goods_list_bottom">
+						<a href="$!goods_url"><span class="sale_two_name">$!{goodsto.goods_name}</span></a>
+						<a href="$!goods_url">
+							<p class="sale_pingfen">
+								#set($well_evaluate =
+								$!CommUtil.null2Double($!{goodsto.well_evaluate})*100)
+								#if($!well_evaluate>0) <span class="five_star"><b
+									title="好评率：$!{well_evaluate}%" style="width: $!{well_evaluate}"></b></span>
+								#end #set($eva_count=0) #foreach($eva in $goodsto.evaluates)
+								#if($!eva.evaluate_status==0) #set($eva_count= $!eva_count + 1)
+								#end #end #if($!eva_count > 0) <a href="javascript:void(0);"
+									class="deta_eval_a">($!{eva_count})</a> #end #if(!$!store) #end
+							</p>
+						</a> #if( $!{goodsto.goods_price} > $!{goodsto.goods_current_price})
+						#set($pro
+						=(($!{goodsto.goods_price}-$!{goodsto.goods_current_price})/$!{goodsto.goods_price})*100)
+						#set($bigdecimal = $!CommUtil.bigDeCimal($pro)) <a
+							href="$!goods_url"
+							style="display: flex; justify-content: space-between;"><span
+							class="was">&nbsp;$!{goodsto.goods_price}&nbsp;AED</span><span
+							class="was_pro"> $!{bigdecimal}% off</span></a> #else <a
+							href="$!goods_url"><span class="was"></span></a> #end <a
+							href="$!goods_url"> <span class="sale_two_price">
+								<h5>
+									<strong>$!{goodsto.goods_current_price}&nbsp;</strong><small>AED</small>
+								</h5>
+						</span>
+						</a> <a href="$!goods_url"><span class="sale_two_price"></span></a>
+					</div>
+				</div>
+			</div>
+			#end #end
+		</div>
+		<!--宸︾澶�-->
+		<div class="swiper-button-prev arrows9">
+			<img src="$!webPath/resources/style/common/images/arrow/arrow1.png">
+		</div>
+		<!--鍙崇澶�-->
+		<div class="swiper-button-next arrows9">
+			<img src="$!webPath/resources/style/common/images/arrow/arrow3.png">
+		</div>
+	</div>
+</div>
+<!-- 妤煎眰10 -->
+<div class="goods_box">
+	<div class="title_goods2">
+		<p style="width: 20%"></p>
+		<p class="title_goods2_r">
+			<span class="title_goods_z"></span> <span class="title_goods_w">$floors.get(2).childs.get(1).gf_name</span>
+			<span class="title_goods_z"></span>
+		</p>
+		<span class="title_goods_w title_goods_wr"><a
+			href="$!webPath/store_goods_list_9.htm">View more</a></span>
+	</div>
+	<div class="swiper-container goods10" id="swiper-container">
+		#set( $goodslist =
+		$gf_tools.generic_goods("$floors.get(2).childs.get(1).gf_gc_goods") )
+		<div class="swiper-wrapper">
+			#foreach( $goodsto in $!goodslist) #if($!goodsto)
+			#if($!goodsto.goods_main_photo)
+			#set($img="$!imageWebServer/$!{goodsto.goods_main_photo.path}/$!{goodsto.goods_main_photo.name}_small.$!{goodsto.goods_main_photo.ext}")
+			#else
+			#set($img="$!imageWebServer/$!{config.goodsImage.path}/$!{config.goodsImage.name}")
+			#end #set($goods_url="$!webPath/goods_$!{goodsto.id}_digital.htm")
+			#if($!config.second_domain_open && $!goodsto.goods_type==1 &&
+			$!goodsto.goods_store.store_second_domain!="")
+			#set($goods_url="http://$!{goodsto.goods_store.store_second_domain}.$!{domainPath}/goods_$!{goodsto.id}_digital.htm")
+			#end
+			<div class="swiper-slide" id="swiper-slide">
+				<div class="goods_content">
+					<p class="img_cspan">
+						<a href="$!goods_url" target="_blank" class="sale_two_img">
+							#if($!goodsto.goods_type==0)
+							#set($imga="$!imageWebServer/$!{config.websiteLogo.path}/$!{config.websiteLogo.name}")
+							<img src="$!imga" border="0"
+							style="height: 20px; width: 40px; position: absolute; z-index: 1; left: 0;" />
+							#end <img data-src="$!img"
+							src="$!webPath/resources/style/common/images/loader.png"
+							width="170" height="170" />
+						</a>
+					</p>
+					<div class="goods_list_bottom">
+						<a href="$!goods_url"><span class="sale_two_name">$!{goodsto.goods_name}</span></a>
+						<a href="$!goods_url">
+							<p class="sale_pingfen">
+								#set($well_evaluate =
+								$!CommUtil.null2Double($!{goodsto.well_evaluate})*100)
+								#if($!well_evaluate>0) <span class="five_star"><b
+									title="好评率：$!{well_evaluate}%" style="width: $!{well_evaluate}"></b></span>
+								#end #set($eva_count=0) #foreach($eva in $goodsto.evaluates)
+								#if($!eva.evaluate_status==0) #set($eva_count= $!eva_count + 1)
+								#end #end #if($!eva_count > 0) <a href="javascript:void(0);"
+									class="deta_eval_a">($!{eva_count})</a> #end #if(!$!store) #end
+							</p>
+						</a> #if( $!{goodsto.goods_price} > $!{goodsto.goods_current_price})
+						#set($pro
+						=(($!{goodsto.goods_price}-$!{goodsto.goods_current_price})/$!{goodsto.goods_price})*100)
+						#set($bigdecimal = $!CommUtil.bigDeCimal($pro)) <a
+							href="$!goods_url"
+							style="display: flex; justify-content: space-between;"><span
+							class="was">&nbsp;$!{goodsto.goods_price}&nbsp;AED</span><span
+							class="was_pro"> $!{bigdecimal}% off</span></a> #else <a
+							href="$!goods_url"><span class="was"></span></a> #end <a
+							href="$!goods_url"> <span class="sale_two_price">
+								<h5>
+									<strong>$!{goodsto.goods_current_price}&nbsp;</strong><small>AED</small>
+								</h5>
+						</span>
+						</a> <a href="$!goods_url"><span class="sale_two_price"></span></a>
+					</div>
+				</div>
+			</div>
+			#end #end
+		</div>
+		<!--宸︾澶�-->
+		<div class="swiper-button-prev arrows10">
+			<img src="$!webPath/resources/style/common/images/arrow/arrow1.png">
+		</div>
+		<!--鍙崇澶�-->
+		<div class="swiper-button-next arrows10">
+			<img src="$!webPath/resources/style/common/images/arrow/arrow3.png">
+		</div>
+	</div>
+</div>
+<!-- 妤煎眰11 -->
+<div class="goods_box">
+	<div class="title_goods2">
+		<p style="width: 20%"></p>
+		<p class="title_goods2_r">
+			<span class="title_goods_z"></span> <span class="title_goods_w">$floors.get(2).childs.get(2).gf_name</span>
+			<span class="title_goods_z"></span>
+		</p>
+		<span class="title_goods_w title_goods_wr"><a
+			href="$!webPath/store_goods_list_9.htm">View more</a></span>
+	</div>
+	<div class="swiper-container goods11" id="swiper-container">
+		#set( $goodslist =
+		$gf_tools.generic_goods("$floors.get(2).childs.get(2).gf_gc_goods") )
+		<div class="swiper-wrapper">
+			#foreach( $goodsto in $!goodslist) #if($!goodsto)
+			#if($!goodsto.goods_main_photo)
+			#set($img="$!imageWebServer/$!{goodsto.goods_main_photo.path}/$!{goodsto.goods_main_photo.name}_small.$!{goodsto.goods_main_photo.ext}")
+			#else
+			#set($img="$!imageWebServer/$!{config.goodsImage.path}/$!{config.goodsImage.name}")
+			#end #set($goods_url="$!webPath/goods_$!{goodsto.id}_digital.htm")
+			#if($!config.second_domain_open && $!goodsto.goods_type==1 &&
+			$!goodsto.goods_store.store_second_domain!="")
+			#set($goods_url="http://$!{goodsto.goods_store.store_second_domain}.$!{domainPath}/goods_$!{goodsto.id}_digital.htm")
+			#end
+			<div class="swiper-slide" id="swiper-slide">
+				<div class="goods_content">
+					<p class="img_cspan">
+						<a href="$!goods_url" target="_blank" class="sale_two_img">
+							#if($!goodsto.goods_type==0)
+							#set($imga="$!imageWebServer/$!{config.websiteLogo.path}/$!{config.websiteLogo.name}")
+							<img src="$!imga" border="0"
+							style="height: 20px; width: 40px; position: absolute; z-index: 1; left: 0;" />
+							#end <img data-src="$!img"
+							src="$!webPath/resources/style/common/images/loader.png"
+							width="170" height="170" />
+						</a>
+					</p>
+					<div class="goods_list_bottom">
+						<a href="$!goods_url"><span class="sale_two_name">$!{goodsto.goods_name}</span></a>
+						<a href="$!goods_url">
+							<p class="sale_pingfen">
+								#set($well_evaluate =
+								$!CommUtil.null2Double($!{goodsto.well_evaluate})*100)
+								#if($!well_evaluate>0) <span class="five_star"><b
+									title="好评率：$!{well_evaluate}%" style="width: $!{well_evaluate}"></b></span>
+								#end #set($eva_count=0) #foreach($eva in $goodsto.evaluates)
+								#if($!eva.evaluate_status==0) #set($eva_count= $!eva_count + 1)
+								#end #end #if($!eva_count > 0) <a href="javascript:void(0);"
+									class="deta_eval_a">($!{eva_count})</a> #end #if(!$!store) #end
+							</p>
+						</a> #if( $!{goodsto.goods_price} > $!{goodsto.goods_current_price})
+						#set($pro
+						=(($!{goodsto.goods_price}-$!{goodsto.goods_current_price})/$!{goodsto.goods_price})*100)
+						#set($bigdecimal = $!CommUtil.bigDeCimal($pro)) <a
+							href="$!goods_url"
+							style="display: flex; justify-content: space-between;"><span
+							class="was">&nbsp;$!{goodsto.goods_price}&nbsp;AED</span><span
+							class="was_pro"> $!{bigdecimal}% off</span></a> #else <a
+							href="$!goods_url"><span class="was"></span></a> #end <a
+							href="$!goods_url"> <span class="sale_two_price">
+								<h5>
+									<strong>$!{goodsto.goods_current_price}&nbsp;</strong><small>AED</small>
+								</h5>
+						</span>
+						</a> <a href="$!goods_url"><span class="sale_two_price"></span></a>
+					</div>
+				</div>
+			</div>
+			#end #end
+		</div>
+		<!--宸︾澶�-->
+		<div class="swiper-button-prev arrows11">
+			<img src="$!webPath/resources/style/common/images/arrow/arrow1.png">
+		</div>
+		<!--鍙崇澶�-->
+		<div class="swiper-button-next arrows11">
+			<img src="$!webPath/resources/style/common/images/arrow/arrow3.png">
+		</div>
+	</div>
+</div>
+
+<!-- 妤煎眰12 -->
+<div class="goods_box">
+	<div class="title_goods2">
+		<p style="width: 20%"></p>
+		<p class="title_goods2_r">
+			<span class="title_goods_z"></span> <span class="title_goods_w">$floors.get(2).childs.get(3).gf_name</span>
+			<span class="title_goods_z"></span>
+		</p>
+		<span class="title_goods_w title_goods_wr"><a
+			href="$!webPath/store_goods_list_9.htm">View more</a></span>
+	</div>
+	<div class="swiper-container goods12" id="swiper-container">
+		#set( $goodslist =
+		$gf_tools.generic_goods("$floors.get(2).childs.get(3).gf_gc_goods") )
+		<div class="swiper-wrapper">
+			#foreach( $goodsto in $!goodslist) #if($!goodsto)
+			#if($!goodsto.goods_main_photo)
+			#set($img="$!imageWebServer/$!{goodsto.goods_main_photo.path}/$!{goodsto.goods_main_photo.name}_small.$!{goodsto.goods_main_photo.ext}")
+			#else
+			#set($img="$!imageWebServer/$!{config.goodsImage.path}/$!{config.goodsImage.name}")
+			#end #set($goods_url="$!webPath/goods_$!{goodsto.id}_digital.htm")
+			#if($!config.second_domain_open && $!goodsto.goods_type==1 &&
+			$!goodsto.goods_store.store_second_domain!="")
+			#set($goods_url="http://$!{goodsto.goods_store.store_second_domain}.$!{domainPath}/goods_$!{goodsto.id}_digital.htm")
+			#end
+			<div class="swiper-slide" id="swiper-slide">
+				<div class="goods_content">
+					<p class="img_cspan">
+						<a href="$!goods_url" target="_blank" class="sale_two_img">
+							#if($!goodsto.goods_type==0)
+							#set($imga="$!imageWebServer/$!{config.websiteLogo.path}/$!{config.websiteLogo.name}")
+							<img src="$!imga" border="0"
+							style="height: 20px; width: 40px; position: absolute; z-index: 1; left: 0;" />
+							#end <img data-src="$!img"
+							src="$!webPath/resources/style/common/images/loader.png"
+							width="170" height="170" />
+						</a>
+					</p>
+					<div class="goods_list_bottom">
+						<a href="$!goods_url"><span class="sale_two_name">$!{goodsto.goods_name}</span></a>
+						<a href="$!goods_url">
+							<p class="sale_pingfen">
+								#set($well_evaluate =
+								$!CommUtil.null2Double($!{goodsto.well_evaluate})*100)
+								#if($!well_evaluate>0) <span class="five_star"><b
+									title="好评率：$!{well_evaluate}%" style="width: $!{well_evaluate}"></b></span>
+								#end #set($eva_count=0) #foreach($eva in $goodsto.evaluates)
+								#if($!eva.evaluate_status==0) #set($eva_count= $!eva_count + 1)
+								#end #end #if($!eva_count > 0) <a href="javascript:void(0);"
+									class="deta_eval_a">($!{eva_count})</a> #end #if(!$!store) #end
+							</p>
+						</a> #if( $!{goodsto.goods_price} > $!{goodsto.goods_current_price})
+						#set($pro
+						=(($!{goodsto.goods_price}-$!{goodsto.goods_current_price})/$!{goodsto.goods_price})*100)
+						#set($bigdecimal = $!CommUtil.bigDeCimal($pro)) <a
+							href="$!goods_url"
+							style="display: flex; justify-content: space-between;"><span
+							class="was">&nbsp;$!{goodsto.goods_price}&nbsp;AED</span><span
+							class="was_pro"> $!{bigdecimal}% off</span></a> #else <a
+							href="$!goods_url"><span class="was"></span></a> #end <a
+							href="$!goods_url"> <span class="sale_two_price">
+								<h5>
+									<strong>$!{goodsto.goods_current_price}&nbsp;</strong><small>AED</small>
+								</h5>
+						</span>
+						</a> <a href="$!goods_url"><span class="sale_two_price"></span></a>
+					</div>
+				</div>
+			</div>
+			#end #end
+		</div>
+		<!--宸︾澶�-->
+		<div class="swiper-button-prev arrows12">
+			<img src="$!webPath/resources/style/common/images/arrow/arrow1.png">
+		</div>
+		<!--鍙崇澶�-->
+		<div class="swiper-button-next arrows12">
+			<img src="$!webPath/resources/style/common/images/arrow/arrow3.png">
+		</div>
+	</div>
+</div>
+<script>
+    var swiper = new Swiper('.swiper-container', {
+      slidesPerView: 6,
+      spaceBetween: 20,
+      freeMode: true,
+      navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
+      },
+    });
+</script>
+#end
+

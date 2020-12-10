@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport"
+	content="width=device-width,inital-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style"
+	content="black-translucent">
+
+<title>$!{obj.goods_name}</title>
+
+<link
+	href="$!webPath/resources/style/system/front/wap/css/style_170228_bak.css"
+	rel="stylesheet" type="text/css" />
+<link
+	href="$!webPath/resources/style/system/front/wap/v2.0/css/v2.0style.css"
+	rel="stylesheet" type="text/css" />
+
+<style type="text/css">
+.mask {
+	position: absolute;
+	top: 0px;
+	filter: alpha(opacity = 80);
+	background-color: #ccc;
+	z-index: 1002;
+	left: 0px;
+	opacity: 0.8;
+	-moz-opacity: 0.5;
+	display: none;
+}
+
+.mask2 {
+	position: absolute;
+	top: 20px;
+	filter: alpha(opacity = 100);
+	background-color: #fff;
+	z-index: 2;
+	left: 0px;
+	bottom: 50px;
+	opacity: 1;
+	-moz-opacity: 1;
+	width: 100%;
+	height: 100%;
+	text-align: center;
+	display: none;
+	overflow: hidden;
+}
+</style>
+
+<script src="$!webPath/resources/js/wap/defined.js"></script>
+<script src="$!webPath/resources/js/wap/jquery-1.10.2.min.js"></script>
+<script src="$!webPath/resources/js/TouchSlide.1.1.js"></script>
+<script src="$!webPath/resources/js/jquery.validate.min.js"></script>
+<script src="$!webPath/resources/js/outdoors_goods_details1.js"></script>
+<script src="$!webPath/resources/js/outdoors_goods_details2.js"></script>
+
+<script>
+	$(document).ready(function(){
+		$("#bm").click(function(){
+			$("#outdoors_detail").hide();
+			$(this).css("border-bottom","1px solid red");
+			$("#xlxq").css("border-bottom","none");
+			$("#bm_user").show();
+		});
+		
+		$("#xlxq").click(function(){
+			$("#outdoors_detail").show();
+			$(this).css("border-bottom","1px solid red");
+			$("#bm").css("border-bottom","none");
+			$("#bm_user").hide();
+		});
+	});	
+</script>
+
+</head>
+
+<body>
+	<div class="details_index"
+		style="margin-top: -13px; padding-bottom: 48px;">
+		<div class="details_top">
+
+			<div class="details_photo" id="details_photo" style="width: 100%;">
+				<div class="deta_photo">
+					<ul>
+						<li><img
+							src="$!imageWebServer/$!obj.goods_main_photo.path/$!obj.goods_main_photo.name"
+							style="width: 100%;" /></li> #if($!obj.goods_photos.size()>0)
+						#foreach($acc in $obj.goods_photos)
+						<li><img src="$!imageWebServer/$!acc.path/$!acc.name"
+							style="width: 100%" /></li> #end #end
+					</ul>
+				</div>
+			</div>
+			<script type="text/javascript">
+					TouchSlide({ 
+						slideCell:"#details_photo",
+						mainCell:".deta_photo ul", 
+						effect:"left", 
+						autoPlay:true,//自动播放			
+						switchLoad:"_src" //切换加载，真实图片路径为"_src" 
+					});
+				</script>
+
+			<section style="padding-top: 0px; padding-bottom: 0px;">
+				<div class="details_price" style="margin-bottom: 10px;">
+					<ul style="width: 100%; padding-bottom: 10px;">
+						<li class="details_price_money"
+							style="text-align: left; display: table-cell; vertical-align: bottom;">
+							<span id="store_price"
+							style="width: auto; color: red; padding-top: 10px; font-size: 16px;">定金：¥$!{obj.store_price}&nbsp;</span>
+							<span
+							style="margin: 14px 0 0 10px; width: auto; float: right; color: #6c6a6a; font-size: 12px;">起团人数：$!{obj.goods_inventory}</span>
+						</li>
+						<li class="details_price_money" style="font-size: 16px;">$!obj.goods_name</li>
+					</ul>
+				</div>
+			</section>
+
+		</div>
+
+		<div class="details_box">
+
+			<div
+				style="position: relative; width: 100vw; text-align: center; margin: 5px 0px; margin-bottom: 10px;">
+				<div id="xlxq"
+					style="position: absolute; width: 49.5vw; border-bottom: 1px solid red;">路线介绍</div>
+				<div id="bm"
+					style="position: absolute; width: 49.5vw; margin-left: 50.5vw;">已报名：$!{obj.goods_salenum}</div>
+			</div>
+
+			<div id="bm_user" style="display: none; margin-top: 30px;">
+				<ul>
+					<li>
+						<div
+							style="position: relative; width: 100vw; text-align: center; border-bottom: 1px solid #f0f0f0; height: 50px; Line-height: 50px;">
+							<div
+								style="position: absolute; width: 30vw; height: 50px; padding-top: 5px;">
+								<img
+									src="http://wx.qlogo.cn/mmopen/Q3auHgzwzM63viaY0Bia9q29FmyPEzfVDPv8VxoEBpdEN50Tu6Zw3SmHAQ8z5PlBNcTrHuwGq86T0umDLSn1N7HA/0"
+									style="width: 40px; height: 40px; border-radius: 50%;">
+							</div>
+							<div
+								style="position: absolute; width: 70vw; margin-left: 31vw; text-align: left;">
+								<span>无心睡眠</span>
+							</div>
+						</div>
+					</li>
+					<li>
+						<div
+							style="position: relative; width: 100vw; text-align: center; border-bottom: 1px solid #f0f0f0; height: 50px; Line-height: 50px;">
+							<div
+								style="position: absolute; width: 30vw; height: 50px; padding-top: 5px;">
+								<img
+									src="http://wx.qlogo.cn/mmopen/Q3auHgzwzM63viaY0Bia9q29FmyPEzfVDPv8VxoEBpdEN50Tu6Zw3SmHAQ8z5PlBNcTrHuwGq86T0umDLSn1N7HA/0"
+									style="width: 40px; height: 40px; border-radius: 50%;">
+							</div>
+							<div
+								style="position: absolute; width: 70vw; margin-left: 31vw; text-align: left;">
+								<span>who am i?</span>
+							</div>
+						</div>
+					</li>
+					<li>
+						<div
+							style="position: relative; width: 100vw; text-align: center; border-bottom: 1px solid #f0f0f0; height: 50px; Line-height: 50px;">
+							<div
+								style="position: absolute; width: 30vw; height: 50px; padding-top: 5px;">
+								<img
+									src="http://wx.qlogo.cn/mmopen/Q3auHgzwzM63viaY0Bia9q29FmyPEzfVDPv8VxoEBpdEN50Tu6Zw3SmHAQ8z5PlBNcTrHuwGq86T0umDLSn1N7HA/0"
+									style="width: 40px; height: 40px; border-radius: 50%;">
+							</div>
+							<div
+								style="position: absolute; width: 70vw; margin-left: 31vw; text-align: left;">
+								<span>冯一彪兄</span>
+							</div>
+						</div>
+					</li>
+					<li>
+						<div
+							style="position: relative; width: 100vw; text-align: center; border-bottom: 1px solid #f0f0f0; height: 50px; Line-height: 50px;">
+							<div
+								style="position: absolute; width: 30vw; height: 50px; padding-top: 5px;">
+								<img
+									src="http://wx.qlogo.cn/mmopen/Q3auHgzwzM63viaY0Bia9q29FmyPEzfVDPv8VxoEBpdEN50Tu6Zw3SmHAQ8z5PlBNcTrHuwGq86T0umDLSn1N7HA/0"
+									style="width: 40px; height: 40px; border-radius: 50%;">
+							</div>
+							<div
+								style="position: absolute; width: 70vw; margin-left: 31vw; text-align: left;">
+								<span>喂</span>
+							</div>
+						</div>
+					</li>
+					<li>
+						<div
+							style="position: relative; width: 100vw; text-align: center; border-bottom: 1px solid #f0f0f0; height: 50px; Line-height: 50px;">
+							<div
+								style="position: absolute; width: 30vw; height: 50px; padding-top: 5px;">
+								<img
+									src="http://wx.qlogo.cn/mmopen/Q3auHgzwzM63viaY0Bia9q29FmyPEzfVDPv8VxoEBpdEN50Tu6Zw3SmHAQ8z5PlBNcTrHuwGq86T0umDLSn1N7HA/0"
+									style="width: 40px; height: 40px; border-radius: 50%;">
+							</div>
+							<div
+								style="position: absolute; width: 70vw; margin-left: 31vw; text-align: left;">
+								<span>fasf</span>
+							</div>
+						</div>
+					</li>
+				</ul>
+			</div>
+
+			<div id="outdoors_detail" style="margin-top: 15px;">
+				<dl class="stand">
+					<dt>
+						<div style="width: 100%; text-align: center;">
+							<div class="integral_infro">$!obj.goods_details_mobile</div>
+						</div>
+					</dt>
+				</dl>
+			</div>
+		</div>
+
+		<div class="main_bottom">
+			<ul>
+				<li
+					style="width: 65%; background-color: #26ba9a; line-height: 48px; color: #fff;">
+					<span style="font-size: 14px; color: #fff;">咨询热线：0731-82280487</span>
+				</li>
+				<li
+					style="width: 35%; background-color: #26ba00; line-height: 48px; color: #fff;">
+					<a href="javascript:void(0)" onClick="buy_goods()" class="atonce"><span
+						style="font-size: 18px; color: #fff;">报名加入</span></a>
+				</li>
+			</ul>
+		</div>
+	</div>
+</body>
+</html>

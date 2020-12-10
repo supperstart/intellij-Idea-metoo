@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta charset="utf-8">
+<title>Log in Page - $!config.title</title>
+<meta name="viewport"
+	content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<link rel="stylesheet" href="$!webPath/resources/wap/css/mui.min.css">
+<link rel="stylesheet" href="$!webPath/resources/wap/fonts/iconfont.css">
+<link href="$!webPath/resources/style/system/front/wap/css/style.css"
+	rel="stylesheet" type="text/css" />
+<link
+	href="$!webPath/resources/style/system/front/wap/v2.0/css/v2.0style.css"
+	rel="stylesheet" type="text/css" />
+<script src="$!webPath/resources/js/wap/jquery-1.10.2.min.js"></script>
+<script src="$!webPath/resources/js/jquery.validate.min.js"></script>
+<style>
+html, body, .mui-content {
+	background-color: #ffffff;
+}
+
+.mui-bar .mui-pull-left .mui-icon {
+	padding-right: 5px;
+	font-size: 28px;
+}
+
+.mui-bar .mui-btn {
+	font-weight: normal;
+	font-size: 17px;
+}
+
+.mui-bar .mui-btn-link {
+	top: 1px;
+}
+
+input {
+	margin: 0px !important;
+}
+
+.hint, #theForm {
+	padding: 0px 20px;
+}
+
+.hint>h5 {
+	font-style: normal;
+	font-size: 18px;
+	color: #0a0a0a;
+}
+
+.account {
+	font-size: 13px;
+	font-weight: 550;
+	color: #111;
+}
+
+.ip>span {
+	color: #579fde;
+	font-size: 18px;
+	height: 29px;
+	width: 31px;
+	line-height: 31px;
+	display: block;
+	background: #f7f8fa;
+	border-top-right-radius: 3px;
+	border-bottom-right-radius: 3px;
+}
+
+.auth-divider {
+	width: 100%;
+	margin: 0 auto 7px;
+	float: none;
+	text-align: center;
+	position: relative;
+	top: 2px;
+	padding-top: 1px;
+	margin-bottom: 25px;
+	line-height: 0;
+}
+
+.auth-divider:after {
+	content: '';
+	background-color: transparent;
+	height: 1px;
+	border-top: 1px solid #e7e7e7;
+	position: absolute;
+	top: 55%;
+	margin-top: -1px;
+	width: 33%;
+	left: 0px;
+}
+
+.auth-divider::before {
+	right: 0px;
+	z-index: 1;
+	content: '';
+	background-color: transparent;
+	height: 1px;
+	border-top: 1px solid #e7e7e7;
+	position: absolute;
+	top: 55%;
+	width: 33%;
+	margin-top: -1px;
+	z-index: 1;
+}
+
+.phone_login ul li.ip input {
+	padding-right: 20px;
+}
+
+.guanbi, .guanbi1 {
+	position: absolute;
+	top: 0px;
+	display: flex;
+	height: 100%;
+	right: 6px;
+	align-items: center;
+}
+
+#Createnum {
+	background-color: transparent;
+	color: #111;
+	border: 0;
+	display: block;
+	font-family: Arial, sans-serif;
+	font-size: 13px;
+	line-height: 29px;
+	margin: 0;
+	outline: 0;
+	padding: 0 10px 0 11px;
+	text-align: center;
+	white-space: nowrap;
+	font-weight: 600;
+}
+
+#Createnum button {
+	border-style: solid;
+	border-width: 1px;
+	background: linear-gradient(to bottom, #f7f8fa, #e7e9ec);
+	box-shadow: 0 1px 0 rgba(255, 255, 255, .6) inset;
+	border-radius: 2px;
+	padding: 5px 8px;
+}
+
+.phone_login {
+	width: 100%;
+}
+
+.phone_login ul li.ip_btn input {
+	background: #3866df;
+	box-shadow: 0 1px 0 rgba(255, 255, 255, .4) inset;
+	border: 0;
+	box-shadow: none;
+	height: 32px;
+	line-height: 1;
+	display: block;
+	width: 100%;
+}
+
+.ip_btn {
+	border-width: 1px;
+	border-style: solid;
+	border-radius: 3px;
+}
+
+.ip, .pass {
+	position: relative;
+}
+</style>
+<script>
+		jQuery(document).ready(function(){
+		  jQuery("#theForm").validate({
+		    errorPlacement: function(error, element) {  
+							   element.parent().addClass("bd_red");
+		        			 error.appendTo(element.parent().next());  
+		   					 },	
+			success:function(label) {
+		     						 label.parent().prev().removeClass("bd_red");
+								},
+			rules: {
+					username:{required:true},
+					password:{required:true}
+					#if($!config.securityCodeRegister),
+				code:{
+				  required:true,
+				  remote:{
+				    url: "$!webPath/verify_code.htm",     //后台处理程序
+		            type: "post",               //数据发送方式
+		            dataType: "json",           //接受数据格式   
+		            data: {                     //要传递的数据
+		                  "code": function(){return jQuery("#code").val();}
+				     }
+				  }
+				}
+				#end
+					},
+			messages: {
+					username:{required:"用户名不能为空"},
+					password:{required:"密码不能为空"}
+					#if($!config.securityCodeRegister),
+							code:{
+				  		required:"验证码不能为空",
+				  		remote:"验证码不正确"
+				}
+				#end
+					}
+		  });
+		});
+</script>
+</head>
+
+<body>
+
+	<!-- <header id="header" class="mui-bar mui-bar-nav">
+		<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+		<h1 class="mui-title">登陆页 - $!config.title</h1>
+	</header> -->
+
+	<div class="mui-content">
+		<a href="#" /> <img alt="" src="$!webPath/images/logos.png"
+			style="width: 50%; margin: 10px auto; display: block;"> </a>
+		<div class="hint">
+			<h5 class="default-float">
+				<strong>Sign in</strong>
+			</h5>
+			<span style="padding-top: 14px; display: block;">Sign in with
+				your Ebuyair account</span>
+		</div>
+
+		<form action="$!webPath/koala_login.json" method="post" name="theForm"
+			id="theForm">
+			<input name="login_role" type="hidden" id="login_role" value="user" />
+			<div class="phone_login">
+				<ul>
+					<label class="account">ID</label>
+					<li class="ip"><input name="username" id="username"
+						type="text" placeholder="Name/Email/Phone" />
+						<div class="guanbi" style="display: none;">
+							<span class="iconfont iconguanbi"></span>
+						</div></li>
+					<li class="yz"></li>
+					<label class="account">Password</label>
+					<li class="ip pass"><input name="password" id="password"
+						type="password" placeholder="Password" />
+						<div class="guanbi1" style="display: none;">
+							<span class="iconfont iconguanbi"></span>
+						</div></li>
+					<li class="yz"></li> #if($!config.securityCodeRegister)
+					<script>
+		                 function refreshCode(){
+			                 jQuery("#code_img").attr("src","$!webPath/verify.json?d"+new Date().getTime());
+		                 }
+		            </script>
+					<li class="yzm"><input name="code" type="text" id="code"
+						placeholder="Verification code" /> <img id="code_img"
+						src="$!webPath/verify.json" width="73" height="27" /><a
+						href="javascript:void(0);" onClick="refreshCode();" class="refre"><img
+							src="$!webPath/resources/style/system/front/wap/images/refresh.png"
+							width="25" height="25" /></a></li>
+					<li class="yz"></li> #end
+					<li class="ip_btn">
+						<!--  <button type="button" class="mui-btn mui-btn-block mui-btn-primary">登陆</button> -->
+						<input type="submit" value="Enter" />
+					</li>
+
+					<!-- <li><span class="fl"><a href="$!webPath/wap/register.htm">免费注册</a></span><span class="fr"><a href="$!webPath/wap/forget1.htm">找回密码</a></span></li> -->
+				</ul>
+			</div>
+		</form>
+		<div class="auth-divider">
+			<h5>
+				<strong>New customer?</strong>
+			</h5>
+		</div>
+		<a href="$!webPath/wap/register.htm" id="Createnum"><button
+				type="button">Create your Account</button></a>
+	</div>
+
+	</div>
+	<script src="$!webPath/resources/wap/mui.js"></script>
+	<script type="text/javascript">
+		mui.init({
+			swipeBack: true //启用右滑关闭功能
+		});
+		mui(document.body).on('tap', '.mui-btn', function(e) {
+            mui(this).button('loading');
+            setTimeout(function() {
+                mui(this).button('reset');
+            }.bind(this), 2000);
+        });
+		mui(".refre").on('tap', 'img', function (event) {
+			refreshCode();
+	    });
+		
+		document.getElementById("username").addEventListener('input',function(){
+			if(this.value.length>3){
+				$(".guanbi").css('display','flex');
+				return ;
+			}
+			$(".guanbi").hide();
+		});
+		
+		mui(".guanbi").on('tap', 'span', function(event){
+			$("#username").val("");
+			$(".guanbi").hide();
+		});
+		
+		document.getElementById("password").addEventListener('input',function(){
+			if(this.value.length>3){
+				$(".guanbi1").css('display','flex');
+				return ;
+			}
+			$(".guanbi1").hide()
+		});
+		mui(".guanbi1").on('tap', 'span', function(event){
+			$("#password").val("");
+			$(".guanbi1").hide();
+		});
+	    mui('body').on('tap','a',function(){document.location.href=this.href;});
+	</script>
+
+</body>
+
+</html>
+

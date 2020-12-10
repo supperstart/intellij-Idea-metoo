@@ -1,0 +1,1317 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>$!config.title - $!{config.poweredby}</title>
+<meta name="keywords" content="$!config.keywords" />
+<meta name="description" content="$!config.description" />
+<meta name="generator" content="$!{config.meta_generator}" />
+<meta name="author" content="$!{config.meta_author}">
+	<meta name="copyright" content="$!{config.copyRight}">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+			#if($!config.sina_login) $!config.sina_domain_code #end
+			#if($!config.qq_login) $!config.qq_domain_code #end
+			<meta property="wb:webmaster" content="3c0d2bedd819ab1c" />
+			<link
+				href="$!webPath/resources/style/system/front/default/css/public.css"
+				type="text/css" rel="stylesheet" />
+			<link
+				href="$!webPath/resources/style/system/front/default/css/index.css"
+				type="text/css" rel="stylesheet" />
+			<link
+				href="$!webPath/resources/style/system/front/default/css/public_auto.css"
+				type="text/css" rel="stylesheet" />
+			<link href="$!webPath/resources/wap/css/swiper.css" type="text/css"
+				rel="stylesheet" />
+			<link rel="stylesheet"
+				href="$!webPath/resources/wap/fonts/iconfont.css">
+				<script src="$!webPath/resources/js/jquery-1.6.2.js"></script>
+				<script src="$!webPath/resources/js/jquery.lazyload.js"></script>
+				<script src="$!webPath/resources/js/jquery.SuperSlide.2.1.1.js"></script>
+				<script src="$!webPath/resources/js/jquery.shop.common.js"></script>
+				<script src="$!webPath/resources/js/jquery.validate.min.js"></script>
+				<script src="$!webPath/resources/js/jquery.iskyshop.validate.js"
+					type="text/javascript"></script>
+				<!--     <script src="$!webPath/resources/js/jquery.flexslider-min.js" type="text/javascript"></script> -->
+				<script type="text/javascript"
+					src="$!webPath/resources/js/jquery.effect.1.0.js"></script>
+				<!--     <script src="$!webPath/resources/wap/jquery-3.1.1.min.js"></script> -->
+				<script src="$!webPath/resources/js/TouchSlide.1.1.js"></script>
+				<script src="$!webPath/resources/js/jquery.SuperSlide.2.1.1.js"></script>
+				<script src="$!webPath/resources/wap/swiper.min.js"></script>
+				<script src="$!webPath/resources/wap/lazyload.min.js"></script>
+				<style>
+.swiper-button-prev {
+	left: 0px;
+}
+
+.swiper-button-next {
+	right: 0px;
+}
+
+.swiper-button-prev, .swiper-button-next, .swiper-button-next .swiper-button-disabled
+	{
+	pointer-events: auto !important;
+}
+
+.swiper-button-next, .swiper-button-prev {
+	background: none;
+	/*     	-webkit-transform: translateX(100%);
+	    -ms-transform: translateX(100%);
+	    transform: translateX(100%); */
+}
+
+.swiper-button-next>span, .swiper-button-prev>span {
+	color: #fff;
+	position: absolute;
+	top: 31%;
+	left: 6px;
+}
+
+.swiper-button-prev, .swiper-button-next {
+	/* background-color:rgba(0,0,0,.7); */
+	-webkit-transition: -webkit-transform .2s ease;
+	transition: -webkit-transform .2s ease;
+	transition: transform .2s ease;
+	transition: transform .2s ease, -webkit-transform .2s ease;
+}
+
+.swiper-button-prev>img, .swiper-button-next>img {
+	width: 27px;
+}
+
+.slideBox .hd ul li.on {
+	background: #1E90FF;
+}
+
+.sou_top {
+	font-size: 19px !important;
+	top: 5px !important;
+}
+
+.slideBox .hd {
+	right: 0px;
+	left: 46%;
+}
+
+.slideBox .hd ul li {
+	width: 6px;
+	height: 6px;
+	font-size: 0px;
+}
+
+.index_sale_con {
+	width: 100%;
+}
+
+.index_sale {
+	border: none;
+	width: 100% !important;
+	height: 352px;
+	/* margin-top:15px; */
+}
+
+.title_goods1 {
+	width: 100%;
+	clear: both;
+	padding-top: 28px;
+	color: #000;
+	display: flex;
+	justify-content: center;
+}
+
+.title_goods2 {
+	padding-top: 5px;
+	clear: both;
+	display: flex;
+	color: #000;
+	justify-content: center;
+}
+
+.title_goods2_r {
+	width: 60%;
+	text-align: center;
+}
+
+.title_goods_h {
+	border-top: 1.5px solid #000;
+	margin-top: 20px;
+	width: 100px;
+	display: inline-block;
+}
+
+.title_goods_w {
+	font-size: 22px;
+	text-align: center;
+	padding: 5px;
+	white-space: nowrap;
+}
+
+.title_goods_z {
+	border-top: 2px solid #000;
+	margin-bottom: 5px;
+	width: 100px;
+	display: inline-block;
+}
+
+.title_goods_wr {
+	white-space: nowrap;
+	right: 0px;
+	font-size: 13px !important;
+	width: 20%;
+	text-align: end;
+}
+
+.title_goods2 a {
+	color: #ff9900;
+}
+
+.swiper-button-prev, .swiper-button-next {
+	background-size: 17px 24px;
+}
+
+.index_sale_two li {
+	background: #fff;
+	padding: 0 2px;
+}
+
+.sale_two_price small {
+	font-size: 16px;
+}
+
+.sale_two_price strong {
+	color: #000;
+	margin-left: 2px;
+}
+
+.width100 {
+	width: 100% !important;
+	display: flex;
+	justify-content: center;
+}
+
+.was {
+	padding: 3px;
+	text-decoration: line-through;
+	color: #aeaeae;
+	font-weight: 400;
+}
+
+.was_pro {
+	width: 60px;
+	background: red;
+	border-radius: 3px;
+	text-align: center;
+	color: #fff;
+	font-weight: 600;
+	margin-right: 6px;
+	line-height: 20px;
+}
+
+.sale_two_name {
+	font-size: 14px;
+}
+
+.swiper-container {
+	width: 100%;
+	border-radius: 3px;
+}
+
+.index_sale_box {
+	height: inherit;
+}
+/* 		.index_sale_two:first-child{
+			margin: 5px 18px 15px 0px;
+			
+		}
+		.index_sale_two:last-child{
+    		margin: 5px 0px 15px 18px
+    		
+		} */
+.index_sale_two li img {
+	padding: 0px;
+	border: none;
+}
+
+.goods_list_bottom {
+	padding: 5px;
+}
+
+.goods_list_bottom>p {
+	padding-top: 10px;
+}
+
+.index_sale_two {
+	background: #fff;
+	padding: 0px;
+	border-radius: 5px;
+	margin: 5px 9.16px 15px 9.16px;
+	box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2);
+	width: 176px;
+}
+
+.index_sale_hover:hover {
+	box-shadow: 2px 2px 5px 3px rgba(0, 0, 0, 0.7);
+}
+
+.head_fixd .logo span p img {
+	height: 35px !important;
+	width: auto !important;
+}
+
+.a_border>div {
+	border: #000 solid 1px;
+}
+
+ul {
+	overflow: hidden
+}
+
+.slideBox .bd img, .slideBox {
+	width: 100%;
+}
+
+.slideBox, .bd ul, .slideBox .bd img {
+	height: 373px !important;
+	margin: 0px;
+}
+/* banner */
+.bml10 {
+	margin-left: 25px;
+}
+
+.box920r>div {
+	margin-bottom: 25px;
+}
+
+.bml10 a:first-child>img {
+	margin-top: 10px;
+}
+
+.lod {
+	display: flex;
+	justify-content: center;
+	align-items: Center;
+}
+
+.banner, .lod {
+	width: 770px;
+	height: 340px;
+	float: left;
+	margin-top: 10px;
+}
+
+.fullSlide {
+	/*             width: 770px; */
+	height: initial;
+	z-index: 9;
+}
+
+.fullSlide .m-bd {
+	margin: 0 auto;
+	position: relative;
+	z-index: 0;
+	overflow: hidden;
+}
+
+.fullSlide .m-bd ul {
+	width: 100% !important;
+}
+
+.fullSlide .m-bd li {
+	height: 340px;
+	overflow: hidden;
+	text-align: center;
+}
+
+.fullSlide .m-bd li img {
+	height: 340px;
+	width: 770px;
+}
+
+.fullSlide .m-hd {
+	width: 100%;
+	position: absolute;
+	z-index: 1;
+	bottom: 10px;
+	left: 0;
+	height: 30px;
+	line-height: 30px;
+}
+
+.fullSlide .m-hd ul {
+	text-align: center;
+}
+
+.fullSlide .m-hd ul li {
+	cursor: pointer;
+	display: inline-block;
+	*display: inline;
+	zoom: 1;
+	width: 16px;
+	height: 16px;
+	margin: 1px;
+	overflow: hidden;
+	background: center 0 no-repeat;
+	border-radius: 8px;
+	background: #fff;
+	line-height: 999px;
+	margin-left: 5px;
+}
+
+.fullSlide .m-hd ul .active {
+	background: #579ffb;
+}
+
+.fullSlide .prev, .fullSlide .next {
+	display: block;
+	position: absolute;
+	z-index: 1;
+	top: 50%;
+	margin-top: -30px;
+	left: 0%;
+	z-index: 1;
+	width: 40px;
+	height: 60px;
+	background: url(./slider-arrow2.png) -126px -137px #000 no-repeat;
+	cursor: pointer;
+	filter: alpha(opacity = 50);
+	opacity: 0.2;
+	display: none;
+}
+
+.fullSlide .next {
+	left: auto;
+	right: 0%;
+	background-position: -6px -137px;
+}
+
+.g-row {
+	margin: 10px 0px;
+	display: flex;
+}
+
+.g-row.mb30 {
+	margin-bottom: 30px;
+}
+
+.g-row:after {
+	clear: both;
+	content: " ";
+	display: block;
+	font-size: 0;
+	height: 0;
+	visibility: hidden;
+}
+
+.bml10img {
+	margin: 5px;
+}
+
+.clearfix {
+	display: inline-table;
+}
+
+.pc_border>div {
+	border: #000 solid 1px;
+}
+
+.goods_list_bottom>a {
+	display: block;
+	padding-top: 5px;
+	font-size: 12px;
+	text-align: start;
+}
+
+.brand_list ul {
+	margin-top: 25px;
+}
+
+.brand_img
+:not
+ 
+(
+:first-child
+ 
+){
+margin
+:
+ 
+10
+px
+ 
+15
+px
+;
+
+	
+padding
+:
+ 
+5
+px
+ 
+5
+px
+;
+
+
+}
+.swiper-lazy-preloader:after {
+	background-image:
+		url($!webPath/resources/style/common/images/loader.png)
+}
+</style>
+				<script>
+
+   
+    
+        jQuery(document).ready(function () {
+//          /*  $(".lod").css('display', 'block'); */
+            //banner
+            /* 控制左右按钮显示 */
+            jQuery(".fullSlide").hover(function () { jQuery(this).find(".prev,.next").stop(true, true).fadeTo("show", 0.5) }, function () { jQuery(this).find(".prev,.next").fadeOut() });
+
+            /* $(".lod").css('display', 'none'); */
+            $(".banner").css('display', 'block');
+            /* 调用SuperSlide 
+            jQuery(".fullSlide").slide({
+                titCell: ".m-hd ul", mainCell: ".m-bd ul", effect: "fold", autoPlay: true, autoPage: true, trigger: "click",
+                startFun: function (i) {
+
+
+                    var curLi = jQuery(".fullSlide .m-bd li").eq(i); 
+                    if (!!curLi.attr("src")) {
+                        curLi.css("background-image", curLi.attr("src")).removeAttr("src")
+                    }
+                }
+            });*/
+
+            //鼠标经过左侧分类
+            
+            jQuery(".img_cspan>p>img").lazyload({ effect: "fadeIn", width: 170, height: 170,threshold: -80 , failure_limit : 30 });
+            
+            jQuery(".left_menu_dl").hover(function () {
+                var child_count = jQuery(this).attr("child_count");
+                if (child_count > 0) {
+                    var id = jQuery(this).attr("id");
+                    jQuery("#dts_" + id).addClass("left_menu_this").removeClass("left_menu_dt");
+                    jQuery("#child_" + id).show();
+                }
+                var gc_id = jQuery(this).attr("id");
+                var gc_color = "#1E90FF";
+              /*   jQuery("#dts_" + gc_id).attr("style", "border:1px solid " + gc_color + "; border-left:3px solid " + gc_color + ";border-right:none");
+                jQuery("#left_menu_con_" + gc_id).attr("style", "border:1px solid " + gc_color + "; border-left:1px solid " + gc_color + ";").find(".menu_con_right_top").css("background-color", gc_color); */
+                //设置div高度为每行div中最高的高度
+                var begin = 0;
+                var end = 2;
+                jQuery("#child_" + gc_id).find(".left_menu_con_center_left").each(function () {
+                    var max_height = 0;
+                    var index = jQuery(this).index();
+                    var height = jQuery(this).height();
+                    if (index > end || index < begin) {
+                        begin = begin + 3;
+                        end = end + 3;
+                    }
+                    if (height > max_height) {
+                        max_height = 'auto';
+                    }
+                    for (var i = begin; i <= end; i++) {
+                        var temp_height = jQuery("#child_" + gc_id).find(".left_menu_con_center_left").eq(i).height();
+                        if (temp_height > max_height) {
+                            max_height = temp_height;
+                        }
+                        jQuery("#child_" + gc_id).find(".left_menu_con_center_left").eq(i).height(max_height);
+                    }
+                });
+
+                var top = jQuery("#child_" + gc_id).offset().top;
+                var scroll_top = jQuery(document).scrollTop();
+                var height = jQuery("#left_menu_con_" + gc_id).height();
+                var all_h = top - scroll_top + height;
+                var doc_h = jQuery(window).height();
+                var margin_top = doc_h - all_h;
+                if (margin_top <= 5) {
+                    margin_top = margin_top - 20;
+                   /*  jQuery("#left_menu_con_" + gc_id).css('margin-top', margin_top + 'px'); */
+                } else {
+                   /*  jQuery("#left_menu_con_" + gc_id).css('margin-top', '0px'); */
+                }
+            }).mouseleave(function () {
+                jQuery("dt[id^=dts_]").removeAttr("style");
+                jQuery("div[id^=left_menu_con_]").removeAttr("style");
+                var child_count = jQuery(this).attr("child_count");
+                if (child_count > 0) {
+                    var id = jQuery(this).attr("id");
+                    jQuery("#dts_" + id).removeClass("left_menu_this").addClass("left_menu_dt");
+                    jQuery("#child_" + id).hide();
+                }
+            });
+            //鼠标经过推荐商品行	
+            jQuery("#index_sale_tab ul li").mouseover(function () {
+                jQuery(this).siblings().removeClass("this");
+                jQuery(this).addClass("this");
+                var i = jQuery(this).index();
+                jQuery("#index_sale_tab").siblings().hide();
+                jQuery("#index_sale_tab").siblings().eq(i).show();
+                jQuery("#sale_change").attr("mark", jQuery(this).attr("id").replace("goodscase", ""));
+            });
+            //鼠标经过楼层标题
+            jQuery(".storey_tab ul li").mouseover(function () {
+                jQuery(this).siblings().removeClass("this");
+                jQuery(this).addClass("this");
+                var i = jQuery(this).index();
+                jQuery(this).parent().parent().siblings().not(".hot_sell").hide();
+                jQuery(this).parent().parent().siblings().eq(i).show();
+
+            });
+            var head_h = jQuery("#head_h").height();
+            jQuery("#head_unbomb").height(head_h);
+            jQuery(window).scroll(function () {
+                var top = jQuery(document).scrollTop();
+                //顶部搜索框跟随
+                if (top == 0) {
+                    jQuery("#top").show();
+                    /* attr("style", "") */
+                } else {
+                    jQuery("#top").hide();
+                   /*  attr("style", "position:fixed;top:0px") */
+                }
+                if (top > head_h) {
+                    jQuery("#head_h").addClass("head_fixd");
+                    jQuery("#soubt").addClass("sou_top");
+                } else {
+                    jQuery("#head_h").removeClass("head_fixd");
+                    jQuery("#soubt").removeClass("sou_top");
+                }
+                //楼层导航跟随
+                jQuery("li[floor_id^=floor_] b").css("display", "block");
+                jQuery("div[id^=floor_]").each(function () {
+                    var floor_top = jQuery(this).offset().top - top;
+                    if (floor_top <= 580 && floor_top >= 0) {
+                        var floor_id = jQuery(this).attr("id");
+                        jQuery("li[floor_id=" + floor_id + "] b").css("display", "none");
+                    }
+                });
+            });
+            //右上角公告切换
+            jQuery(".top_mr_tab li").mouseover(function () {
+                jQuery(this).siblings().removeClass("this");
+                jQuery(this).addClass("this");
+                var i = jQuery(this).index();
+                jQuery(".top_mr_box").hide();
+                jQuery(".top_mr_box").eq(i).show();
+            });
+
+            //用户登录、商家入驻tab页切换
+            jQuery("#top_mid_login_tab>li").css("cursor", "pointer").mouseover(function () {
+                var id = jQuery(this).attr("id");
+                jQuery("#top_mid_login_tab>li").removeClass("this");
+                jQuery(this).addClass("this");
+                if (id == "top_mid_login_tab_user") {
+                    jQuery("#top_mid_login_tab_seller_info").hide();
+                    jQuery("#top_mid_login_tab_user_info").show();
+                }
+                if (id == "top_mid_login_tab_seller") {
+                    jQuery("#top_mid_login_tab_user_info").hide();
+                    jQuery("#top_mid_login_tab_seller_info").show();
+                }
+            });
+            //
+        });
+       
+    </script>
+</head>
+
+<body>
+	<!--点击收藏-->
+	<script type="text/javascript">
+        jQuery(document).ready(function () {
+            jQuery(".top_pull").mouseover(function () {
+                jQuery(this).find("div").show();
+                jQuery(this).find("em").addClass("em_this");
+                jQuery(this).find("s").addClass("this");
+            }).mouseleave(function () {
+                jQuery(this).find("div").hide();
+                jQuery(this).find("em").removeClass("em_this");
+                jQuery(this).find("s").removeClass("this");
+            });
+        });
+        var browserEvent = function (obj, url, title) {
+            var e = window.event || arguments.callee.caller.arguments[0];
+            var B = {
+                IE: /MSIE/.test(window.navigator.userAgent) && !window.opera
+                , FF: /Firefox/.test(window.navigator.userAgent)
+                , OP: !!window.opera
+            };
+            obj.onmousedown = null;
+            if (B.IE) {
+                obj.attachEvent("onmouseup", function () {
+                    try {
+                        window.external.AddFavorite(url, title);
+                        window.event.returnValue = false;
+                    } catch (exp) { }
+                });
+            } else {
+                if (B.FF || obj.nodeName.toLowerCase() == "a") {
+                    obj.setAttribute("rel", "sidebar"), obj.title = title, obj.href = url;
+                } else if (B.OP) {
+                    var a = document.createElement("a");
+                    a.rel = "sidebar", a.title = title, a.href = url;
+                    obj.parentNode.insertBefore(a, obj);
+                    a.appendChild(obj);
+                    a = null;
+                }
+            }
+        };
+    </script>
+	<!--[if IE 6]>
+<div class="top_tipe">
+	<div class="top_tipe_center">
+    	<em><img src="$!webPath/resources/style/system/front/default/images/ie6_warning.png" style="height:16px; width:16px;"/></em><b>温馨提示：您当前使用的浏览器版本过低，兼容性和安全性较差，建议您升级：</b><em><img src="$!webPath/resources/style/system/front/default/images/ie_b.png"/></em><b><a href="http://windows.microsoft.com/zh-cn/internet-explorer/download-ie?tp=1.0.0.0.0.KdMt0Yu">IE8浏览器</a>或</b><em><img src="$!webPath/resources/style/system/front/default/images/google_b.png" /></em><b><a href="http://www.google.cn/intl/zh-CN/chrome/">谷歌浏览器</a></b>
+        <span><a href="javascript:void(0);" onclick="javascript:jQuery('.top_tipe').hide();">x</a></span>
+    </div>
+</div>
+<![endif]-->
+	<!--  <div class="top" id="top">
+        <div class="top_page">
+            <div class="top_right">
+            	#if($!user)
+                <span> 
+				    #if("$!user.userRole"=="ADMIN")
+				    <a href="$!webPath/admin/index.htm">Personal Center</a> 
+				    #end 
+				    <a href="$!webPath/koala_logout.htm">Log Out</a>
+				</span> 
+				#else
+			    <span>
+                    <a href="$!webPath/user/login.htm">Log In</a>&nbsp;&nbsp;
+                    <a href="$!webPath/register.htm">Sign Up</a>
+                </span>#end
+                <span class="top_pull">
+                    <a href="$!webPath/buyer/order.htm">Orders</a>
+                </span> 
+                 #set($navs=$!navTools.queryNav(-1,-1)) #if($!navs.size()>0)
+                <span class="top_pull">
+                    <em class="">网站导航
+                        <s class=""></s>
+                    </em>
+                    <div class="top_this" style="display:none">
+                        <div class="website">
+                            <ul>
+                                #foreach($nav in $navs)
+                                <li>
+                                    <a href="$!nav.url" #if($!{nav.new_win}==1)target="_blank" #end rel="nofollow">$!nav.title</a>
+                                </li>
+                                #end
+                            </ul>
+                        </div>
+                    </div>
+                </span> #end </div>
+           #if(!$!user)
+
+            <span class="top_shop">
+                <a href="$!webPath/seller/login.htm" target="_blank">Sell with Us</a>
+            </span> #else #if("$!user.userRole"=="SELLER")
+            <b class="top_b">|</b>
+            <span class="top_shop">
+                <a href="$!webPath/seller/index.htm" target="_blank">商家管理</a>
+            </span> #end #end </div>
+    </div> -->
+
+	<div id="head_unbomb">$!httpInclude.include("/top.htm")
+		$!httpInclude.include("/head.htm")</div>
+	$!httpInclude.include("/nav.htm")
+
+	<div class="main">
+		<div class="g-row" style="margin-top: 10px;">
+			<!-- banner -->
+			<div class="focusBox fullSlide" id="focusBox">
+				<script src="$!imageWebServer/adv/1"></script>
+				<!-- <a href="#" ><img src="http://photo.metoo-souq.com/upload/advert/5cb5662bd5abavV9fvlt3QdaYNFXGpSaK.gif"></a> -->
+			</div>
+
+		</div>
+		<!-- 广告位 -->
+		<div class="pc_border">
+			<a href="#"><img
+				src="http://photo.metoo-souq.com/upload/advert/da7fca27-a45c-47d2-bb55-be253de24e67.jpg"></a>
+		</div>
+		<!-- 商品长 1 -->
+		<div class="title_goods1">
+			<span class="title_goods_h"></span>
+			<p class="title_goods_w">Hot</p>
+			<span class="title_goods_h"></span>
+		</div>
+
+		<div class="s1_hd swiper-container">
+			#set( $goodslist = $goodsViewTools.self_goods_sales(30) ) #set(
+			$goods_hub = [])
+
+			<script>
+      		
+             #set( $s1 = [])
+      	 	 #if($goodslist.size() < 7)
+      		  	 $goods_hub.add([$goodslist])
+      		 #else
+      			 $goods_hub.add([$goodslist.get(0),$goodslist.get(1),$goodslist.get(2),$goodslist.get(3),$goodslist.get(4),$goodslist.get(5)])
+      			 #set( $s1 = [])
+      			 #set( $s2 = [])
+      			 #set( $s3 = [])
+      			 #set( $s4 = [])
+     			 #foreach( $goods1 in $goodslist )//循环范围值
+      			 	/*第一组数据*/
+      			 	
+				 	#if($!{velocityCount}>6 && $!{velocityCount}<13)	//验证是否为空
+	   		  			#if($goods1)//添加当前范围元素
+	   		  				$s1.add($goods1)
+	   		  				#if($!{velocityCount}==12)
+	   		  					$goods_hub.add($s1)
+	   		  				#end
+	   		  			#else
+	   		  				$goods_hub.add($s1)
+	   		  				#break;
+            			#end
+   		  			#end
+   		  			/*第二组数据*/
+   		  			#if($!{velocityCount}>12 && $!{velocityCount}<19)	//验证是否为空
+	   		  			#if($goods1)//添加当前范围元素
+	   		  				$s2.add($goods1)
+	   		  				#if($!{velocityCount}==18)
+	   		  					$goods_hub.add($s2)
+	   		  				#end
+	   		  			#else
+	   		  				$goods_hub.add($s2)
+	   		  				#break;
+	        			#end
+		  			#end
+		  			/*第三组数据*/
+   		  			#if($!{velocityCount}>18 && $!{velocityCount}<25)	//验证是否为空
+	   		  			#if($goods1)//添加当前范围元素
+	   		  				$s3.add($goods1)
+	   		  				#if($!{velocityCount}==24)
+	   		  					$goods_hub.add($s3)
+	   		  				#end
+	   		  			#else
+	   		  				$goods_hub.add($s3)
+	   		  				#break;
+	        			#end
+		  			#end
+		  			/*第四组数据*/
+   		  			#if($!{velocityCount}>24 && $!{velocityCount}<31)	//验证是否为空
+	   		  			#if($goods1)//添加当前范围元素
+	   		  				$s4.add($goods1)
+	   		  				#if($!{velocityCount}==30)
+	   		  					$goods_hub.add($s4)
+	   		  				#end
+	   		  			#else
+	   		  				$goods_hub.add($s4)
+	   		  				#break;
+	        			#end
+		  			#end
+   		     	 #end
+      	     #end
+
+	  </script>
+			<div class="swiper-wrapper">
+
+				#foreach( $goodsto in $!goods_hub )
+
+				<div class="swiper-slide">
+					<div class="index_sale width100">
+						<div class="index_sale_box" id="">
+							<div class=" width100" id="_$!obj.id">
+								#foreach( $goods in $!goodsto ) #if($!goods.goods_main_photo)
+								#set($img="$!imageWebServer/$!{goods.goods_main_photo.path}/$!{goods.goods_main_photo.name}_small.$!{goods.goods_main_photo.ext}")
+								#else
+								#set($img="$!imageWebServer/$!{config.goodsImage.path}/$!{config.goodsImage.name}")
+								#end #set($goods_url="$!webPath/goods_$!{goods.id}.htm")
+								#if($!config.second_domain_open && $!goods.goods_type==1 &&
+								$!goods.goods_store.store_second_domain!="")
+								#set($goods_url="http://$!{goods.goods_store.store_second_domain}.$!{domainPath}/goods_$!{goods.id}.htm")
+								#end
+
+								<ul class="index_sale_two index_sale_hover">
+									<li><a href="$!goods_url" target="_blank"
+										class="sale_two_img">
+											<p class="img_cspan">
+												<span> #if($!goods.goods_type==0)
+													#set($imga="$!imageWebServer/$!{config.websiteLogo.path}/$!{config.websiteLogo.name}")
+													<img src="$!imga" border="0"
+													style="height: 20px; width: 40px; position: absolute; z-index: 1; left: 0;" />
+													#end <img data-src="$!img"
+													src="$!webPath/resources/style/common/images/loader.png"
+													width="170" height="170" position="relative" />
+												</span>
+											</p>
+									</a>
+										<div class="goods_list_bottom">
+											<a href="$!goods_url" target="_blank"><span
+												class="sale_two_name">$!{goods.goods_name}</span></a>
+											<p class="sale_pingfen">
+												#set($well_evaluate =
+												$!CommUtil.null2Double($!{goods.well_evaluate})*100)
+												#if($!well_evaluate>0) <span class="five_star"><b
+													title="好评率：$!{well_evaluate}%"
+													style="width: $!{well_evaluate"></b></span> #end
+												#set($eva_count=0) #foreach($eva in $goods.evaluates)
+												#if($!eva.evaluate_status==0) #set($eva_count= $!eva_count +
+												1) #end #end #if($!eva_count > 0) <a
+													href="javascript:void(0);" class="deta_eval_a">($!{eva_count})</a>
+
+												#end
+
+											</p>
+											#if( $!{goods.goods_price} > $!{goods.goods_current_price})
+											#set($pro
+											=(($!{goods.goods_price}-$!{goods.goods_current_price})/$!{goods.goods_price})*100)
+											#set($bigdecimal = $!CommUtil.bigDeCimal($pro)) <a
+												href="$!goods_url"
+												style="display: flex; justify-content: space-between;"><span
+												class="was">&nbsp;$!{goods.goods_price}&nbsp;AED</span><span
+												class="was_pro">$!{bigdecimal}% off</span></a> #else <a
+												href="$!goods_url"><span class="was"></span></a> #end <a
+												href="$!goods_url"> <span class="sale_two_price">
+													<h5>
+														<strong>$!{goods.goods_current_price}&nbsp;<small>AED</small></strong>
+													</h5>
+											</span>
+											</a>
+											<!--  <div class="list_contrast_buy"><a href="javascript:void(0);" goods_id="$!obj.id" goods_type="$!obj.goods_type" user_id="$!obj.goods_store.user.id" id="goods_cart_$!{obj.id}">Add to cart</a></div> -->
+											<a href="$!goods_url"><span class="sale_two_price"></span></a>
+										</div></li>
+								</ul>
+								#end
+							</div>
+						</div>
+					</div>
+				</div>
+				#end
+			</div>
+			<!--左箭头-->
+			<div class="swiper-button-prev indexSlick">
+				<img src="$!webPath/resources/style/common/images/arrow/arrow1.png">
+			</div>
+			<!--右箭头-->
+			<div class="swiper-button-next indexSlick">
+				<img src="$!webPath/resources/style/common/images/arrow/arrow3.png">
+			</div>
+		</div>
+
+		<!-- 商品长 2-->
+		<!-- <div class="title_goods2">
+		<span class="title_goods_h"></span>
+		<span class="title_goods_w">New</span>
+		<span class="title_goods_h"></span>
+	</div>
+	
+	<div class="s2_hd swiper-container">
+  	 #set( $goodslist = $goodsViewTools.queryGoodsdetails(30) )
+  	 #set( $goods_hub = [])
+
+      <script>
+      		
+             #set( $s1 = [])
+      	 	 #if($goodslist.size() < 7)
+      		  	 $goods_hub.add([$goodslist])
+      		 #else
+      			 $goods_hub.add([$goodslist.get(0),$goodslist.get(1),$goodslist.get(2),$goodslist.get(3),$goodslist.get(4),$goodslist.get(5)])
+      			 #set( $s1 = [])
+      			 #set( $s2 = [])
+      			 #set( $s3 = [])
+      			 #set( $s4 = [])
+     			 #foreach( $goods1 in $goodslist )//循环范围值
+      			 	/*第一组数据*/
+				 	#if($!{velocityCount}>6 && $!{velocityCount}<13)	//验证是否为空
+	   		  			#if($goods1)//添加当前范围元素
+	   		  				$s1.add($goods1)
+	   		  				#if($!{velocityCount}==12)
+	   		  					$goods_hub.add($s1)
+	   		  				#end
+	   		  			#else
+	   		  				$goods_hub.add($s1)
+	   		  				#break;
+            			#end
+   		  			#end
+   		  			/*第二组数据*/
+   		  			#if($!{velocityCount}>12 && $!{velocityCount}<19)	//验证是否为空
+	   		  			#if($goods1)//添加当前范围元素
+	   		  				$s2.add($goods1)
+	   		  				#if($!{velocityCount}==18)
+	   		  					$goods_hub.add($s2)
+	   		  				#end
+	   		  			#else
+	   		  				$goods_hub.add($s2)
+	   		  				#break;
+	        			#end
+		  			#end
+		  			/*第三组数据*/
+   		  			#if($!{velocityCount}>18 && $!{velocityCount}<25)	//验证是否为空
+	   		  			#if($goods1)//添加当前范围元素
+	   		  				$s3.add($goods1)
+	   		  				#if($!{velocityCount}==24)
+	   		  					$goods_hub.add($s3)
+	   		  				#end
+	   		  			#else
+	   		  				$goods_hub.add($s3)
+	   		  				#break;
+	        			#end
+		  			#end
+		  			/*第四组数据*/
+   		  			#if($!{velocityCount}>24 && $!{velocityCount}<31)	//验证是否为空
+	   		  			#if($goods1)//添加当前范围元素
+	   		  				$s4.add($goods1)
+	   		  				#if($!{velocityCount}==30)
+	   		  					$goods_hub.add($s4)
+	   		  				#end
+	   		  			#else
+	   		  				$goods_hub.add($s4)
+	   		  				#break;
+	        			#end
+		  			#end
+   		     	 #end
+      	     #end
+
+	  </script>
+ 	  <div class="swiper-wrapper">
+ 	 	#foreach( $goodsto in $!goods_hub )
+		  <div class="swiper-slide">
+			  <div class="index_sale width100"> 
+	                <div class="index_sale_box" id="" >
+	                    <div class=" width100" id="_$!obj.id">
+                     	  #foreach( $goods in  $!goodsto )
+						  #if($!goods.goods_main_photo)
+					      #set($img="$!imageWebServer/$!{goods.goods_main_photo.path}/$!{goods.goods_main_photo.name}_small.$!{goods.goods_main_photo.ext}")
+					      #else
+					      #set($img="$!imageWebServer/$!{config.goodsImage.path}/$!{config.goodsImage.name}")
+					      #end
+					      #set($goods_url="$!webPath/goods_$!{goods.id}.htm")
+					      #if($!config.second_domain_open && $!goods.goods_type==1 && $!goods.goods_store.store_second_domain!="")
+					      #set($goods_url="http://$!{goods.goods_store.store_second_domain}.$!{domainPath}/goods_$!{goods.id}.htm")
+					      #end 
+	                     	<ul class="index_sale_two index_sale_hover" >
+	                            <li>
+	                            	<a href="$!goods_url" target="_blank" >
+		                                <a href="$!goods_url" target="_blank" class="sale_two_img">
+		                                    <p class="img_cspan">
+		                                        <span>
+			                                        #if($!goods.goods_type==0)
+		                                        	#set($imga="$!imageWebServer/$!{config.websiteLogo.path}/$!{config.websiteLogo.name}")
+		                                        	<img src="$!imga" border="0"style="height:20px; width:40px;position: absolute;z-index: 1;left:0;" />
+		                                        	#end
+		                                            <img data-src="$!img" src="$!webPath/resources/style/common/images/loader.png" width="170" height="170" />
+		                                        </span>
+		                                    </p>
+		                                </a>
+		                                <div class="goods_list_bottom">
+		                                	<a href="$!goods_url" ><span class="sale_two_name">$!{goods.goods_name}</span></a>
+		                                	<p style="height:20px;"> </p>
+		                                	#if( $!{goods.goods_price} > $!{goods.goods_current_price})
+		                                	#set($pro =(($!{goods.goods_price}-$!{goods.goods_current_price})/$!{goods.goods_price})*100)
+		                                	#set($bigdecimal = $!CommUtil.bigDeCimal($pro))
+				                            <a href="$!goods_url" style="display: flex;justify-content: space-between;"><span class="was">&nbsp;$!{goods.goods_price}&nbsp;AED</span><span class="was_pro"> $!{bigdecimal}% off</span></a>
+				                            #else
+				                            <a href="$!goods_url"><span class="was"></span></a>
+				                            #end		           
+				                            <a href="$!goods_url" >
+					                            <span class="sale_two_price">
+					                            	<h5><strong>$!{goods.goods_current_price}&nbsp;</strong><small>AED</small></h5>
+					                            </span>
+				                            </a>
+				                            <a href="$!goods_url" ><span class="sale_two_price"></span></a>
+		                                </div>
+	                                </a>
+	                            </li>
+	                        </ul>
+                   	 	  #end
+	                   	 </div>
+	                </div>
+	          </div>
+		   </div>
+ 	 	#end
+ 	  </div>
+ 	  左箭头
+	   <div class="swiper-button-prev indexSlick1">
+	  	<img src="$!webPath/resources/style/common/images/arrow/arrow1.png">
+	  </div>
+	  右箭头	
+      <div class="swiper-button-next indexSlick1">
+      	<img src="$!webPath/resources/style/common/images/arrow/arrow3.png">
+      </div>
+	</div> -->
+
+		<!-- 选项卡 -->
+		<div class="title_goods1">
+			<span class="title_goods_h"></span>
+			<p class="title_goods_w">Recommended</p>
+			<span class="title_goods_h"></span>
+		</div>
+		<script>
+	  var goods_random=1;//随机次数
+	  function change_case_goods(){
+		var caseid = jQuery("#sale_change").attr("mark");
+		goods_random=parseInt(jQuery(".index_sale_tab li[class='this']").attr("goods_random"));
+	   jQuery.ajax({type:'POST',url:'$!webPath/switch_case_goods.htm',data:{"goods_random":goods_random,"caseid":caseid},
+				  beforeSend:function(){
+					     jQuery("#_"+caseid).empty();
+						 jQuery("#index_sale_box_"+caseid).html("<div style='width:100%;height:301px;text-align:center;'><img src='$!webPath/resources/style/common/images/loader.png' style='margin-top:145px;' /></div>");
+					  },
+				  success:function(html){
+		                      jQuery("#index_sale_box_"+caseid).html(html);
+		                      goods_random++;						  
+							  jQuery(".index_sale_tab li[class='this']").attr("goods_random",goods_random);
+						  }
+				 });
+	}
+	  </script>
+
+
+		<div class="index_center_box">
+			<div class="index_sale" style="height: 396px;">
+
+				#set($goodscases=$!goodsCaseViewTools.queryGoodsCase("index_top"))
+				#if($!goodscases.size()>0)
+				<div class="index_sale_tab" id="index_sale_tab">
+					<a href="javascript:void(0);" class="sale_change"
+						mark="$!goodscases.get(0).id" id="sale_change"
+						onclick="change_case_goods();">Refresh</a>
+					<ul>
+						#set($first=1) #foreach($obj in $goodscases)
+						<li #if($!first==1) class="this" #set($first=0) #end
+							id="goodscase$!obj.id" goods_random="1"><h3>$!obj.case_name</h3>
+							<s></s></li> #end
+					</ul>
+				</div>
+				#set($first=1) #foreach($obj in $goodscases)
+				<div class="index_sale_box" #if($!first==1) #set($first=0) #else
+					style="display: none" #end id="index_sale_box_$!obj.id">
+					#set($case_list=$!goodsCaseViewTools.queryCaseGoods($obj.case_content))
+					<div class="" id="_$!obj.id">
+						#foreach($!casegoods in $case_list)
+						<ul class="index_sale_two index_sale_hover">
+							$!floors.size() #if($!casegoods.goods_main_photo)
+							#set($img="$!imageWebServer/$!{casegoods.goods_main_photo.path}/$!{casegoods.goods_main_photo.name}_small.$!{casegoods.goods_main_photo.ext}")
+							#else
+							#set($img="$!imageWebServer/$!{config.goodsImage.path}/$!{config.goodsImage.name}")
+							#end
+							#set($goods_url="$!webPath/goods_$!{casegoods.id}_gcase.htm")
+							#if($!config.second_domain_open && $!casegoods.goods_type==1 &&
+							$!casegoods.goods_store.store_second_domain!="")
+							#set($goods_url="http://$!{casegoods.goods_store.store_second_domain}.$!{domainPath}/goods_$!{casegoods.id}_gcase.htm")
+							#end
+							<li><a href="$!goods_url" target="_blank"
+								class="sale_two_img">
+									<p class="img_cspan">
+										<span> #if($!casegoods.goods_type==0)
+											#set($imga="$!imageWebServer/$!{config.websiteLogo.path}/$!{config.websiteLogo.name}")
+											<img src="$!imga" border="0"
+											style="height: 20px; width: 40px; position: absolute; z-index: 1; left: 0;" />
+											#end <img data-src="$!img"
+											src="$!webPath/resources/style/common/images/loader.png"
+											width="170" height="170" />
+										</span>
+									</p>
+							</a>
+								<div class="goods_list_bottom">
+									<a href="$!goods_url"><span class="sale_two_name">$!casegoods.goods_name</span></a>
+									<a href="$!goods_url">
+										<p class="sale_pingfen">
+											#set($well_evaluate =
+											$!CommUtil.null2Double($!{goods.well_evaluate})*100)
+											#if($!well_evaluate>0) <span class="five_star"><b
+												title="好评率：$!{well_evaluate}%"
+												style="width: $!{well_evaluate"></b></span> #end #set($eva_count=0)
+											#foreach($eva in $obj.evaluates)
+											#if($!eva.evaluate_status==0) #set($eva_count= $!eva_count +
+											1) #end #end #if($!eva_count > 0) <a
+												href="javascript:void(0);" class="deta_eval_a">($!{eva_count})</a>
+
+											#end
+
+											<!--   #if(!$!store)
+										            #if($!userTools.adminOnLine()=="true") <a href="javascript:void(0);" #if(!$!user)dialog_uri="$!current_webPath/user_dialog_login.htm" dialog_title="会员登录" dialog_width="430" dialog_height="100" dialog_id="user_login" #else onclick="open_im('$!obj.id','$!webPath','user','plat','');" #end  class="deta_eval_online">在线客服</a> #else <a href="javascript:void(0);" #if(!$!user)dialog_uri="$!current_webPath/user_dialog_login.htm" dialog_title="会员登录" dialog_width="430" dialog_height="100" dialog_id="user_login" #else onclick="if(confirm('客服当前不在线，是否继续?'))open_im('$!obj.id','$!webPath','user','plat','');" #end  class="deta_eval_offline">在线客服</a> #end
+										            #end -->
+										</p>
+									</a> #if( $!{casegoods.goods_price} >
+									$!{casegoods.goods_current_price}) #set($pro
+									=(($!{casegoods.goods_price}-$!{casegoods.goods_current_price})/$!{casegoods.goods_price})*100)
+									#set($bigdecimal = $!CommUtil.bigDeCimal($pro)) <a
+										href="$!goods_url"
+										style="display: flex; justify-content: space-between;"><span
+										class="was">&nbsp;$!{casegoods.goods_price}&nbsp;AED</span><span
+										class="was_pro"> $!{bigdecimal}% off</span></a> #else <a
+										href="$!goods_url"><span class="was"></span></a> #end <a
+										href="$!goods_url"> <span class="sale_two_price">
+											<h5>
+												<strong>$!casegoods.goods_current_price&nbsp;</strong><small>AED</small>
+											</h5>
+											<h3>
+												<span class="iconfont iconjiarugouwuche"></span>
+											</h3>
+									</span>
+									</a> <a href="$!goods_url"><span class="sale_two_price"></span></a>
+								</div> </a></li>
+						</ul>
+						#end
+					</div>
+				</div>
+				#end #end
+			</div>
+
+		</div>
+
+		<!-- 广告图片 Start -->
+		<div class="pc_border" style="margin-top: 10px;">
+			<a href="#"><img
+				src="http://photo.metoo-souq.com/upload/advert/95e13a5d-b78a-4271-a81d-8fd6b03ae8e7.jpg"></a>
+		</div>
+		<!-- 品牌列表 -->
+		<div class="brand_content">
+			<div class="brand_title">
+				<h3>Brand</h3>
+			</div>
+			#if($!goodsBrands.size()>0)
+			<div class="brand_list">
+				<a href="$!gb_url" target="_blank"> <img
+					src="$!imageWebServer/$!{goodsBrands.get(0).brandLogo.path}/$!{goodsBrands.get(0).brandLogo.name}"
+					style="border: #E8EBEE solid 20px; width: 68%; height: 68%; display: block; margin: 7% auto;" />
+				</a>
+				<ul>
+					#foreach($gb in $!goodsBrands)
+					#set($gb_url="$!webPath/brand_goods_$!{gb.id}.htm")
+					<li class="brand_img">
+						#if($!{gb.brandLogo}&&$!{velocityCount}>1) <a href="$!gb_url"
+						target="_blank"> <img
+							data-src="$!imageWebServer/$!{gb.brandLogo.path}/$!{gb.brandLogo.name}"
+							width="138" height="90" />
+					</a> #end
+					</li> #end
+				</ul>
+			</div>
+			#end
+		</div>
+		<!-- 左右大广告 -->
+
+		<!-- 广告  -->
+
+		$!httpInclude.include("/floor.htm")
+		<!-- 底部广告位 -->
+		<div class="pc_border" style="margin-top: 10px;">
+			<a href="#"><img
+				src="http://photo.metoo-souq.com/upload/advert/32ec0992-ce70-4387-90a4-9c85acfde6f0.jpg"></a>
+		</div>
+
+		<script> 
+	 
+    var mys2 = new Swiper('.s2_hd', {
+    	autoplay: false,
+    	navigation: {
+    	      nextEl: '.swiper-button-next',
+    	      prevEl: '.swiper-button-prev',
+    	},
+    })
+    var mys1 = new Swiper('.s1_hd', {
+    	autoplay: false,
+    	navigation: {
+    	      nextEl: '.swiper-button-next',
+    	      prevEl: '.swiper-button-prev',
+    	},
+    })
+	  $(".s2_hd").hover(function(){
+			$('.indexSlick1').show("");
+		},function(){
+			$('.indexSlick1').hide("");
+	    });
+	    
+	    $(".s1_hd").hover(function(){
+			$('.indexSlick').show("");
+		},function(){
+			$('.indexSlick').hide("");
+	    }); 
+	    $('.indexSlick1').hide("");
+	    $('.indexSlick').hide("");
+    
+    /*品牌类*/
+    $('.arrows1').hide("");
+    $('.arrows2').hide("");
+    $('.arrows3').hide("");
+    $('.arrows4').hide("");
+    $('.arrows5').hide("");
+    $('.arrows6').hide("");
+    $('.arrows7').hide("");
+    $('.arrows8').hide("");
+    $('.arrows9').hide("");
+    $('.arrows10').hide("");
+    $('.arrows11').hide("");
+    $('.arrows12').hide("");
+    $(".goods1").hover(function(){
+		$('.arrows1').show("");
+	},function(){
+		$('.arrows1').hide("");
+    });
+    $(".goods2").hover(function(){
+		$('.arrows2').show("");
+	},function(){
+		$('.arrows2').hide("");
+    });
+    $(".goods3").hover(function(){
+		$('.arrows3').show("");
+	},function(){
+		$('.arrows3').hide("");
+    });
+    $(".goods4").hover(function(){
+		$('.arrows4').show("");
+	},function(){
+		$('.arrows4').hide("");
+    });
+    $(".goods5").hover(function(){
+		$('.arrows5').show("");
+	},function(){
+		$('.arrows5').hide("");
+    });
+    $(".goods6").hover(function(){
+		$('.arrows6').show("");
+	},function(){
+		$('.arrows6').hide("");
+    });
+    $(".goods7").hover(function(){
+		$('.arrows7').show("");
+	},function(){
+		$('.arrows7').hide("");
+    });
+    $(".goods8").hover(function(){
+		$('.arrows8').show("");
+	},function(){
+		$('.arrows8').hide("");
+    });
+    $(".goods9").hover(function(){
+		$('.arrows9').show("");
+	},function(){
+		$('.arrows9').hide("");
+    });
+    $(".goods10").hover(function(){
+		$('.arrows10').show("");
+	},function(){
+		$('.arrows10').hide("");
+    });
+    $(".goods11").hover(function(){
+		$('.arrows11').show("");
+	},function(){
+		$('.arrows11').hide("");
+    });
+    $(".goods12").hover(function(){
+		$('.arrows12').show("");
+	},function(){
+		$('.arrows12').hide("");
+    });
+    </script>
+	</div>
+
+	<div>$!httpInclude.include("/footer.htm")</div>
+</body>
+
+</html>
+
+
+

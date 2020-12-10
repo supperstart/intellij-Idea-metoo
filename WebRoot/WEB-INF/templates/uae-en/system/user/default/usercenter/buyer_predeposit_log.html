@@ -1,0 +1,111 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Footprint -$!{config.title}-$!{config.poweredby}</title>
+<meta name="keywords" content="$!config.keywords" />
+<meta name="description" content="$!config.description" />
+<meta name="generator" content="$!{config.meta_generator}" />
+<meta name="author" content="$!{config.meta_author}">
+	<meta name="copyright" content="$!{config.copyRight}">
+		<link
+			href="$!webPath/resources/style/system/front/default/css/public.css"
+			type="text/css" rel="stylesheet" />
+		<link
+			href="$!webPath/resources/style/system/front/default/css/public_auto.css"
+			type="text/css" rel="stylesheet" />
+		<link
+			href="$!webPath/resources/style/system/front/default/css/user.css"
+			type="text/css" rel="stylesheet" />
+		<link href="$!webPath/resources/style/common/css/overlay.css"
+			type="text/css" rel="stylesheet" />
+		<link
+			href="$!webPath/resources/style/common/css/jquery-ui-1.8.22.custom.css"
+			type="text/css" rel="stylesheet" />
+		<script src="$!webPath/resources/js/jquery-1.6.2.js"></script>
+		<script src="$!webPath/resources/js/jquery-ui-1.8.21.js"></script>
+		<script src="$!webPath/resources/js/jquery.poshytip.min.js"></script>
+		<script src="$!webPath/resources/js/jquery.shop.common.js"></script>
+		<script src="$!webPath/resources/js/jquery.validate.min.js"></script>
+</head>
+<body>
+	$!httpInclude.include("/top.htm") $!httpInclude.include("/head.htm")
+	$!httpInclude.include("/nav1.htm")
+	<div class="main">
+		<div class="usercenter">
+			$!httpInclude.include("/buyer/nav.htm?op=predeposit_log")
+			<div class="myorder">
+				<h4>
+					<span class="myorder_fright"></span><strong> expenditure
+						details #if($!{user.availableBalance})$!{user.availableBalance}
+						AED #else 0 AED #end </strong>
+				</h4>
+			</div>
+			<div class="usercenter_right">
+
+				<div class="user_list">
+					#if($!objs.size()>0)
+					<form method="post" id="ListForm">
+						<div class="show_smallimg">
+							<table width="100%" border="0" cellspacing="0" cellpadding="0"
+								class="smallimg_table">
+								<tr>
+									<th width="8%">Number</th>
+									<th width="12%">Price(AED)</th>
+									<th width="15%">Submission time</th>
+									<th width="12%">Type</th>
+									<th>description</th>
+								</tr>
+								#foreach($obj in $objs)
+								<tr>
+									<td align="center">$!obj.id</td>
+									<td align="center">¥$!obj.pd_log_amount</td>
+									<td align="center">$!CommUtil.formatLongDate($!obj.addTime)</td>
+									#if($!obj.pd_payment=="alipay") #set($pd_payment="Alipay") #end
+									#if($!obj.pd_payment=="alipay") #set($pd_payment="Alipay") #end
+									#if($!obj.pd_payment=="alipay_wap") #set($pd_payment="Mobile
+									web page alipay") #end #if($!obj.pd_payment=="alipay_app")
+									#set($pd_payment="Mobile alipay APP") #end
+									#if($!obj.pd_payment=="bill") #set($pd_payment="Quick money")
+									#end #if($!obj.pd_payment=="chinabank")
+									#set($pd_payment="MOTOPAY") #end
+									#if($!obj.pd_payment=="tenpay") #set($pd_payment="Tenpay") #end
+									<td align="center">$!obj.pd_op_type</td>
+									#if($!obj.pd_status==0) #set($pd_status="Waiting for the
+									payment") #end #if($!obj.pd_status==1)
+									#set($pd_status="completion of payment") #end
+									<td align="center">$!obj.pd_log_info</td>
+									#if($!obj.pd_pay_status==0) #set($pd_pay_status="Waiting for
+									the payment") #end #if($!obj.pd_pay_status==1)
+									#set($pd_pay_status="Wait for review") #end
+									#if($!obj.pd_pay_status==2) #set($pd_pay_status="completion of
+									payment") #end
+								</tr>
+								#end
+							</table>
+						</div>
+						<div class="userlist_allop">
+							<div class="user_list_page">
+								<span class="user_page_sp"> <input name="currentPage"
+									type="hidden" id="currentPage" value="$!currentPage" />
+									$!gotoPageFormHTML
+								</span>
+							</div>
+						</div>
+					</form>
+					#else
+					<div class="nothing">
+						<div class="nothing_left">
+							<img
+								src="$!webPath/resources/style/system/front/default/images/nothing.png" />
+						</div>
+						<div class="nothing_right">There is nothing</div>
+					</div>
+					#end
+				</div>
+			</div>
+		</div>
+		$!httpInclude.include("/footer.htm")
+	</div>
+</body>
+</html>

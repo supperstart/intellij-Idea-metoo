@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>Ebuyair</title>
+</head>
+<style>
+/*   #aimg{
+    	
+        argin: 0 auto;
+    } */
+#img {
+	margin: auto;
+	position: absolute;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+}
+</style>
+<body>
+	 #if($!user)
+	<div id="aimg">
+		<a href="$!webPath/buyer/index.htm"><img
+			src="http://photo.metoo-souq.com/upload/brand/load.jpg" alt=""
+			id="img" style="width: 900px; height: 600px"></a>
+	</div>
+	#else #if("$!user.userRole"=="SELLER")
+	<div id="aimg">
+		<a href="$!webPath/buyer/index.htm"><img
+			src="http://photo.metoo-souq.com/upload/brand/load.jpg" alt=""
+			id="img" style="width: 900px; height: 600px"></a>
+	</div>
+	#end 
+	#end 
+
+</body>
+</html>

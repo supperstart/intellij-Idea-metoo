@@ -1,0 +1,56 @@
+<ul class="tab-view-user">
+	<!-- 用户top -->
+	<li style="background-color: #fff; margin-bottom: 10px;"
+		class="last_li">
+		<div class="canvas-left-content">
+			<div class="canvas-left-top">
+				<p>
+					<img src="$!webPath/images/logos.png" /><i
+						class="iconfont iconguanbi" id="offCanvasHide"></i>
+				</p>
+				<div class="account_info">
+					<p>#if($!user.userName) hala $!{user.userName} ! #else Hi, We
+						Are noon #end</p>
+					#if($!user.userName)<span class="account_style">$!{user.userName}</span>#end
+				</div>
+			</div>
+			<div class="canvas-left-bottom">
+				<ul>
+					<li><span> <a
+							#if($!user.userName) href="$!webPath/wap/goods_cart1.htm?op=cart"
+							#else href="$!webPath/wap/login.htm" #end><i
+								class="iconfont icongouwuche"></i></a>
+					</span></li>
+					<li><span> <a href="$!webPath/wap/index.htm"><i
+								class="iconfont iconzhuye"></a></i>
+					</span></li>
+					<li><span><a
+							#if($!user.userName) href="$!webPath/wap/buyer/favorite.htm"
+							#else href="$!webPath/wap/login.htm" #end><i
+								class="iconfont iconshoucang1"></i></a></span></li>
+					<li><span> <a
+							#if($!user.userName) href="$!webPath/wap/buyer/service_center.htm"
+							#else href="$!webPath/wap/login.htm" #end><i
+								class="iconfont iconzhanghuguanli"></i></a>
+					</span></li>
+				</ul>
+			</div>
+		</div>
+
+	</li>
+	<!-- 菜单选项 -->
+	#foreach($gc in $gcs)
+	<li class="tab-view-list"><a href="#" class="mui-navigate-right">$!gc.className</a>
+		<ul class="accordion">
+			#foreach($child in $gc.childs) #if($child.display == true)
+			<li class=""><a
+				href="$!webPath/wap/class_goods.htm?gc_id=$!{child.id}"
+				target="_blank" class="mui-navigate-right">$!child.className</a></li>
+			#end #end
+		</ul></li> #end
+
+	<li class="tab-view-list" style="margin-top: 10px;"><a
+		href="$!webPath/koala_logout.htm"> <i
+			class="iconfont iconzhanghuguanli"></i><span>Sign Out</span>
+	</a></li>
+</ul>

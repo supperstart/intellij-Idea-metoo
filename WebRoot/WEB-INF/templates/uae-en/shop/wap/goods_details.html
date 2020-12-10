@@ -1,0 +1,1771 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+<meta charset="utf-8" />
+<meta name="viewport"
+	content="width=device-width,inital-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+<meta name="apple-wap-web-app-capable" content="yes">
+<meta name="apple-wap-web-app-status-bar-style"
+	content="black-translucent">
+<title>$!config.title</title>
+<link href="$!webPath/resources/wap/css/mui.min.css" rel="stylesheet"
+	type="text/css" />
+<link href="$!webPath/resources/wap/fonts/mui.ttf" rel="stylesheet"
+	type="text/css" />
+<link
+	href="$!webPath/resources/style/system/front/wap/v2.0/css/v2.0style.css"
+	rel="stylesheet" type="text/css" />
+
+<link rel="stylesheet" href="$!webPath/resources/wap/css/swiper.css">
+<link rel="stylesheet" href="$!webPath/resources/wap/css/index.css">
+<link rel="stylesheet" href="$!webPath/resources/wap/css/goods.css">
+<link rel="stylesheet" href="$!webPath/resources/wap/fonts/iconfont.css">
+<link rel="stylesheet" href="$!webPath/resources/wap/css/animate.css">
+
+<link
+	href="$!webPath/resources/style/system/front/wap/css/style_170228_bak.css"
+	rel="stylesheet" type="text/css" />
+
+<script src="$!webPath/resources/wap/jquery-3.1.1.min.js"></script>
+<script src="$!webPath/resources/js/TouchSlide.1.1.js"></script>
+<script src="$!webPath/resources/js/jquery.SuperSlide.2.1.1.js"></script>
+
+<script src="$!webPath/resources/wap/swiper.min.js"></script>
+<script src="$!webPath/resources/wap/mui.js"></script>
+<script src="$!webPath/resources/wap/mui.zoom.js"></script>
+<script src="$!webPath/resources/wap/mui.previewimage.js"></script>
+
+
+<!-- 11 -->
+<link
+	href="$!webPath/resources/style/system/front/wap/v2.0/css/jquery_danchu/reveal.css"
+	rel="stylesheet" type="text/css" />
+
+<script src="$!webPath/resources/js/wap/defined.js"></script>
+
+<script src="$!webPath/resources/js/jquery-1.4.4.min.js"></script>
+<script src="$!webPath/resources/js/jquery.validate.min.js"></script>
+<script src="$!webPath/resources/js/jquery.reveal.js"
+	type="text/javascript"></script>
+<script>
+	var parent_user = "$!parent_user.userName";
+	var goods_cod = "$!obj.goods_cod";
+	var store_price="$!obj.goods_current_price";  
+	#if($!{obj.activity_status}==2 && $!user)
+		#set($level_name=$!goodsViewTools.query_user_level_name("$!user.id")) 
+		#if($!level_name=="铜牌会员")
+			store_price=$!activityViewTools.getActivityGoodsInfo("$!obj.id","$!user.id").rate_price;
+		#end
+		#if($!level_name=="银牌会员")
+			store_price=$!activityViewTools.getActivityGoodsInfo("$!obj.id","$!user.id").rate_price;
+		#end
+		#if($!level_name=="金牌会员")
+			store_price=$!activityViewTools.getActivityGoodsInfo("$!obj.id","$!user.id").rate_price;
+		#end
+		#if($!level_name=="超级会员")
+			store_price=$!activityViewTools.getActivityGoodsInfo("$!obj.id","$!user.id").rate_price;
+		#end
+	#end
+	jQuery(function() {
+		jQuery("#show_count").html(" x "+jQuery("#count").val());
+		
+		jQuery("#show_spec").click(function(e) {
+			if(jQuery("#spec_count").css("display")=="block"){
+				jQuery("#img_spec").attr("src","$!webPath/resources/style/system/front/wap/images/details_right.gif");
+				jQuery("#img_spec").attr("width","9");
+				jQuery("#img_spec").attr("height","18");
+				jQuery("#show_count").html(" x "+jQuery("#count").val());
+			}else{
+				jQuery("#img_spec").attr("src","$!webPath/resources/style/system/front/wap/images/details_right_b.gif");
+				jQuery("#img_spec").attr("width","18");
+				jQuery("#img_spec").attr("height","9");
+				jQuery("#show_count").html(" x "+jQuery("#count").val());
+			}
+	        jQuery("#spec_count").toggle();
+	    });
+	
+	    jQuery(".details_standard>a").click(function(){
+			jQuery(".standard_bottom").slideToggle();
+			if(jQuery(this).find("ul").is(".standard_active")){
+				jQuery(this).find("ul").removeClass("standard_active");
+			}else{
+				jQuery(this).find("ul").addClass("standard_active");
+			}
+		})
+		jQuery(".standard_check").not(":eq(0)").each(function(){
+				var th = jQuery(this).find("a").first();
+				goods_spec_set(th); 
+		});
+		
+		#if($!mark)
+			var img = "$!webPath/resources/style/system/front/wap/images/star.png";
+					jQuery(".details_star img").attr("src",img);
+			jQuery(".details_star img").attr("mark","1");
+		#end 
+		
+		//商品收藏
+		#if($!user)
+		jQuery(".details_star").click(function(){
+			if(jQuery(".details_star img").attr("mark")==0){
+			  jQuery.post("$!webPath/add_goods_favorite.htm",{"id":"$!obj.id"},function(data){
+				  if(data==0){
+					  var img = "$!webPath/resources/style/system/front/wap/images/star.png";
+					jQuery(".details_star img").attr("src",img);
+					
+					jQuery(".details_star img").attr("mark","1");
+					alert("商品收藏成功！");  
+				  }else if(data==1){
+					alert("您已收藏该商品！");  
+				  }
+				  
+					
+			  },"text");
+			}else {
+				 jQuery.post("$!webPath/delete_goods_favorite.htm",{"id":"$!obj.id"},function(data){
+				  if(data==0){
+					var img = "$!webPath/resources/style/system/front/wap/images/star_bg.png";
+					jQuery(".details_star img").attr("src",img);
+					
+					jQuery(".details_star img").attr("mark","0");
+					alert("您已取消收藏该商品！");  
+				  }else if(data==1){
+					alert("无法取消收藏商品");  
+				  }
+					
+			  },"text");
+			}
+		});
+		#end
+		
+		
+		//分享遮罩层
+		jQuery("#coverPic").click(function(){
+			
+		    $(".title").hide();
+			$("#shareDiv").show();
+		    $('body').animate({scrollTop:0},100);
+		    $("#shareDiv").show();
+			
+		});
+		//点击隐藏遮罩层
+		jQuery("#shareDiv").click(function(){
+			$(this).hide();
+		});
+		
+		//客服页面
+		jQuery("#customPic").click(function(){
+			
+		    $(".title").hide();
+			$("#customDiv").show();
+		    $('body').animate({scrollTop:0},100);
+			
+		});
+		//点击隐藏客服页面
+		jQuery("#customCancle").click(function(){
+			$("#customDiv").hide();
+		});
+	
+	});
+	function goods_spec_set(obj){
+		var spec=jQuery(obj).attr("spec");
+		var gsp="";
+		var sname="";
+		var load=true;
+		var count=0;
+		jQuery(" li[mark^=spec_] a[spec="+spec+"]").each(function(index, element) {
+	       jQuery(element).removeClass("this");
+	    });
+		jQuery(obj).addClass("this");
+		jQuery("li[mark^=spec]").each(function(){
+			jQuery.each(jQuery(this).find("a[class=this]"),function(){									
+			  gsp=jQuery(this).attr("gsp")+","+gsp;
+			  if(count==0){
+				  sname=" "+jQuery(this).attr("sname")+" ";	  
+				  }else{
+				  sname=" "+jQuery(this).attr("sname")+" "+sname;	  
+					  }
+			  count++;
+			});
+		});
+		jQuery("li[mark^=spec_]").each(function(){
+		 if(jQuery(this).find("a[class=this]").length==0) load=false;
+		});
+		if(sname==""){
+		}else{
+			jQuery("#show_spec span[class=fl] div").html(sname + "&nbsp;");
+			jQuery("#show_count").html(" x "+jQuery("#count").val());
+		}
+		if(load){
+		jQuery.post("$!current_webPath/wap/load_goods_gsp.htm",{"id":"$!obj.id","gsp":gsp},function(data){
+		   goods_inventory=data.count;
+		   store_price=data.price;
+		   if(data.act_price!=null){
+				act_price = data.act_price;
+			   jQuery("#act_price").html(act_price);
+			   }
+		   jQuery("#goods_inventory").html(goods_inventory);
+		   var goods_count = jQuery("#count").val();
+		   if(goods_inventory<goods_count){
+				jQuery("#count").val(goods_inventory);
+		   }
+		   jQuery("#store_price").html(store_price);
+			#if($!{obj.activity_status}==2 && $!user)
+				#set($level_name=$!goodsViewTools.query_user_level_name("$!user.id")) 
+				#if($!level_name=="铜牌会员")
+				store_price=$!activityViewTools.getActivityGoodsInfo("$!obj.id","$!user.id").rate_price;
+				#end
+				#if($!level_name=="银牌会员")
+				store_price=$!activityViewTools.getActivityGoodsInfo("$!obj.id","$!user.id").rate_price;
+				#end
+				#if($!level_name=="金牌会员")
+				store_price=$!activityViewTools.getActivityGoodsInfo("$!obj.id","$!user.id").rate_price;
+				#end
+				#if($!level_name=="超级会员")
+				store_price=$!activityViewTools.getActivityGoodsInfo("$!obj.id","$!user.id").rate_price;
+				#end
+			#end
+		  },"json");
+		}
+	}
+	function add_cart(){
+		console.log("13456")
+		#if($!user.id==$!obj.goods_store.user.id)
+		 alert("无法购买自己的商品");
+		#else
+			var add=true;
+			var gsp="";
+			jQuery("li[mark^=spec_]").each(function(){
+				if(jQuery(this).find("a[class=this]").length==0) add=false;
+			});
+			if(add){
+				jQuery("li[mark^=spec_]").each(function(){
+					gsp = jQuery(this).find("a[class=this]").attr("gsp")+","+gsp;
+				});
+			}
+		
+			if(add){
+				#if($!obj.activity_status==2 && $!user) 
+					store_price = $!activityViewTools.getActivityGoodsInfo("$!obj.id","$!user.id").rate_price;
+				#end
+				var count = jQuery("#count").val()-0;
+				var goods_inventory = jQuery("#goods_inventory").attr("inventory")-0;
+				if(goods_inventory!=0){
+					if(goods_inventory<count){
+						count = goods_inventory;
+					}
+					jQuery.ajax({type:'POST',
+				              url:'$!webPath/wap/add_goods_cart.htm',
+							  data:{"id":"$!{obj.id}",
+									"price":store_price,
+									"gsp":gsp,
+									"count":count},
+						   success:function(data){
+							  window.location.href="$!webPath/wap/goods_cart0.htm"
+				             }
+				});
+				}
+			 }else{
+				alert("Please select the specification !");
+				
+				$("html,body").animate({scrollTop: $("#navBar").offset().top}, 1000);
+				jQuery("#img_spec").attr("src","$!webPath/resources/style/system/front/wap/images/details_right_b.gif");
+				jQuery("#img_spec").attr("width","18");
+				jQuery("#img_spec").attr("height","9");
+				jQuery("#show_count").html(" x "+jQuery("#count").val());
+				
+				jQuery("#spec_count").show();
+			}
+		#end
+	}
+	function buy_goods(){
+	#if($!user.id==$!obj.goods_store.user.id)
+	 alert("无法购买自己的商品");
+	#else
+	  var add=true
+	  var gsp="";
+	  jQuery("li[mark^=spec_]").each(function(){
+		 if(jQuery(this).find("a[class=this]").length==0) add=false;
+	});
+	if(add){
+		jQuery("li[mark^=spec_]").each(function(){
+		gsp = jQuery(this).find("a[class=this]").attr("gsp")+","+gsp;
+	});
+	}
+	  if(add){
+		#if($!obj.activity_status==2 && $!user) 
+		store_price = $!activityViewTools.getActivityGoodsInfo("$!obj.id","$!user.id").rate_price;
+		#end
+		var count = jQuery("#count").val()-0;
+		var goods_inventory = jQuery("#goods_inventory").attr("inventory")-0;
+		if(goods_inventory!=0){
+			if(goods_inventory<count){
+				count = goods_inventory;
+			}
+			jQuery.ajax({type:'POST',
+		              url:'$!webPath/wap/add_goods_cart.htm',
+					  data:{"id":"$!{obj.id}",
+							"price":store_price,
+							"gsp":gsp,
+							"count":count},
+				   success:function(data){
+					  window.location.href="$!webPath/wap/goods_cart1.htm";
+	              }
+		});
+		}
+		
+	  }else{
+			alert("请选择规格！");
+			$("html,body").animate({scrollTop: $("#navBar").offset().top}, 1000);
+			jQuery("#img_spec").attr("src","$!webPath/resources/style/system/front/wap/images/details_right_b.gif");
+			jQuery("#img_spec").attr("width","18");
+			jQuery("#img_spec").attr("height","9");
+			jQuery("#show_count").html(" x "+jQuery("#count").val());
+	        jQuery("#spec_count").show();
+	
+			
+	}
+	#end
+	}
+	
+	</script>
+<style>
+html, body {
+	background-color: #efeff4;
+}
+
+.mui-off-canvas-left {
+	background-color: #f7f7fa;
+}
+
+p {
+	text-indent: 22px;
+}
+
+.meunright {
+	width: 30%;
+	justify-content: flex-end;
+	position: relative;
+	z-index: 999;
+	display: flex;
+	align-items: center;
+	height: 100%;
+}
+
+.meunright_a {
+	width: 88%;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
+}
+
+.focusBox {
+	margin: 0px;
+}
+
+span.mui-icon {
+	font-size: 14px;
+	color: #007aff;
+	margin-left: -15px;
+	padding-right: 10px;
+}
+
+.mui-off-canvas-left {
+	color: #fff;
+}
+
+.title+.content {
+	margin: 10px 15px 35px;
+	color: #bbb;
+	text-indent: 1em;
+	font-size: 14px;
+	line-height: 24px;
+}
+
+input {
+	color: #000;
+}
+
+.mui-preview-image.mui-fullscreen {
+	position: fixed;
+	z-index: 20;
+	background-color: #000;
+}
+
+.mui-preview-header, .mui-preview-footer {
+	position: absolute;
+	width: 100%;
+	left: 0;
+	z-index: 10;
+}
+
+.mui-preview-header {
+	height: 44px;
+	top: 0;
+}
+
+.mui-preview-footer {
+	height: 50px;
+	bottom: 0px;
+}
+
+.mui-preview-header .mui-preview-indicator {
+	display: block;
+	line-height: 25px;
+	color: #fff;
+	text-align: center;
+	margin: 15px auto 4;
+	width: 70px;
+	background-color: rgba(0, 0, 0, 0.4);
+	border-radius: 12px;
+	font-size: 16px;
+}
+
+.mui-preview-image {
+	display: none;
+	-webkit-animation-duration: 0.5s;
+	animation-duration: 0.5s;
+	-webkit-animation-fill-mode: both;
+	animation-fill-mode: both;
+}
+
+.mui-preview-image.mui-preview-in {
+	-webkit-animation-name: fadeIn;
+	animation-name: fadeIn;
+}
+
+.mui-preview-image.mui-preview-out {
+	background: none;
+	-webkit-animation-name: fadeOut;
+	animation-name: fadeOut;
+}
+
+.mui-preview-image.mui-preview-out .mui-preview-header,
+	.mui-preview-image.mui-preview-out .mui-preview-footer {
+	display: none;
+}
+
+.mui-zoom-scroller {
+	position: absolute;
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-box-align: center;
+	-webkit-align-items: center;
+	align-items: center;
+	-webkit-box-pack: center;
+	-webkit-justify-content: center;
+	justify-content: center;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	-webkit-backface-visibility: hidden;
+}
+
+.mui-zoom {
+	-webkit-transform-style: preserve-3d;
+	transform-style: preserve-3d;
+}
+
+.mui-slider .mui-slider-group .mui-slider-item img {
+	width: auto;
+	height: auto;
+	max-width: 100%;
+	max-height: 100%;
+}
+
+.mui-android-4-1 .mui-slider .mui-slider-group .mui-slider-item img {
+	width: 100%;
+}
+
+.mui-android-4-1 .mui-slider.mui-preview-image .mui-slider-group .mui-slider-item
+	{
+	display: inline-table;
+}
+
+.mui-android-4-1 .mui-slider.mui-preview-image .mui-zoom-scroller img {
+	display: table-cell;
+	vertical-align: middle;
+}
+
+.mui-preview-loading {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+	display: none;
+}
+
+.mui-preview-loading.mui-active {
+	display: block;
+}
+
+.mui-preview-loading .mui-spinner-white {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	margin-left: -25px;
+	margin-top: -25px;
+	height: 50px;
+	width: 50px;
+}
+
+.mui-preview-image img.mui-transitioning {
+	-webkit-transition: -webkit-transform 0.5s ease, opacity 0.5s ease;
+	transition: transform 0.5s ease, opacity 0.5s ease;
+}
+
+@
+-webkit-keyframes fadeIn { 0% {
+	opacity: 0;
+}
+
+100%
+{
+opacity
+
+
+:
+
+ 
+
+1;
+}
+}
+@
+keyframes fadeIn { 0% {
+	opacity: 0;
+}
+
+100%
+{
+opacity
+
+
+:
+
+ 
+
+1;
+}
+}
+@
+-webkit-keyframes fadeOut { 0% {
+	opacity: 1;
+}
+
+100%
+{
+opacity
+
+
+:
+
+ 
+
+0;
+}
+}
+@
+keyframes fadeOut { 0% {
+	opacity: 1;
+}
+
+100%
+{
+opacity
+
+
+:
+
+ 
+
+0;
+}
+}
+p img {
+	max-width: 100%;
+	height: auto;
+}
+
+.mui-zoom-wrapper {
+	display: none;
+	overflow: hidden;
+}
+
+.breviary {
+	display: flex;
+	justify-content: center;
+	overflow: hidden;
+}
+
+.breviary li {
+	overflow: hidden;
+	float: left;
+	width: 65px;
+	height: 45px;
+	padding: 0px 10px 0px 10px;
+}
+
+.breviary li img {
+	border: 1px solid #8d8d8d;
+	padding: 2px;
+	width: 100%;
+	height: 100%;
+}
+
+.tab-view-list {
+	position: relative;
+	padding-left: 15px;
+	border-bottom: 1px solid #e2e5f1;
+	background-color: #fff;
+}
+
+.tab-view-list:first-child {
+	border-top: 1px solid #e2e5f1;
+	box-shadow: 0 0 1px rgba(0, 0, 0, 0.04);
+}
+
+.mui-off-canvas-left {
+	color: #initial;
+}
+
+.tab-view-list>a {
+	height: 38px;
+	display: flex;
+	align-items: center;
+}
+
+.logo, .mui-title {
+	overflow: auto;
+	margin: auto;
+	position: absolute;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+}
+/*canvas-left-content*/
+.canvas-left-content, .canvas-left-top {
+	overflow: hidden;
+	display: block;
+}
+
+.canvas-left-top, .canvas-left-bottom {
+	padding: 12px 15px;
+}
+
+.canvas-left-bottom {
+	border-top: 1px solid #f7f7fa;
+	border-bottom: 1px solid #e2e5f1;
+}
+
+.canvas-left-top>p>img {
+	height: 24px;
+}
+
+.canvas-left-bottom>ul {
+	overflow: hidden;
+	display: flex;
+}
+
+.canvas-left-bottom>ul>li {
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-align-items: center;
+	-webkit-box-align: center;
+	-ms-flex-align: center;
+	align-items: center;
+	-webkit-box-pack: center;
+	-webkit-justify-content: center;
+	-ms-flex-pack: center;
+	justify-content: center;
+	color: #fff;
+	text-align: center;
+	flex: 1;
+}
+
+.canvas-left-bottom>ul>li>span {
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-align-items: center;
+	-webkit-box-align: center;
+	-ms-flex-align: center;
+	align-items: center;
+	-webkit-box-pack: center;
+	-webkit-justify-content: center;
+	-ms-flex-pack: center;
+	justify-content: center;
+	width: 32px;
+	height: 32px;
+	color: #fff;
+	background-color: #007aff;
+	border-radius: 3px;
+}
+
+.canvas-left-bottom>ul>li>i {
+	
+}
+
+.canvas-left-top>p {
+	display: flex;
+}
+
+.account_info>p, .canvas-left-top>p {
+	text-indent: 0px;
+	color: #404553;
+	font-weight: bold;
+}
+
+.canvas-left-top>p>i {
+	flex: 1;
+	color: initial;
+	text-align: right;
+}
+
+.account_info {
+	display: block;
+}
+
+.account_style {
+	display: block;
+	font-weight: normal;
+	font-size: 12px;
+	color: #7e859b;
+}
+
+/* goods */
+.collects {
+	color: #007aff;
+}
+
+.details_box {
+	border-bottom: 0px;
+}
+
+#show_count, #spec_count {
+	width: auto;
+	overflow: hidden;
+}
+
+#spec_count ul {
+	width: 100%;
+}
+
+.mask2 {
+	position: absolute;
+	top: 20px;
+	filter: alpha(opacity = 100);
+	background-color: #fff;
+	z-index: 2;
+	left: 0px;
+	bottom: 50px;
+	opacity: 1;
+	-moz-opacity: 1;
+	width: 100%;
+	height: 100%;
+	text-align: center;
+	display: none;
+	overflow: hidden;
+}
+
+.mask {
+	position: absolute;
+	top: 0px;
+	filter: alpha(opacity = 80);
+	background-color: #777;
+	z-index: 1002;
+	left: 0px;
+	opacity: 0.8;
+	-moz-opacity: 0.8;
+}
+
+.mui-preview-image.mui-fullscreen {
+	position: fixed;
+	z-index: 20;
+	background-color: #000;
+}
+
+.mui-preview-header, .mui-preview-footer {
+	position: absolute;
+	width: 100%;
+	left: 0;
+	z-index: 10;
+}
+
+.mui-preview-header {
+	height: 44px;
+	top: 0;
+}
+
+.mui-preview-footer {
+	height: 50px;
+	bottom: 0px;
+}
+
+.mui-preview-header .mui-preview-indicator {
+	display: block;
+	line-height: 25px;
+	color: #fff;
+	text-align: center;
+	margin: 15px auto 4;
+	width: 70px;
+	background-color: rgba(0, 0, 0, 0.4);
+	border-radius: 12px;
+	font-size: 16px;
+}
+
+.mui-preview-image {
+	display: none;
+	-webkit-animation-duration: 0.5s;
+	animation-duration: 0.5s;
+	-webkit-animation-fill-mode: both;
+	animation-fill-mode: both;
+}
+
+.mui-preview-image.mui-preview-in {
+	-webkit-animation-name: fadeIn;
+	animation-name: fadeIn;
+}
+
+.mui-preview-image.mui-preview-out {
+	background: none;
+	-webkit-animation-name: fadeOut;
+	animation-name: fadeOut;
+}
+
+.mui-preview-image.mui-preview-out .mui-preview-header,
+	.mui-preview-image.mui-preview-out .mui-preview-footer {
+	display: none;
+}
+
+.mui-zoom-scroller {
+	position: absolute;
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-box-align: center;
+	-webkit-align-items: center;
+	align-items: center;
+	-webkit-box-pack: center;
+	-webkit-justify-content: center;
+	justify-content: center;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	-webkit-backface-visibility: hidden;
+}
+
+.mui-zoom {
+	-webkit-transform-style: preserve-3d;
+	transform-style: preserve-3d;
+}
+
+.mui-slider .mui-slider-group .mui-slider-item img {
+	width: auto;
+	height: auto;
+	max-width: 100%;
+	max-height: 100%;
+}
+
+.mui-android-4-1 .mui-slider .mui-slider-group .mui-slider-item img {
+	width: 100%;
+}
+
+.mui-android-4-1 .mui-slider.mui-preview-image .mui-slider-group .mui-slider-item
+	{
+	display: inline-table;
+}
+
+.mui-android-4-1 .mui-slider.mui-preview-image .mui-zoom-scroller img {
+	display: table-cell;
+	vertical-align: middle;
+}
+
+.mui-preview-loading {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+	display: none;
+}
+
+.mui-preview-loading.mui-active {
+	display: block;
+}
+
+.mui-preview-loading .mui-spinner-white {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	margin-left: -25px;
+	margin-top: -25px;
+	height: 50px;
+	width: 50px;
+}
+
+.mui-preview-image img.mui-transitioning {
+	-webkit-transition: -webkit-transform 0.5s ease, opacity 0.5s ease;
+	transition: transform 0.5s ease, opacity 0.5s ease;
+}
+
+@
+-webkit-keyframes fadeIn { 0% {
+	opacity: 0;
+}
+
+100%
+{
+opacity
+
+
+:
+
+ 
+
+1;
+}
+}
+@
+keyframes fadeIn { 0% {
+	opacity: 0;
+}
+
+100%
+{
+opacity
+
+
+:
+
+ 
+
+1;
+}
+}
+@
+-webkit-keyframes fadeOut { 0% {
+	opacity: 1;
+}
+
+100%
+{
+opacity
+
+
+:
+
+ 
+
+0;
+}
+}
+@
+keyframes fadeOut { 0% {
+	opacity: 1;
+}
+
+100%
+{
+opacity
+
+
+:
+
+ 
+
+0;
+}
+}
+p img {
+	max-width: 100%;
+	height: auto;
+}
+
+.good_img_content, .user_grade_list {
+	background-color: #fff;
+	overflow: hidden;
+}
+
+.mui-zoom-wrapper {
+	display: none;
+	overflow: hidden;
+}
+
+.breviary {
+	display: flex;
+	justify-content: center;
+	position: relative;
+	overflow: hidden;
+	padding: 5px;
+	margin: 0px;
+}
+
+.breviary li {
+	overflow: hidden;
+	width: 33px;
+	height: 33px;
+	padding: 3px;
+}
+
+.breviary li img {
+	border: 1px solid #8d8d8d;
+	padding: 2px;
+	width: 100%;
+}
+
+.mui-preview-header .mui-preview-indicator {
+	width: 100%;
+	padding-top: 10px;
+}
+
+h5.mui-content-padded {
+	margin-left: 0px !important;
+	margin-top: 20px !important;
+}
+
+input, button, .mui-btn {
+	/*   margin: 5px 15px 10px 5px; */
+	
+}
+
+.mui-spinner {
+	display: inline-block;
+	width: 24px;
+	height: 24px;
+	-webkit-transform-origin: 50%;
+	transform-origin: 50%;
+	-webkit-animation: spinner-spin 1s step-end infinite;
+	animation: spinner-spin 1s step-end infinite;
+}
+
+.mui-spinner:after {
+	display: block;
+	content: "";
+	width: 100%;
+	height: 100%;
+	background-position: 50%;
+	background-size: 100%;
+	background-repeat: no-repeat;
+}
+
+.mui-spinner-custom:after {
+	background-image:
+		url("data:image/svg+xml;charset=utf-8,<svg viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'><defs><line id='l' x1='60' x2='60' y1='7' y2='27' stroke='red' stroke-width='11' stroke-linecap='round'/></defs><g><use xlink:href='%23l' opacity='.27'/><use xlink:href='%23l' opacity='.27' transform='rotate(30 60,60)'/><use xlink:href='%23l' opacity='.27' transform='rotate(60 60,60)'/><use xlink:href='%23l' opacity='.27' transform='rotate(90 60,60)'/><use xlink:href='%23l' opacity='.27' transform='rotate(120 60,60)'/><use xlink:href='%23l' opacity='.27' transform='rotate(150 60,60)'/><use xlink:href='%23l' opacity='.37' transform='rotate(180 60,60)'/><use xlink:href='%23l' opacity='.46' transform='rotate(210 60,60)'/><use xlink:href='%23l' opacity='.56' transform='rotate(240 60,60)'/><use xlink:href='%23l' opacity='.66' transform='rotate(270 60,60)'/><use xlink:href='%23l' opacity='.75' transform='rotate(300 60,60)'/><use xlink:href='%23l' opacity='.85' transform='rotate(330 60,60)'/></g></svg>");
+}
+
+.mui-off-canvas-wrap .mui-bar {
+	box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .08);
+}
+
+.goods_spec_set {
+	overflow: hidden;
+	text-indent: 0px;
+}
+
+.goods_spec_set>.this {
+	border-color: #3866df;
+	color: #3866df;
+	padding: 7px 15px;
+}
+
+.goods_spec_set>a {
+	border: 1px solid #e2e5f1;
+	padding: 7px 15px;
+	border-radius: 2px;
+	font-weight: 600;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	max-width: 140px;
+	line-height: 38px;
+	font-size: 10px;
+}
+
+.details_price {
+	box-shadow: 0 0 1px rgba(0, 0, 0, 0.04);
+	border-bottom: 1px solid #e2e5f1;
+}
+
+.breviary, .details_price ul {
+	background-color: #fff;
+}
+
+.details_price ul {
+	width: 100%;
+}
+
+.details_price ul li {
+	margin: 5px 0px;
+	display: block;
+	width: 100%;
+}
+
+.stand {
+	margin: 5px 0px 0px 0px;
+	background-color: #fff;
+}
+
+.Product_Options {
+	font-weight: 500;
+	color: inherit;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	font-size: 14px;
+}
+
+.fr {
+	float: right !important;
+	padding-top: 28px;
+	padding-left: 10px;
+}
+</style>
+</head>
+
+<body>
+
+	<div id="offCanvasWrapper" class="mui-off-canvas-wrap mui-draggable">
+		<!--侧滑菜单部分-->
+		<aside id="offCanvasSide" class="mui-off-canvas-left">
+			<div id="offCanvasSideScroll" class="mui-scroll-wrapper">
+				<div class="mui-scroll">
+					$!httpInclude.include("/wap/index_left.htm")</div>
+			</div>
+		</aside>
+		<!--主界面部分-->
+		<div class="mui-inner-wrap">
+			<header class="mui-bar mui-bar-nav">
+				$!httpInclude.include("/wap/top.htm") </header>
+			<!-- 主题内容 -->
+			<div id="offCanvasContentScroll"
+				class="mui-content mui-scroll-wrapper">
+
+				<!-- 主体内容 -->
+				<div class="mui-scroll">
+
+					<!-- 商品图片 -->
+					<div class="good_img_content ">
+						<div class="swiper-wrapper">
+							<div class="swiper-slide">
+								<span class="iconfont iconsousuo"
+									style="color: #333333; right: 9px; top: 10px; position: absolute;"></span>
+								<img
+									src="$!imageWebServer/$!obj.goods_main_photo.path/$!obj.goods_main_photo.name"
+									height="280" style="width: 100%;" data-preview-src=""
+									data-preview-group="2" />
+							</div>
+							#if($!obj.goods_photos.size()>0) #foreach($acc in
+							$obj.goods_photos)
+							<div class="swiper-slide">
+								<span class="iconfont iconsousuo"
+									style="color: #333333; right: 9px; top: 10px; position: absolute;"></span>
+								<img src="$!imageWebServer/$!acc.path/$!acc.name" height="280"
+									style="width: 100%;" data-preview-src="" data-preview-group="2" />
+							</div>
+							#end #end
+						</div>
+					</div>
+					<!-- 商品缩略图 -->
+					<ul class="breviary">
+						<li onclick="blank(0)"><span class="moer_text"></span> <img
+							src="$!imageWebServer/$!obj.goods_main_photo.path/$!obj.goods_main_photo.name"
+							style="width: 100%;" /></li> #if($!obj.goods_photos.size()>0)
+						#foreach($acc in $obj.goods_photos)
+						<li onclick="blank(0)"><span class="moer_text"></span> <img
+							src="$!imageWebServer/$!acc.path/$!acc.name" style="width: 100%;" />
+						</li> #end #end
+						</li>
+					</ul>
+					<!-- 价格数据 -->
+					<div class="details_price">
+						<section style="padding-top: 0px; padding-bottom: 0px;">
+							<div class="details_price" style="margin-bottom: 10px;">
+								<ul style="padding-bottom: 10px;">
+									#if($!{obj.activity_status}==2 && $!user)
+									#set($level_name=$!goodsViewTools.query_user_level_name("$!user.id"))
+									#if($!level_name=="铜牌会员")
+									#set($act_price=$!activityViewTools.getActivityGoodsInfo("$!obj.id","$!user.id").rate_price)
+									#end #if($!level_name=="银牌会员")
+									#set($act_price=$!activityViewTools.getActivityGoodsInfo("$!obj.id","$!user.id").rate_price)
+									#end #if($!level_name=="金牌会员")
+									#set($act_price=$!activityViewTools.getActivityGoodsInfo("$!obj.id","$!user.id").rate_price)
+									#end #if($!level_name=="超级会员")
+									#set($act_price=$!activityViewTools.getActivityGoodsInfo("$!obj.id","$!user.id").rate_price)
+									#end
+									<li class="details_price_money"><strong id="store_price">¥$!{act_price}$!obj.activity_price</strong>
+									</li> #else
+									<li class="details_price_money"
+										style="text-align: left; display: table-cell; vertical-align: bottom;">
+										<span class="price_num" style="width: auto;">
+											<h3 class="" id="store_price">¥$!{obj.store_price}&nbsp;</h3>
+											<small class="">AED</small>
+									</span>
+										<div class=""
+											style="overflow: hidden; width: 100%; color: #aeaeae; font-weight: 500; font-size: 12px;">
+											<span style="text-decoration: line-through; width: auto;">¥$!{obj.goods_price}</span>
+											<span class="saved " style="width: auto;">&nbsp; - You
+												Save&nbsp;</span> <span class="noWrap" style="width: auto;">$!{obj.goods_price}
+												AED</span>
+										</div> </span> <!-- <span style="margin: 14px 0 0 22px;width: 25%;color:#6c6a6a;">包邮</span>  -->
+										#if($!{obj.goods_salenum} > 9) <span
+										style="margin: 14px 0 0 10px; width: auto; float: right; color: #6c6a6a; font-size: 12px;">销量：$!{obj.goods_salenum}</span><span>
+											<!-- $!{obj.delivery_area} -->
+									</span> #end
+									</li> #end
+									<li class="details_price_money" style="font-size: 16px;">$!obj.goods_name</li>
+								</ul>
+
+
+								<!--二维码小图标
+									<div style="width:10%;float:left;vertical-align:middle; margin-top:15px;">
+										<a href="#" class="big-link" data-reveal-id="myModal"">
+											
+											<img src="data:image/png;base64,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" style="width:100%;"> 
+										</a> 
+									</div>-->
+							</div>
+							<!-- 商品规格 -->
+							#if($!goodsViewTools.getCombinPlans("$!obj.id","suit").size()>0)
+							<dl class="act">
+								<dt id="group_goods">
+									<a href="$!webPath/wap/combin_goods.htm?id=$!{obj.id}"><span
+										class="fl">促销：<b>组合套装</b>
+									</span><span class="fr"><img
+											src="$!webPath/resources/style/system/front/wap/images/details_right.gif"
+											width="9" height="18" /> </span> </a>
+								</dt>
+							</dl>
+							#end
+							<dl class="stand">
+								<!-- <dt id="show_spec">
+									<span class="fl" style="width:100%;display:none;" >
+										<div style="float:left;padding-left:20px;">
+											选择规格: #foreach($spec in $goodsViewTools.generic_spec("$!obj.id")) 
+														#if($!velocityCount==1)
+															$!{spec.name} 
+														#end 
+													#end &nbsp;&nbsp;&nbsp;
+										</div>
+										<span id="show_count"></span>
+									</span> 
+								</dt> -->
+								<dd id="spec_count">
+									#set($Optionsdata = $goodsViewTools.generic_spec("$!obj.id") )
+									#if($!Optionsdata.size()>0)
+									<p class="Product_Options">Product Options</p>
+									#end
+									<ul>
+										#foreach($spec in $!Optionsdata)
+										<li mark="spec_$!{spec_id}"><p class="fl">$!{spec.name}：</p>
+											<p class="goods_spec_set">
+												#foreach($gsp in $obj.goods_specs)
+												#if($!{gsp.spec.id}==$!spec.id) <a
+													href="javascript:void(0);" onClick="goods_spec_set(this);"
+													sname="$!gsp.value" spec="$!gsp.spec.id" gsp="$!gsp.id">$!gsp.value</a>
+												#end #end
+											</p></li> #end
+										<li>
+											<div class=""
+												style="padding-left: 20px; margin-bottom: 10px;">
+												<h5 class="mui-content-padded"
+													style="display: inline-block;">QTY:</h5>
+												<div class="mui-numbox num" data-numbox-step='1'
+													data-numbox-min='1'
+													data-numbox-max='$!{obj.goods_inventory}'>
+													<button class="mui-btn mui-btn-numbox-minus minus"
+														id="minus_click" onClick="minus()" type="button">-</button>
+													<input class="mui-input-numbox" type="number" id="count"
+														name="count" value="1" />
+													<button class="mui-btn mui-btn-numbox-plus plus"
+														id="plus_click" onClick="plus()" type="button">+</button>
+												</div>
+												<span class="" style="width: auto;">In stock: <strong
+													id="goods_inventory" inventory="$!{obj.goods_inventory}">$!{obj.goods_inventory}</strong></span>
+											</div>
+										</li>
+										<script>
+											function plus(){
+											
+											}
+											function minus(){
+											var cc = jQuery("#count").val()-0;
+											if(cc<=1){
+												jQuery("#count").val(1);
+											}
+											if(goods_cod=="0"){
+													jQuery("#show_count").html(" x "+jQuery("#count").val());
+												}else{
+													jQuery("#show_count").html(" x "+jQuery("#count").val());
+												}
+											}
+											
+											</script>
+									</ul>
+								</dd>
+							</dl>
+							<div style="background-color: #fff; padding: 18px 0px;">
+								<button type="button"
+									class="mui-btn mui-btn-block mui-btn-primary buttom_join"
+									id="addto" onClick="add_cart()">ADD TO CTRL</button>
+							</div>
+
+							#if($!store) #set($store_url="$!webPath/store_$!{store.id}.htm")
+							#if($!config.second_domain_open &&
+							$!store.store_second_domain!="")
+							#set($store_url="http://$!{store.store_second_domain}.$!{domainPath}")
+							#end
+							<!--商家店铺-->
+							<div class="mobile_list">
+								<p>Offer Details</p>
+								<ul class="mobile_list_info">
+									<li>
+										<p>
+											<i class="iconfont icondianpu"></i> <span class="flex1">$!store.store_name</span>
+										</p>
+									</li>
+									<li>
+										<p>
+											<i class="iconfont iconanquanbaozhang"></i> <span
+												class="flex1">SECURE SHOPPING</span>
+										</p>
+										<p class="note_right">
+											<span>Your data is always protected</span>
+										</p>
+									</li>
+									<li>
+										<p>
+											<i class="iconfont iconwulianwang-"></i> <span class="flex1">TRUSTED
+												SHIPPING</span>
+										</p>
+										<p class="note_right">
+											<span>Free shipping when you spend 100 AED and above</span>
+										</p>
+									</li>
+									<li>
+										<p>
+											<i class="iconfont icontuifeibaozhang"></i> <span
+												class="flex1">EASY RETURNS</span>
+										</p>
+										<p class="note_right">
+											<span>Free returns on eligible items so you can shop
+												with ease</span>
+										</p>
+									</li>
+								</ul>
+							</div>
+							#else
+							<!--自营 -->
+							<div class="mobile_list">
+								<p>Offer Details</p>
+								<ul class="mobile_list_info">
+									<li>
+										<p>
+											<i class="iconfont icondianpu"></i> <span class="flex1">Metoo.store</span>
+										</p>
+									</li>
+									<li>
+										<p>
+											<i class="iconfont iconanquanbaozhang"></i> <span
+												class="flex1">SECURE SHOPPING</span>
+										</p>
+										<p class="note_right">
+											<span>Your data is always protected</span>
+										</p>
+									</li>
+									<li>
+										<p>
+											<i class="iconfont iconwulianwang-"></i> <span class="flex1">TRUSTED
+												SHIPPING</span>
+										</p>
+										<p class="note_right">
+											<span>Free shipping when you spend 100 AED and above</span>
+										</p>
+									</li>
+									<li>
+										<p>
+											<i class="iconfont icontuifeibaozhang"></i> <span
+												class="flex1">EASY RETURNS</span>
+										</p>
+										<p class="note_right">
+											<span>Free returns on eligible items so you can shop
+												with ease</span>
+										</p>
+									</li>
+								</ul>
+							</div>
+							#end
+							<!-- 提供的服务
+								<div style="overflow: hidden;">
+									<ul>	
+										<li class="details_remark">
+											<span>快递：免运费</span><span>$!{obj.goods_salenum}人已购买</span>
+											<span>$!{obj.delivery_area}</span>
+											<span class="details_star collects">Collect</span>
+										</li>
+									</ul>
+								</div>  -->
+						</section>
+					</div>
+					<!-- 其他数据 -->
+					<div class="else_data">
+						<!-- 	
+								<div id="customDiv" class="mask2" style="background:#fff; width:100%;">
+									<a href="javascript:void(0)" id="customCancle">
+										<img src="$!webPath/resources/style/system/front/wap/images/close_pink.png" style="position: absolute;right: 5px;top:-25px;" />  
+									</a>
+										<h5 style="font-size:18px;width:100%;background-color:#ffffff;padding:15px; text-align:left;">1、长按下图二维码，联系商城客服</h5>
+										#if($!{obj.gc.parent.id} != 343)
+												<img style="text-align:center;" src="$!webPath/weixin/code.png" height="200px; width=200px;" />  
+											#else
+												<img style="text-align:center;" src="$!webPath/weixin/sg.png" height="200px; width=200px;" /> 
+										#end
+										<div style="font-size:18px;width:90%;background-color:#ffffff;padding:15px; text-align:left;">
+											<h4>2、公众号客服</h4>
+											<p>点击粉色考拉公众号左下角小键盘按钮，输入文字信息即可联系客服。（9:00-18:00）</p>
+											<h4>3、服务热线</h4>
+											<p>0731-82280487</p>
+											<h4>4、订单查询</h4>
+											<p>从商城"个人中心"点击"我的订单"，可查看订单是否发货，以及物流信息。</p>
+										</div>	
+								</div>  -->
+
+
+						<!--生成弹出的产品页面和二维码
+								<div id="myModal" class="reveal-modal" >
+								
+									<div >
+										<div style="text-align:center;">
+											<div>
+												<img style="width:70vw" src="$!imageWebServer/$!obj.goods_photos.get(0).path/$!obj.goods_photos.get(0).name" />
+											</div>
+											
+											<div >
+												<div style="text-align:left;">
+													<img style="text-align:center;width:24vw; float:left;" src="$!webPath/weixin/koala_erweima.jpg" />  
+												
+													<div style="position:relative; float:left; margin-left:5px; width:46vw;">
+														<span >$!obj.goods_name</span><br />
+														<span style="color:red">¥$!{obj.store_price}</span><br />
+														<span>长按识别二维码</span>
+													</div>
+												</div>
+											</div>			
+										</div>
+									</div>
+									
+									<a class="close-reveal-modal">&#215;</a>	
+								</div>
+								-->
+
+						<!-- <div class="phone_hd">
+										<a class="back" href="javascript:history.go(-1);"><img
+											src="$!webPath/resources/style/system/front/wap/images/back.png"
+											width="25" height="25" />
+										</a> 商品详情 1234564564<a class="search home" href="$!webPath/wap/index.htm"><img
+											src="$!webPath/resources/style/system/front/wap/images/home.png"
+											width="25" height="25" /> </a>
+									</div>  -->
+
+						#if($!{obj.activity_status}==2)
+						<div class="name">当前商品为促销商品，用户登录后方可享受促销价格！</div>
+						#end
+						#if($!{obj.buyGift_id}&&$!{obj.order_enough_give_status}==1&&$!isGift)
+						<div class="name">当前商品满$!obj.buyGift_amount元即有赠品。</div>
+						#end #if($!{obj.order_enough_if_give}==1&&$!isGive)
+						<div class="name">当前商品为满$!obj.buyGift_amount元即赠送商品。</div>
+						#end #if($!enoughreduce)
+						<div class="name">$!enoughreduce.ertag</div>
+						#end
+					</div>
+					<!--商品规格及配送-->
+					<div class="details_box">
+						<dl class="send">
+							<dt>
+								<ul class="eva">
+									<li><a href="$!webPath/wap/order_record.htm?id=$!{obj.id}">Order
+											record<span class="gray"></span>
+									</a></li>
+									<li><a href="$!webPath/wap/goods_eva.htm?id=$!{obj.id}">Comment<span
+											class="gray">($!evaluates_count)</span>
+									</a></li>
+								</ul>
+							</dt>
+						</dl>
+					</div>
+					<ul
+						style="width: 100%; overflow: hidden; padding-bottom: 10px; background-color: #fff;">
+						<li id="navBar" style="width: 100%;">
+							<!-- <hr style="height:1px;border:none;border-bottom:1px solid #e3dddd;width:100%" /> -->
+						</li> #if($!{obj.gc.id} != 345)
+						<li class="details_price_money"
+							style="font-size: 12px; color: #838080; border-top: 1px solid #e3dddd; padding-top: 10px; width: 100%; padding-left: 0px;">
+							<div style="width: 33%; float: left; text-align: center;">
+								<img
+									src="$!webPath/resources/style/system/front/wap/images/tick.png"
+									width="14" height="14">&nbsp;FREE Shipping
+							</div>
+							<div style="width: 34%; float: left; text-align: center;">
+								<img
+									src="$!webPath/resources/style/system/front/wap/images/tick.png"
+									width="14" height="14">&nbsp;24-hour delivery
+							</div>
+							<div style="width: 33%; float: left; text-align: center;">
+								<img
+									src="$!webPath/resources/style/system/front/wap/images/tick.png"
+									width="14" height="14">&nbsp;Quality goods
+							</div> <!-- <span style="float:right;width:20px;"><img id="img_smm" src="$!webPath/resources/style/system/front/wap/images/details_right.gif" height="18" width="9"> -->
+							</span>
+						</li> #end
+					</ul>
+					<!-- 评分 -->
+					<div class="user_grade_list">
+						<h4>Description:</h4>
+						<div class="user_grade_data">
+							<!--评价等-->
+							#set($well_evaluate =
+							$!CommUtil.null2Double($!{obj.well_evaluate})*100)
+							#set($well="$!{well_evaluate}%") #set($middle_evaluate =
+							$!CommUtil.null2Double($!{obj.middle_evaluate})*100)
+							#set($middle="$!{middle_evaluate}%") #set($bad_evaluate =
+							$!CommUtil.null2Double($!{obj.bad_evaluate})*100)
+							#set($bad="$!{bad_evaluate}%")
+							<div class="evaluation_top">
+								<div class="evaluation_top_box">
+									<b>Feedback Rate&nbsp;&nbsp;</b><span><i
+										style="width: $!{well"></i></span><strong>$!{well}</strong>
+								</div>
+								<ul>
+									<li class="this"><span>Positive<br /> <i>$!well</i>
+									</span></li>
+									<li><span>Moderate<br /> <i>$!middle</i>
+									</span></li>
+									<li><span>Negative<br /> <i>$!bad</i>
+									</span></li>
+								</ul>
+							</div>
+							<div class="evaluation_box">
+								<ul>
+									<li class="details_eli" style="border-bottom: 0px;"><a
+										href=""><b><i><em><img
+														src="$!webPath/resources/style/system/front/wap/images/evel_star.png"></em><em><img
+														src="$!webPath/resources/style/system/front/wap/images/evel_star.png"></em><em><img
+														src="$!webPath/resources/style/system/front/wap/images/evel_star.png"></em><em><img
+														src="$!webPath/resources/style/system/front/wap/images/evel_star.png"></em><em><img
+														src="$!webPath/resources/style/system/front/wap/images/evel_star_bg.png"></em></i>100%&nbsp;(2)</b><span>评价</span></a>
+									</li>
+								</ul>
+								#if($!objs.size()>0) #foreach($obj in $!objs)
+								<ul>
+									<li>
+										<h3>$!{obj.evaluate_user.userName}</h3>
+									</li>
+									#set($img="$!imageWebServer/$!config.memberIcon.path/$!config.memberIcon.name")
+									#if($!obj.evaluate_user.photo)
+									#set($img="$!imageWebServer/$!obj.evaluate_user.photo.path/$!obj.evaluate_user.photo.name")
+									#end
+									<li class="evalua_ruler"><img src="$!img" width="45"
+										height="45" /></li>
+									<li class="evalua_con">评价：$!{obj.evaluate_info}</li>
+									<li class="evalua_ruler"><b>购买日期：$!CommUtil.formatShortDate($!obj.addTime)</b>
+									</li>
+								</ul>
+								#end #else
+								<div style="line-height: 40px; text-align: center">还没有评价内容</div>
+								#end
+							</div>
+							<div class="loading" id="loading" style="display: none">
+								<ul>
+									<li><img
+										src="$!webPath/resources/style/system/front/wap/images/loading.gif"
+										width="16" height="16"></li>
+									<li>正在加载....</li>
+								</ul>
+							</div>
+							<div class="loading" id="loading_none" style="display: none">
+								<ul>
+									<li>没有更多了....</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+
+
+
+
+
+
+					<div style="margin-top: 100px; display: block;"></div>
+				</div>
+			</div>
+			<!-- off-canvas backdrop -->
+			<div class="mui-off-canvas-backdrop"></div>
+		</div>
+		<!--购物车列表-->
+		<aside id="offCanvasSides" class="mui-off-canvas-right"
+			style="background: #fff;">
+			<div id="offCanvasSideScroll" class="mui-scroll-wrapper">
+				<div class="mui-scroll">
+					$!httpInclude.include("/wap/cart_right.htm")</div>
+			</div>
+		</aside>
+	</div>
+
+	<script>
+	mui.init({
+        swipeBack: true //启用右滑关闭功能
+    });
+    mui.previewImage();
+	var mySwiper = new Swiper('.good_img_content', {
+		effect : 'fade',
+		on: {
+			slideChangeTransitionEnd: function(){
+				$(".breviary li span").removeClass("moer_text");
+				$(".breviary li span").eq(this.activeIndex).addClass("moer_text");
+		    },
+		},
+        autoplay: false,//可选选项，自动滑动
+    })
+	function blank(index){
+		$(".breviary li span").removeClass("moer_text");
+		$(".breviary li span").eq(index).addClass("moer_text");
+		mySwiper.slideTo(index, 1000, false);//切换到第一个slide，速度为1秒
+	}
+    var shrink = new Swiper('.shrink_img_content', {
+        autoplay: false,//可选选项，自动滑动
+    })
+  	//关闭侧滑效果
+		document.getElementsByClassName('mui-inner-wrap')[0].addEventListener('drag', function(event) {
+		　　event.stopPropagation();
+	});
+    mui(document.body).on('tap', '.mui-btn', function(e) {
+        mui(this).button('loading');
+        console.log(e)
+        setTimeout(function() {
+        	if(e.target.id=="addto"){
+           	 /* $("#addto").trigger("click") */
+        	 add_cart();
+        	}
+        	if(e.target.id=="minus_click"){
+        		minus();
+        	}
+			if(e.target.id=="plus_click"){
+				plus();
+				console.log("plus")
+        	}
+            mui(this).button('reset');
+        }.bind(this), 2000); 
+    });
+    
+    //加量的操作
+    var count=document.getElementById("count");
+	count.addEventListener('change',function(){
+		var goods_inventory = jQuery("#goods_inventory").attr("goods_inventory")-0;
+		console.log(count.value)
+		if(count.value>=goods_inventory){
+			count.value(goods_inventory);
+		}
+		/* if(goods_cod=="0"){
+				jQuery("#show_count").html(" x "+jQuery("#count").val());
+			}else{
+				jQuery("#show_count").html(" x "+jQuery("#count").val());
+		} */
+	});
+	
+	   
+	/*     jQuery("#count").keyup(function(e) {
+													var count=jQuery("#count").val().replace(/\D/g,'');
+													if(count==""){
+														count=1;
+													}
+													var goods_inventory = jQuery("#goods_inventory").attr("goods_inventory")-0;
+													if(count>goods_inventory){
+														jQuery("#count").val(goods_inventory);
+													}else if(count<1){
+														jQuery("#count").val(1);
+													}else{
+														jQuery("#count").val(count);
+													}
+													if(goods_cod=="0"){
+														jQuery("#show_count").html(" x "+jQuery("#count").val());
+													}else{
+														jQuery("#show_count").html(" x "+jQuery("#count").val());
+													}
+												}); */
+    
+    mui('body').on('tap','a',function(){document.location.href=this.href;});
+    
+    $("#bt").click(function () {
+        var btn = $('.test');
+        mui.trigger(btn, 'tap');
+    })
+ 
+    
+    var testBox=document.getElementById("count");
+		testBox.addEventListener('change',function(){
+			jQuery("#show_count").html(" x "+jQuery("#count").val());
+		});
+    //侧滑容器父节点
+    var offCanvasWrapper = mui('#offCanvasWrapper');
+    //主界面容器
+    var offCanvasInner = offCanvasWrapper[0].querySelector('.mui-inner-wrap');
+    //菜单容器
+    // var offCanvasSide = document.getElementById("offCanvasSide");
+    // if (!mui.os.android) {
+    //     document.getElementById("move-togger").classList.remove('mui-hidden');
+    //     var spans = document.querySelectorAll('.android-only');
+    //     for (var i = 0, len = spans.length; i < len; i++) {
+    //         spans[i].style.display = "none";
+    //     }
+    // }
+    //移动效果是否为整体移动
+    var moveTogether = false;
+    //侧滑容器的class列表，增加.mui-slide-in即可实现菜单移动、主界面不动的效果；
+    var classList = offCanvasWrapper[0].classList;
+    
+    mui(".last_li").on('tap', '#offCanvasHide', function (event) {
+    	 offCanvasWrapper.offCanvas('close');
+    });
+    //主界面和侧滑菜单界面均支持区域滚动；
+    mui('#offCanvasSideScroll').scroll();
+    mui('#offCanvasContentScroll').scroll();
+    //实现ios平台原生侧滑关闭页面；
+    if (mui.os.plus && mui.os.ios) {
+        mui.plusReady(function () { //5+ iOS暂时无法屏蔽popGesture时传递touch事件，故该demo直接屏蔽popGesture功能
+            plus.webview.currentWebview().setStyle({
+                'popGesture': 'none'
+            });
+        });
+    }
+    mui(".tab-view-user").on('tap', '.tab-view-list', function (event) {
+        if ($(event.target).siblings().hasClass("accordion_active") != true) {
+         /* 	$(event.target).after("background: transparent;")  */
+            $(event.target).siblings().addClass("accordion_active")
+        	/* $(event.target).after("background-color: #222;")  */
+            return;
+        }
+        $(event.target).siblings().removeClass("accordion_active");
+       /*  $(event.target).after("background-color: transparent;")  */
+    });
+    mui(".goods_spec_set").on('tap', 'a', function (event) {
+    	goods_spec_set(event.target)
+    });
+    mui('body').on('tap','a',function(){document.location.href=this.href;});
+
+	</script>
+</body>
+
+</html>

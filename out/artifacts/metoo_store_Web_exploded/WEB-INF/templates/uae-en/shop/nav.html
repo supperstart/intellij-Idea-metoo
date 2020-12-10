@@ -1,0 +1,399 @@
+
+<script>
+jQuery(document).ready(function(){
+  jQuery("#navul li").each(function(){
+    var original_url=jQuery(this).attr("original_url");
+	if("$!{current_url}".indexOf(original_url)>=0){
+	   jQuery(this).addClass("this");
+	}
+  });
+});
+</script>
+
+<style>
+.left_menu_str>a {
+	width: 100%;
+	height: "100%";
+	display: blcok;
+}
+</style>
+<link href="$!webPath/resources/style/system/front/default/css/nav.css"
+	type="text/css" rel="stylesheet" />
+
+<div id="main_demo">
+	<div class="nav_menu">
+		<div class="nav_list">
+			<div class="navf">
+				<div class="lists" id="navlist_second">
+					<ul>
+						<li style="width: 229px; margin: 0px;"><strong><a
+								href="$!webPath/goods_class.htm" class="meun_a" target="_blank"
+								style="padding: 0px; color: #ff9900;"><span>All
+										CATEGORIES</span><i class="iconfont iconxiajiantou"
+									style="padding-left: 39px;"></i></strong></a></li>
+						<li><a href="#" class="meun_a" target="_blank"><strong>GAOQIAO</strong></a>
+						</li>
+						<li><a href="$!webPath/group/index.htm" class="meun_a"
+							target="_blank"><strong>Ceramics</strong></a></li>
+						<!--      	 #foreach($gc in $!gcViewTools.query_gc("",9))
+                	<li>
+                		#if($!gc.icon_type==0)
+			            #if($!gc.icon_sys!="")
+			            #set($icon_img="$!webPath/resources/style/common/images/icon/icon_$!{gc.icon_sys}.png")
+			            #end
+			            #else
+			            #if($!gc.icon_acc)
+			            #set($icon_img="$!imageWebServer/$!gc.icon_acc.path/$!gc.icon_acc.name")
+			            #end
+			            #end
+			            <a href="$!webPath/store_goods_list_$!{gc.id}.htm" class="meun_a" target="_blank"><strong>$!gc.className</strong></a>
+                	</li>
+                    #end -->
+
+						<!--       #set($navs=$!navTools.queryNav(0,-1))
+				      #foreach($nav in $navs)
+				      #if($!CommUtil.indexOf("$!nav.url","http://")>=0)
+				      #set($url="$!nav.url")
+				      #else
+				      #set($url="$!webPath/$!{nav.url}")
+				      #end
+				      <li>< a href=" " id="$!nav.id" #if($!nav.new_win==1)target="_blank"#end original_url="$!nav.original_url"><span>$!{nav.title}</span></ a></li>
+				      #end -->
+					</ul>
+				</div>
+				<div class="box" id="navbox_second"
+					style="height: 0px; opacity: 0; overflow: hidden;">
+					<div class="cont">
+						<div class="nav">
+							<div class="nav_center">
+								<div class="nav_left">
+									<div class="index_topleft">
+										<div class="left_menu" id="left_menu">
+											#foreach($gc in $!gcViewTools.query_gc("",13))
+											#set($icon_img="$!webPath/resources/style/common/images/icon/default_icon.png")
+											<a href="$!webPath/store_goods_list_$!{gc.id}.htm">
+												<dl #if($!velocityCount%2==0) class="left_menu_dl double"
+													#else class="left_menu_dl" #end
+													child_count="$!gc.childs.size()"
+													#if($!{gc.gc_color}) gc_color="$!{gc.gc_color}" #else
+													gc_color="#E60012" #end id="$!gc.id"
+													#if($!velocityCount==1)
+													style="position: relative; z-index: 999; cursor: pointer;"
+													onclick="javascript:window.location.href='$!webPath/store_goods_list_$!{gc.id}.htm'"
+													#end>
+													<!--left_menu_this����״̬����left_menu_dt����״̬������-->
+													#if($!gc.icon_type==0) #if($!gc.icon_sys!="")
+													#set($icon_img="$!webPath/resources/style/common/images/icon/icon_$!{gc.icon_sys}.png")
+													#end #else #if($!gc.icon_acc)
+													#set($icon_img="$!imageWebServer/$!gc.icon_acc.path/$!gc.icon_acc.name")
+													#end #end
+													<!-- ��꾭������ʱ����style="border:1px solid #F00; border-left:3px solid #F00;"���ӵײ���ɫ-->
+													<dt class="left_menu_dt" id="dts_$!gc.id">
+														<i class="left_menu_i"></i> <span class="left_menu_str">
+															$!gc.className </span>
+														<!-- <b class="left_menu_str_b">
+							            #foreach($child_gc in $gcViewTools.query_third_rec("$!gc.id",4))
+							            	<a href="$!webPath/store_goods_list_$!{child_gc.id}.htm">$!{child_gc.className}</a>  
+							            #end
+							            </b> -->
+													</dt>
+													<dd class="left_menu_dd" style="display: none"
+														id="child_$!gc.id">
+														<!--���ڹ��ʱleft_menu_con this   ��꾭������ʱ����style="border:1px solid #F00; border-left:3px solid #F00;"���ӵײ���ɫ-->
+														#set($adv_map=$!gcViewTools.query_gc_advert("$!gc.id","$!webPath"))
+														<div
+															class="left_menu_con #if($!adv_map.get('advert_img')!="
+															") this #end" id="left_menu_con_$!{gc.id}">
+
+															<span class="left_menu_sp">
+																<div class="left_menu_con_center">
+																	<div class="left_menu_con_center_left">
+																		<dl>
+																			<dt id="nav_title_top">
+																				<span style="font-size: 16px;">$!gc.className</span>
+																			</dt>
+																		</dl>
+																	</div>
+																	#foreach($gc1 in $gc.childs)
+																	<div class="left_menu_con_center_left">
+																		<dl>
+																			<dt>
+																				<a href="$!webPath/store_goods_list_$!{gc1.id}.htm">$!gc1.className</a>
+																			</dt>
+																			<!-- #foreach($gc2 in $!gc1.childs)
+							                            <dd><a href="$!webPath/store_goods_list_$!{gc2.id}.htm">$!gc2.className</a></dd>
+							                  			#end -->
+																		</dl>
+																	</div>
+																	#end
+																</div> <!-- center_banner -->
+																<ul class="navigation_center_banner">
+																	<script src="$!imageWebServer/advcate/$!gc.className"></script>
+																</ul> #if($!adv_map.get('advert_img')!="" &&
+																$!adv_map.get('advert_img')!='null')
+																<div class="right_menu_con_right_img">
+																	#set($adv_url=$!adv_map.get('advert_url')) <a
+																		#if($!{adv_url}!=""
+																		) href="$!adv_map.get('advert_url')" target="_blank"
+																		#else href="javascript:void(0);" #end><img
+																		src="$!adv_map.get('advert_img')" /></a>
+																</div> #end
+															</span> #set($gbs=$gcViewTools.query_gc_brand("$!gc.id"))
+															#if($!gbs.size()>=0)
+															<div class="menu_con_right_top">
+																<dl>
+																	<dt id="nav_title_top">
+																		<span>Top Brand</span>
+																	</dt>
+																</dl>
+																<dl>
+																	<dt>
+																		#set($velocityCount=0) #foreach($map in $gbs) #set(
+																		$velocityCount = $velocityCount+(-1))
+																		#if($velocityCount<5)
+																		#set($path=$!{map.get('imgPath')})
+																		#set($imgName=$!{map.get('imgName')}) <span
+																			id="nav_brand"> <a
+																			href="$!webPath/brand_goods_$!{map.get('id')}.htm">
+																				#set($img="$!imageWebServer/$path/$imgName") <img
+																				data-src="$!img"
+																				src="$!webPath/resources/style/common/images/loader.png"
+																				width="170" height="170" position="relative" />
+																		</a>
+																		</span> #end #end
+																	</dt>
+																</dl>
+
+															</div>
+															#end
+														</div>
+
+													</dd>
+												</dl>
+											</a> #end
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<!-- ��� -->
+					<div class="cont cont_tu">
+						<div class="cont_tu_fast">
+							<a href="#"><img
+								data-src="$!imageWebServer/$!filePathIndexSubject/1.png"
+								src="$!webPath/resources/style/common/images/loader.png"
+								width="170" height="170" position="relative"></a>
+						</div>
+						<div class="cont_tu_fast">
+							<a href="#"><img
+								data-src="$!imageWebServer/$!filePathIndexSubject/2.png"
+								src="$!webPath/resources/style/common/images/loader.png"
+								width="170" height="170" position="relative"></a>
+
+						</div>
+						<div class="cont_tu_end">
+							<p class="cont_tu_end1">
+								<a href="#"><img
+									data-src="$!imageWebServer/$!filePathIndexSubject/3.png"
+									src="$!webPath/resources/style/common/images/loader.png"
+									width="170" height="170" position="relative"></a>
+							</p>
+							<p class="cont_tu_end2">
+								<a href="#"><img
+									data-src="$!imageWebServer/$!filePathIndexSubject/4.png"
+									src="$!webPath/resources/style/common/images/loader.png"
+									width="170" height="170" position="relative"></a>
+							</p>
+						</div>
+					</div>
+					<div class="cont cont_tu">
+						<div class="cont_tu_fast">
+							<a href="#"><img
+								data-src="$!imageWebServer/$!filePathIndexSubject/5.png"
+								src="$!webPath/resources/style/common/images/loader.png"
+								width="170" height="170" position="relative"></a>
+						</div>
+						<div class="cont_tu_end">
+							<p class="cont_tu_end3">
+								<a href="#"><img
+									data-src="$!imageWebServer/$!filePathIndexSubject/6.png"
+									src="$!webPath/resources/style/common/images/loader.png"
+									width="170" height="170" position="relative"></a>
+							</p>
+							<p class="cont_tu_end4">
+								<a href="#"><img
+									data-src="$!imageWebServer/$!filePathIndexSubject/7.png"
+									src="$!webPath/resources/style/common/images/loader.png"
+									width="170" height="170" position="relative"></a>
+							</p>
+						</div>
+						<div class="cont_tu_fast1">
+							<a href="#"><img
+								data-src="$!imageWebServer/$!filePathIndexSubject/8.png"
+								src="$!webPath/resources/style/common/images/loader.png"
+								width="170" height="170" position="relative"></a>
+						</div>
+					</div>
+					<!-- #foreach($gc in $!gcViewTools.query_gc("",8))
+		                <div class="cont" >
+			                 <ul class="sublist clearfix">
+			                   #foreach($gc1 in $gc.childs)
+			                    	<li>
+		                                <span>
+		                                    <a href="$!webPath/store_goods_list_$!{gc1.id}.htm" title="">$!gc1.className</a>
+		                                </span>
+			                            #foreach($gc2 in $!gc1.childs)
+			                            <p class="mcate-item-bd">
+			                                <a href="$!webPath/store_goods_list_$!{gc2.id}.htm" title="">$!gc2.className</a>
+			                            </p>
+			                  			#end
+			                        </li>
+			                    #end 
+			                 </ul>
+			                 center_banner
+			                 <ul class="navigation_center_banner">
+			                	<li><script src="$!webPath/advert_invoke.htm?id=22"></script></li> 
+			                	<li><script src="$!webPath/advert_invoke.htm?id=23"></script></li> 
+			                	<li><script src="$!webPath/advert_invoke.htm?id=24"></script></li> 
+			                	<li><script src="$!webPath/advert_invoke.htm?id=25"></script></li> 
+			                 </ul>
+			                 <div class="banner_navigation">
+		                     	<script src="$!webPath/advert_invoke.htm?id=18"></script>
+		                     </div>
+		                </div>
+					#end  -->
+				</div>
+			</div>
+
+		</div>
+	</div>
+</div>
+<script>
+     jQuery(document).ready(function () {
+        /* �������Ұ�ť��ʾ */
+        jQuery(".fullSlide").hover(function () { jQuery(this).find(".prev,.next").stop(true, true).fadeTo("show", 0.5) }, function () { jQuery(this).find(".prev,.next").fadeOut() });
+
+      //��꾭��������
+/*         jQuery(".sale_two_img img").lazyload({ effect: "fadeIn", width: 170, height: 170 }); */
+        jQuery(".left_menu_dl").hover(function () {
+            var child_count = jQuery(this).attr("child_count");
+            if (child_count > 0) {
+                var id = jQuery(this).attr("id");
+                jQuery("#dts_" + id).addClass("left_menu_this").removeClass("left_menu_dt");
+                jQuery("#child_" + id).show();
+            }
+            var gc_id = jQuery(this).attr("id");
+            var gc_color = "#1E90FF";
+          /*   jQuery("#dts_" + gc_id).attr("style", "border:1px solid " + gc_color + "; border-left:3px solid " + gc_color + ";border-right:none");
+            jQuery("#left_menu_con_" + gc_id).attr("style", "border:1px solid " + gc_color + "; border-left:1px solid " + gc_color + ";").find(".menu_con_right_top").css("background-color", gc_color); */
+            //����div�߶�Ϊÿ��div����ߵĸ߶�
+            var begin = 0;
+            var end = 2;
+            jQuery("#child_" + gc_id).find(".left_menu_con_center_left").each(function () {
+                var max_height = 0;
+                var index = jQuery(this).index();
+                var height = jQuery(this).height();
+                if (index > end || index < begin) {
+                    begin = begin + 3;
+                    end = end + 3;
+                }
+                if (height > max_height) {
+                    max_height = 'auto';
+                }
+                for (var i = begin; i <= end; i++) {
+                    var temp_height = jQuery("#child_" + gc_id).find(".left_menu_con_center_left").eq(i).height();
+                    if (temp_height > max_height) {
+                        max_height = temp_height;
+                    }
+                    jQuery("#child_" + gc_id).find(".left_menu_con_center_left").eq(i).height(max_height);
+                }
+            });
+
+            var top = jQuery("#child_" + gc_id).offset().top;
+            var scroll_top = jQuery(document).scrollTop();
+            var height = jQuery("#left_menu_con_" + gc_id).height();
+            var all_h = top - scroll_top + height;
+            var doc_h = jQuery(window).height();
+            var margin_top = doc_h - all_h;
+            if (margin_top <= 5) {
+                margin_top = margin_top - 20;
+               /*  jQuery("#left_menu_con_" + gc_id).css('margin-top', margin_top + 'px'); */
+            } else {
+               /*  jQuery("#left_menu_con_" + gc_id).css('margin-top', '0px'); */
+            }
+        }).mouseleave(function () {
+            jQuery("dt[id^=dts_]").removeAttr("style");
+            jQuery("div[id^=left_menu_con_]").removeAttr("style");
+            var child_count = jQuery(this).attr("child_count");
+            if (child_count > 0) {
+                var id = jQuery(this).attr("id");
+                jQuery("#dts_" + id).removeClass("left_menu_this").addClass("left_menu_dt");
+                jQuery("#child_" + id).hide();
+            }
+        });
+        var time = null;    
+        var list = jQuery("#navlist_second");
+        var box = jQuery("#navbox_second");
+        var lista = list.find("a");
+        for (var i = 0, j = lista.length; i < j; i++) {
+            if (lista[i].className == "now") {
+                var olda = i;
+            }
+        }
+        var box_show = function (hei) {
+            box.stop().animate({
+                height: hei,
+                opacity: 1
+            }, 400);
+        }
+        var box_hide = function () {
+            box.stop().animate({
+                height: 0,
+                opacity: 0
+            }, 400);
+        }
+        lista.hover(function () {
+        		
+	            lista.removeClass("now");
+	            jQuery(this).addClass("now");
+	            clearTimeout(time);	            
+	            var index = list.find("a").index(jQuery(this));
+	            box.find(".cont").hide().eq(index).show();
+	            var _height = box.find(".cont").eq(index).height();//
+	            
+	            box_show(_height)
+        }, function () {
+            time = setTimeout(function () {
+                box.find(".cont").hide();
+                box_hide();
+            }, 50);
+            lista.removeClass("now");
+            lista.eq(olda).addClass("now");
+        });
+        box.find(".cont").hover(function () {
+            var _index = box.find(".cont").index(jQuery(this));
+            lista.removeClass("now");
+            lista.eq(_index).addClass("now");
+            clearTimeout(time);
+            jQuery(this).show();
+            var _height = jQuery(this).height() ;//
+            box_show(_height);
+        }, function () {
+            time = setTimeout(function () {
+            	jQuery(this).hide();
+                box_hide();
+            }, 50);
+            lista.removeClass("now");
+            lista.eq(olda).addClass("now");
+        });
+
+        jQuery("#navul li").each(function () {
+            var original_url = jQuery(this).attr("original_url");
+            if ("$!{current_url}".indexOf(original_url) >= 0) {
+                jQuery(this).addClass("this");
+            }
+        });
+    });     
+</script>

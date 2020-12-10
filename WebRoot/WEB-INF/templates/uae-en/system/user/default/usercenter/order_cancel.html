@@ -1,0 +1,62 @@
+<link href="$!webPath/resources/style/common/css/window.css"
+	type="text/css" rel="stylesheet" />
+<link href="$!webPath/resources/style/common/css/overlay.css"
+	type="text/css" rel="stylesheet" />
+<script>
+function switch_reason(){
+  var ck=jQuery("#reason_other").attr("checked");
+  if(ck=="checked"){
+    jQuery("#other_reason").show();
+  }else{
+	jQuery("#other_reason").hide();  
+  }
+}
+function saveForm(){
+	jQuery("#save").attr("disabled","disabled");
+	jQuery("#theForm").submit();
+	}
+</script>
+<form action="$!webPath/buyer/order_cancel_save.htm" method="post"
+	id="theForm">
+	<table style="float: left;" width="390" border="0" cellspacing="0"
+		cellpadding="0" class="box_table">
+		<tr>
+			<td colspan="2" align="left" valign="top">Are you sure to cancel
+				the following order?</td>
+		</tr>
+		<tr>
+			<td width="100" align="right" valign="top">Order number： <input
+				name="id" type="hidden" id="id" value="$!obj.id" />
+			</td>
+			<td align="left">$!obj.order_id</td>
+		</tr>
+		<tr>
+			<td rowspan="4" align="right" valign="top">Reasons：</td>
+			<td align="left"><label><input name="state_info"
+					type="radio" id="radio" value="Change to buy other goods"
+					checked="checked" onclick="switch_reason();" /> Change to buy
+					other goods</label></td>
+		</tr>
+		<tr>
+			<td align="left"><label><input name="state_info"
+					type="radio" id="radio2" value="Buy from other stores"
+					onclick="switch_reason();" /> Buy from other stores</label></td>
+		</tr>
+		<tr>
+			<td align="left"><label><input name="state_info"
+					type="radio" id="reason_other" value="other"
+					onclick="switch_reason();" /> Other reason</label></td>
+		</tr>
+		<tr>
+			<td align="left" id="other_reason" style="display: none;"><textarea
+					name="other_state_info" id="other_state_info" cols="30" rows="5"></textarea></td>
+		</tr>
+		<tr>
+			<td colspan="2" align="center"><span class="inputbtn"> <input
+					type="button" id="save" onclick="saveForm()" value="Submit"
+					style="cursor: pointer;" /> <input name="currentPage"
+					type="hidden" id="currentPage" value="$!currentPage" />
+			</span></td>
+		</tr>
+	</table>
+</form>

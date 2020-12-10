@@ -1,0 +1,19 @@
+<a href="#offCanvasSide"
+	class="mui-icon mui-action-menu mui-icon-bars mui-pull-left"></a>
+<div class="mui-title">
+	<img src="$!webPath/images/logos.png" alt="" class="logo">
+</div>
+
+<div class="meunright mui-pull-right">
+	#if($!user.userName) <a class="meunright_a"
+		href="$!webPath/wap/buyer/center.htm?op=center"> <span class=""
+		style="color: #007aff; font-size: 18px;"> $!{user.userName} </span>
+	</a> #else <a href="$!webPath/wap/login.htm"> <span class="meunright_a"
+		style="color: #007aff; font-size: 18px;"> Log&nbsp;In </span>
+	</a> #end &nbsp;&nbsp;&nbsp; <a href="#offCanvasSides"
+		style="color: #007aff"> <span style="position: relative;">
+			<i class="iconfont icongouwuche" style="font-size: 20px;"></i> <i
+			style="position: absolute; top: -10px; top: -18px; left: 22px; font-size: 5px;">$!carts.size()</i>
+	</span>
+	</a>
+</div>

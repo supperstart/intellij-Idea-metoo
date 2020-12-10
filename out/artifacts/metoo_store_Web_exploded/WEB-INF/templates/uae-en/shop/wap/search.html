@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport"
+	content="width=device-width,inital-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style"
+	content="black-translucent">
+<title>搜索页面 - $!config.title</title>
+<link href="$!webPath/resources/style/system/front/wap/css/style.css"
+	rel="stylesheet" type="text/css" />
+<link
+	href="$!webPath/resources/style/system/front/wap/v2.0/css/v2.0style.css"
+	rel="stylesheet" type="text/css" />
+<script src="$!webPath/resources/js/wap/jquery-1.10.2.min.js"></script>
+<script>
+jQuery(document).ready(function(){
+	search_history_data();
+   jQuery("#top_$!{orderBy}").addClass("this");
+   if("$!{orderBy}"=="store_price"){
+	  if("$!{orderType}"=="desc"){
+		  jQuery("#top_store_price img").attr("src","$!webPath/resources/style/system/front/wap/images/goodsclass_down.png");
+	  }else{
+	  	  jQuery("#top_store_price img").attr("src","$!webPath/resources/style/system/front/wap/images/goodsclass_up.png");
+	  }
+   }else{
+   	  jQuery("#top_$!{orderBy} img").attr("src","$!webPath/resources/style/system/front/wap/images/goodsclass_down.png");
+   }
+   #if($!objs.size()>=24)
+   var currentPage = 2;
+   var ret = 1;
+   jQuery(window).scroll(function(){								  
+	 if (jQuery(document).scrollTop() >= jQuery(document).height() - jQuery(window).height()&&ret==1) {
+		 jQuery.ajax({type:'POST',
+	              url:'$!webPath/wap/search_ajax.htm',
+				  data:{"currentPage":currentPage,
+		  				"keyword":"$!{keyword}",
+						"orderBy":"$!{orderBy}",
+						"orderType":"$!{orderType}"},
+				beforeSend:function(){
+				  jQuery("#loading_none").hide();
+				  jQuery("#loading").show();
+				  ret=2;
+				},
+			   success:function(data){
+				   ret=1;
+				 jQuery("#loading").hide();
+	             if(data){ 
+				  jQuery(".group_list").find("a").last().after(data);
+				  currentPage=currentPage+1;
+			 	 }else{
+				 jQuery("#loading_none").show();
+				  }    
+              	}
+	    });
+	 }
+	});		
+   #end
+   
+   $("#search_btn").click(function(){
+	
+		jQuery("#theForm").submit();
+
+	});
+	
+	jQuery(".group_top li").click(function(){
+		var orderBy = jQuery(this).attr("id").substring(4);
+		if(orderBy=="store_price"){
+			if("$!{orderType}"=="asc"){
+				window.location.href="$!webPath/wap/search_goods.htm?keyword=$!{keyword}&&orderBy="+orderBy+"&&orderType=desc";
+			}else{
+				window.location.href="$!webPath/wap/search_goods.htm?keyword=$!{keyword}&&orderBy="+orderBy+"&&orderType=asc";
+			}	
+		}else{
+			window.location.href="$!webPath/wap/search_goods.htm?keyword=$!{keyword}&&orderBy="+orderBy;
+		}
+	}) 	  
+});
+
+//加载搜索历史记录
+function search_history_data(){
+	var data = jQuery.cookie("search_history");
+	if(data==null){
+		jQuery("div[id^='search_history']").remove();
+	}else{
+		jQuery.each(data.split(","),function(index,item){
+			if(index<10){
+				jQuery("#search_history").find("ul").append("<li><span><a href='javascript:void(0)'>"+item+"</a></span> <i onclick='search_data_del(this)' style='position: absolute;right:20px;'><a href='javascript:void(0)'>删除</a></i></li>");
+			}
+		});
+	}
+}
+
+//删除某一历史记录
+function search_data_del(obj){
+	var item = jQuery(obj).parent().find("span").attr("data");
+	var data = "";
+	var temp = jQuery.cookie("search_history");	
+	jQuery.each(temp.split(","),function(index,value){
+		if(item!=value){
+			if(data!=""){
+				data =data +","+value;
+			}else{
+				data = value;
+			}
+		}
+	});
+	
+	if(data!=""){
+		jQuery.cookie("search_history",data);
+	}else{
+		jQuery.cookie("search_history",null);
+	}
+	search_html_restore();
+	search_history_data();
+}
+//删除全部历史记录
+function search_data_del_all(){
+	jQuery.cookie("search_history",null);
+	search_html_restore();
+	search_history_data();
+}
+//清空搜索历史下拉数据
+function search_html_restore(){
+	jQuery("#head_search_history").find("ul>li").each(function(index, element) {
+       if(index!=0){
+		   jQuery(this).remove();
+	   } 
+    });
+}
+
+function clickSearch(){
+	jQuery("#theForm").submit();
+}
+</script>
+</head>
+
+<body class="index_bg">
+	<div class="phone_hd">
+		<!--
+		<a class="back" href="javascript:history.go(-1);"> <img
+			src="$!webPath/resources/style/system/front/wap/images/back.png"
+			width="25" height="25" />
+		</a>
+		-->
+		<form name="theForm" id="theForm"
+			action="$!webPath/wap/search_goods.htm" method="post">
+			<div class="search_line">
+				<span> <input type="text" placeholder="输入商品名称" name="keyword"
+					id="keyword" value="$!keyword" style="height: 32px;" />
+				</span>
+			</div>
+			<a href="javascript:void(0);" onclick="clickSearch();"> <img
+				align="right" style="margin: 10px;" id="search_btn"
+				src="$!webPath/resources/style/system/front/wap/v2.0/images/search.png">
+			</a>
+		</form>
+	</div>
+	<div class="main">
+		<div class="mt50"></div>
+		<!-- 热门搜索 -->
+		<div
+			style="width: 100%; height: 40px; line-height: 40px; border-bottom: 1px solid #f0f0f0; background-color: #fff;">
+			<span style="margin-left: 30px; font-size: 14px;">热门搜索</span>
+		</div>
+		<div class="hot_search"
+			style="width: 100%; height: 80px; background-color: #fff;">
+			<div style="width: 80px; float: left;">
+				<a href="$!webPath/wap/search_goods.htm?keyword=空调席">空调席</a>
+			</div>
+			<div style="width: 80px; float: left;">
+				<a href="$!webPath/wap/search_goods.htm?keyword=360U型枕">360U型枕</a>
+			</div>
+			<div style="width: 80px; float: left;">
+				<a href="$!webPath/wap/search_goods.htm?keyword=野营垫">野营垫</a>
+			</div>
+			<div style="width: 130px; float: left;">
+				<a href="$!webPath/wap/search_goods.htm?keyword=多功能食物处理器">多功能食物处理器</a>
+			</div>
+			<div style="width: 110px; float: left;">
+				<a href="$!webPath/wap/search_goods.htm?keyword=收纳四件套">收纳四件套</a>
+			</div>
+
+		</div>
+
+		<!-- 历史搜索 -->
+		<!--
+		<div style="background-color: #ddd;width: 100%;height:40px;line-height: 40px;"> 
+			<span style="margin-left: 30px;font-size: 14px;">历史搜索</span></div>
+		<div id="search_history" class="search_history">
+			<ul>
+			</ul>
+		</div>
+		-->
+		<div class="mt50"></div>
+
+		$!httpInclude.include("/wap/footer.htm?op=search")
+	</div>
+</body>
+</html>

@@ -1,0 +1,43 @@
+<script type="text/javascript">
+
+  jQuery("#theForm").validate({
+	  ignore: "",
+	  rules:{
+		 value:{required:true}
+	  },
+	  messages:{
+		  value:{required:"规格属性不能为空"}
+	  }
+	  
+  });
+  
+  function saveForm(){
+		jQuery("#theForms").submit();
+		 if(jQuery("#theForm").validate().valid()){
+			 jQuery("#save").attr("disabled","disabled");
+		 }
+		}
+</script>
+
+<form action="$!webPath/seller/spec_save.htm" method="post"
+	id="theForms">
+	<table style="float: left;" width="100%" border="0" cellspacing="0"
+		cellpadding="0" class="white_table">
+		<tr>
+			<td width="150" align="right" valign="top"><span>Name</span>: <input
+				name="id" type="hidden" id="id" value="$!spec_id" /> <script
+					type="text/javascript"></script></td>
+			<td align="left"><span> <input name="value" type="text"
+					id="value" value="$!spec.value" size="35" />
+			</span><span style="float: left; color: #F00;"></span></td>
+		</tr>
+		<tr>
+			<td colspan="2" align="center"><span class="inputbtn"> <input
+					name="" id="save" type="button" value="Submit" onclick="saveForm()"
+					style="cursor: pointer;" class="white_btn" /> <input
+					name="currentPage" type="hidden" id="currentPage"
+					value="$!currentPage" />
+			</span></td>
+		</tr>
+	</table>
+</form>

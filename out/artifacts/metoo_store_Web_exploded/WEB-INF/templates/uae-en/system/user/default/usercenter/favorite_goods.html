@@ -1,0 +1,120 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Wishilists -$!{config.title}-$!{config.poweredby}</title>
+<meta name="keywords" content="$!config.keywords" />
+<meta name="description" content="$!config.description" />
+<meta name="generator" content="$!{config.meta_generator}" />
+<meta name="author" content="$!{config.meta_author}">
+	<meta name="copyright" content="$!{config.copyRight}">
+		<link
+			href="$!webPath/resources/style/system/front/default/css/public.css"
+			type="text/css" rel="stylesheet" />
+		<link
+			href="$!webPath/resources/style/system/front/default/css/public_auto.css"
+			type="text/css" rel="stylesheet" />
+		<link
+			href="$!webPath/resources/style/system/front/default/css/user.css"
+			type="text/css" rel="stylesheet" />
+		<link
+			href="$!webPath/resources/style/system/front/default/css/goods.css"
+			type="text/css" rel="stylesheet" />
+		<link href="$!webPath/resources/style/common/css/overlay.css"
+			type="text/css" rel="stylesheet" />
+		<link
+			href="$!webPath/resources/style/common/css/jquery-ui-1.8.22.custom.css"
+			type="text/css" rel="stylesheet" />
+		<script src="$!webPath/resources/js/jquery-1.6.2.js"></script>
+		<script src="$!webPath/resources/js/jquery-ui-1.8.21.js"></script>
+		<script src="$!webPath/resources/js/jquery.poshytip.min.js"></script>
+		<script src="$!webPath/resources/js/jquery.shop.common.js"></script>
+</head>
+<body>
+	$!httpInclude.include("/top.htm") $!httpInclude.include("/head.htm")
+
+	<div class="main">
+		<div class="usercenter">
+			$!httpInclude.include("/buyer/nav.htm?op=favorite")
+			<div class="user_list_title">
+				<ul class="user_title_ul">
+					<li class="this"><i></i><a
+						href="$!webPath/buyer/favorite_goods.htm">Goods</a></li>
+					<!-- <li><i></i><a href="$!webPath/buyer/favorite_store.htm">Stores</a></li> -->
+				</ul>
+			</div>
+			<div class="usercenter_right" style="background-color: #fff;">
+				<!--  <div class="myorder">
+        <h4><span class="myorder_fright"></span><strong>我的收藏</strong></h4>
+      </div> -->
+
+				<div class="user_list">
+
+					#if($!objs.size()>0)
+					<form action="$!webPath/buyer/favorite_goods.htm" method="post"
+						id="ListForm">
+						<div class="show_smallimg">
+
+							#foreach($obj in $objs) #if($!obj.goods_photo)
+							#set($img="$!imageWebServer/$!{obj.goods_photo}_small.$!{obj.goods_photo_ext}")
+							#else
+							#set($img="$!imageWebServer/$!{config.goodsImage.path}/$!{config.goodsImage.name}")
+							#end #set($goods_url="$!webPath/goods_$!{obj.goods_id}.htm")
+							#if($!config.second_domain_open && $!obj.goods_type==1 &&
+							$!obj.goods_store_second_domain!="")
+							#set($goods_url="http://$!{obj.goods_store_second_domain}.$!{domainPath}/goods_$!{obj.goods_id}.htm")
+							#end
+							<div class="shelves_goods">
+								<table width="100%" border="0" cellspacing="0" cellpadding="0"
+									class="goodstable1">
+									<tr>
+										<td width="40%"><ul class="goodsul">
+
+												<li><span class="goodsimg"><a href="$goods_url"
+														target="_blank"><img src="$!{img}" width="80"
+															height="80" /></a></span></li>
+												<li class="goodsp"><span style="padding-top: 10px"><a
+														href="$!goods_url" target="_blank">$!obj.goods_name</a></span></li>
+											</ul></td>
+										<td width="10%" align="center"><strong class="price_sign">$!{obj.goods_current_price}</strong><small
+											class="sk-clr1">AED</small></td>
+										<td width="15%" style="text-align: center;">$!CommUtil.formatShortDate($!obj.addTime)</td>
+										<td width="15%" class="goodsp2" align="center"></td>
+										<td align="center" class="goodsp3"><span class="del"><a
+												href="javascript:void(0);"
+												onclick="showDialog('msg_info','','You really want to delete this collect item??',1,'question',3,function(){window.location.href='$!webPath/buyer/favorite_del.htm?mulitId=$!obj.id&currentPage=$!currentPage&type=0'});"
+												class="blue">Delete</a></span> <span class="goodsbtn"> <input
+												name="" type="button" value="Buy Now"
+												onclick="window.open('$!{goods_url}')" />
+										</span></td>
+									</tr>
+								</table>
+							</div>
+							#end
+						</div>
+						<div class="userlist_allop">
+							<div class="user_list_page">
+								<span class="user_page_sp">$!gotoPageFormHTML</span>
+							</div>
+						</div>
+					</form>
+					#else
+					<div class="nothing">
+						<div class="nothing_left">
+							<img
+								src="$!webPath/resources/style/system/front/default/images/nothing.png" />
+						</div>
+						<div class="nothing_right">
+							No record<a href="$!webPath/index.htm" target="_blank">Home
+								Page</a>
+						</div>
+					</div>
+					#end
+				</div>
+
+			</div>
+		</div>
+	</div>
+	$!httpInclude.include("/footer.htm")
+</body>
+</html>

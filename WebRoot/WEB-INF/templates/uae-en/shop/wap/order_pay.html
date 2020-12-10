@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<meta name="viewport"
+	content="width=device-width,inital-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style"
+	content="black-translucent">
+<title>订单支付 - $!config.title</title>
+<link href="$!webPath/resources/style/system/front/wap/css/style.css"
+	rel="stylesheet" type="text/css" />
+
+<style>
+.demo--label {
+	margin: 0;
+	display: inline-block
+}
+
+.demo--radio {
+	display: none
+}
+
+.demo--radioInput {
+	background-color: #fff;
+	border: 1px solid rgba(0, 0, 0, 0.15);
+	border-radius: 100%;
+	display: inline-block;
+	height: 16px;
+	width: 16px;
+	line-height: 1
+}
+
+.demo--radio:checked+.demo--radioInput:after {
+	background-color: #57ad68;
+	border-radius: 100%;
+	content: "";
+	display: inline-block;
+	height: 12px;
+	margin: 2px;
+	width: 12px
+}
+
+.demo--checkbox.demo--radioInput, .demo--radio:checked+.demo--checkbox.demo--radioInput:after
+	{
+	border-radius: 0
+}
+
+.pay_table td {
+	border: 0px solid #fff
+}
+</style>
+
+</head>
+
+<body>
+	<div class="phone_hd">
+		<a class="back" href="javascript:history.go(-1);"><img
+			src="$!webPath/resources/style/system/front/wap/images/back.png"
+			width="25" height="25" /></a>订单支付<a class="menu home"
+			href="$!webPath/wap/index.htm"><img
+			src="$!webPath/resources/style/system/front/wap/images/home.png"
+			width="25" height="25" /></a>
+	</div>
+	<div class="pd5">
+		<span id="pay_title"
+			style="color: red; font-size: 20px; font-weight: bold; display: none">请在微信浏览器中打开</span>
+		<div class="payment">
+			<div class="pay_detail">
+				<dl>
+					<dt>
+						<img
+							src="$!webPath/resources/style/system/front/wap/images/dun.png"
+							width="62">
+					</dt>
+					<dd>
+						<ul>
+							<li style="font-size: 20px; margin-bottom: 10px;">订单支付</li>
+							#set($totalFee = $!orderFormTools.query_order_price("$!of.id"))
+							#set($body = "测试订单支付")
+							<li>应付金额：<span class="red">¥ $!all_of_price</span></li>
+							<li><input type="hidden" value="$!body"></li>
+							<li></li>
+						</ul>
+					</dd>
+				</dl>
+			</div>
+			<form id="theForm" method="post" action="$!webPath/wap/order_pay.htm">
+				<input type="hidden" name="order_id" id="order_id" value="$!{of.id}">
+				<div class="payfor">
+					<h1>请选择支付方式：</h1>
+					#set($alipay_wap_install=$!paymentTools.queryShopPayment("alipay_wap").get("install"))
+					#set($wx_pay_install=$!paymentTools.queryShopPayment("wx_pay").get("install"))
+					#if($!alipay_wap_install==true||$!wx_pay_install==true)
+					<table class="pay_table">
+						<tbody>
+							#if($!alipay_wap_install==true)
+							<tr id="ali" style="display: none">
+								<td width="12%" align="center"><input type="radio"
+									name="payType" id="payType" value="alipay_wap"></td>
+								<td><div class="pay_style">
+										<a href="javascript:void(0)">支付宝</a>
+									</div></td>
+							</tr>
+							#end #if($!wx_pay_install==true)
+							<tr id="wx">
+								<td width="20%" align="right"><img
+									src="$!webPath/resources/style/system/front/wap/v2.0/images/wx_pay_logo.png"
+									width="42"></td>
+								<td width="45%"><span style="float: left;">微信支付</span> <img
+									src="$!webPath/resources/style/system/front/wap/v2.0/images/wx_commend.png"
+									width="32"></td>
+								<td width="30%" align="center">
+									<div>
+										<label class="demo--label"><input class="demo--radio"
+											type="radio" name="payType" id="payType" value="wx_pay"
+											checked="checked"> <span class="demo--radioInput"></span></label>
+									</div>
+								</td>
+							</tr>
+							#end
+					</table>
+					#end
+
+					#set($install=$!paymentTools.queryShopPayment("payafter").get("install"))
+					#if($!install==true)
+					<table class="pay_table">
+						<tbody>
+							<tr>
+								<td colspan="2"><span style="border-bottom: 1px solid #F00">货到付款</span></td>
+							</tr>
+							<tr>
+								<td width="12%" align="center"><input type="radio"
+									name="payType" id="payType" value="payafter"></td>
+								<td><div class="pay_style">
+										<a href="javascript:void(0)">货到付款</a>
+									</div></td>
+							</tr>
+						</tbody>
+					</table>
+					#end
+					#set($install=$!paymentTools.queryShopPayment("balance").get("install"))
+					#if($!install==true)
+					<table class="pay_table">
+						<tbody>
+							<tr>
+								<td colspan="2"><span style="border-bottom: 1px solid #F00">预存款支付</span></td>
+							</tr>
+							<tr>
+								<td width="12%" align="center"><input type="radio"
+									name="payType" id="payType" value="balance"></td>
+								<td><div class="pay_style">
+										<a href="javascript:void(0)">预存款</a>
+									</div></td>
+							</tr>
+						</tbody>
+					</table>
+					#end
+				</div>
+			</form>
+			<div class="pay_btn">
+				<a href="javascript:void(0)" onclick="order_pay();">马上支付</a>
+			</div>
+		</div>
+	</div>
+	<script src="$!webPath/resources/js/wap/defined.js"></script>
+	<script src="$!webPath/resources/js/wap/jquery-1.10.2.min.js"></script>
+	<script type="text/javascript"
+		src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+	<script type="text/javascript">
+
+function order_pay(){
+	/* if(!isWeiXin()){
+		$("#pay_title").show();
+		alert("请在微信浏览器中打开");
+	}else{
+		$("#pay_title").hide(); */
+	
+	jQuery.ajax({
+        type: "post",
+        url:'$!webPath/wap/pay_order.htm',
+        data: {'orderId':$!of.id},
+        dataType: "json",
+        success: function(data){
+       		//微信支付后台返回的结果为成功且预支付id不为空
+       		
+        	if("SUCCESS" == data.result_code && data.package != null){
+        	
+	        	if (typeof WeixinJSBridge == "undefined"){
+	        	
+				   if( document.addEventListener ){
+				   
+				       document.addEventListener('WeixinJSBridgeReady', onBridgeReady(data), false);
+				   }else if (document.attachEvent){
+				  
+				       document.attachEvent('WeixinJSBridgeReady', onBridgeReady(data)); 
+				       document.attachEvent('onWeixinJSBridgeReady', onBridgeReady(data));
+				   }
+				}else{
+				
+				   onBridgeReady(data);
+				}
+        	}else{
+        	
+        		alert(data.err_code_des);
+        	}
+        	
+        	
+        }
+    });
+	
+}
+
+function onBridgeReady(data){
+	WeixinJSBridge.invoke('getBrandWCPayRequest',{  
+            "appId" : data.appId,                  //公众号名称，由商户传入  
+            "timeStamp":data.timeStamp,          //时间戳，自 1970 年以来的秒数  
+            "nonceStr" : data.nonceStr,         //随机串  
+            "package" : data.package,      //<span style="font-family:微软雅黑;">商品包信息</span>  
+            "signType" : data.signType,        //微信签名方式:  
+            "paySign" : data.paySign           //微信签名  
+            },function(res){    
+             
+          //  alert();  
+            if(res.err_msg == "get_brand_wcpay_request:ok" ) {  
+            	alert("支付成功");
+            	window.location.href=data.sendUrl;
+            }/* else{  
+                alert("支付失败！请尝试再次支付！");
+            }   */
+        }); 
+}
+function isWeiXin(){
+  	var ua = window.navigator.userAgent.toLowerCase();
+    if(ua.match(/MicroMessenger/i) == 'micromessenger'){
+        return true;
+    }else{
+        return false;
+    }
+}
+
+</script>
+</body>
+</html>

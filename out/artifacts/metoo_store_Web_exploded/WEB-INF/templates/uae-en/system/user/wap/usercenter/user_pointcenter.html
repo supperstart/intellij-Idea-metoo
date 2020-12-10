@@ -1,0 +1,88 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>买家个人中心</title>
+<meta name="viewport"
+	content="width=device-width,inital-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+<meta name="apple-wap-web-app-capable" content="yes" />
+<meta name="apple-wap-web-app-status-bar-style"
+	content="black-translucent" />
+<link
+	href="../../../../../../resources/style/system/front/wap/css/style.css"
+	rel="stylesheet" type="text/css" />
+<link href="$!webPath/resources/style/system/front/wap/css/style.css"
+	rel="stylesheet" type="text/css" />
+<script src="$!webPath/resources/js/wap/jquery-1.10.2.min.js"></script>
+</head>
+
+<body>
+	#if($!user.userMark)
+	<div class="user_bar">
+		<span class="fr"><a href="javascript:void(0);"
+			onClick="window.location.href='$!webPath/wap/buyer/datum.htm'">完善资料</a></span>
+	</div>
+	#end
+	<div class="phone_main">
+		<!--头部 -->
+
+		<div class="user_hd">
+			<a href="$!webPath/wap/doc.htm?mark=user_point"><div
+					style="width: 100px; height: 30px; background: rgba(255, 255, 255, 0.2); position: absolute; right: 20px; vertical-align: middle;">
+					<img
+						src="$!webPath/resources/style/system/front/wap/images/attention.gif"
+						style="float: left; vertical-align: middle; height: 16px; margin: 8px 10px;" />
+					<p style="color: white; line-height: 30px; font-size: 12px;">积分说明</p>
+				</div></a>
+			<dl style="margin-top: 20px;">
+				<dd>
+					<img
+						src="$!webPath/resources/style/system/front/wap/images/inte_icon.png"
+						style="width: 30px; height: 30px; float: left;" />
+					<p style="font-size: 24px; margin-left: 30px;">总积分</p>
+					<p style="font-size: 24px; margin-left: 50px; margin-top: 20px;">#if($!{user.integral})$!{user.integral}
+						#else 0 #end</p>
+				</dd>
+			</dl>
+		</div>
+		<div class="details_box">
+			<!-- 积分任务 -->
+			<dl class="stand">
+				<dt style="padding-left: 15px;">
+					<a href="$!webPath/wap/doc.htm?mark=user_point_task"> <span
+						class="fl"> <img
+							src="$!webPath/resources/style/system/front/wap/images/point1.png"
+							width="40" height="40"></span> <span class="fl"
+						style="font-size: 16px; color: #aaa; padding-left: 15px; line-height: 40px;">积分任务</span>
+						<span class="fr" style="padding-right: 25px;"><img
+							src="$!webPath/resources/style/system/front/wap/images/details_right.gif"
+							width="9" height="18" /> </span>
+					</a>
+				</dt>
+			</dl>
+
+		</div>
+		<div class="details_box">
+			<!-- 积分明细-->
+			<dl class="stand">
+				<dt style="padding-left: 15px;">
+					<a href="$!webPath/wap/buyer/integral_list.htm"> <span
+						class="fl"> <img
+							src="$!webPath/resources/style/system/front/wap/images/point2.png"
+							width="40" height="40"></span> <span class="fl"
+						style="font-size: 16px; color: #aaa; padding-left: 15px; line-height: 40px;">积分明细</span>
+						<span class="fr" style="padding-right: 25px;"><img
+							src="$!webPath/resources/style/system/front/wap/images/details_right.gif"
+							width="9" height="18" /> </span>
+					</a>
+				</dt>
+			</dl>
+
+		</div>
+
+		<!--底部-->
+		$!httpInclude.include("/wap/footer.htm?op=center")
+
+	</div>
+</body>
+</html>

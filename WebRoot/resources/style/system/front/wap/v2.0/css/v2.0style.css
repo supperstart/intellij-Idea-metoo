@@ -1,0 +1,536 @@
+@charset "utf-8";
+/*手机css*/
+
+/************************************************************************************
+RESET
+*************************************************************************************/
+* {
+	padding: 0px;
+	margin: 0px;
+}
+
+html {
+	height: 100%;
+}
+
+body {
+	font-family: Proxima Nova, Helvetica Neue, Arial, sans-serif;
+	color: #404553;
+	-webkit-font-smoothing: antialiased;
+	background-color: #f7f7f7;
+	font-size: 12px;
+}
+
+html, body, address, blockquote, div, dl, form, h1, h2, h3, h4, h5, h6,
+	ol, p, pre, table, ul, dd, dt, li, tbody, td, tfoot, th, thead, tr,
+	button, del, ins, map, object, a, abbr, acronym, b, bdo, big, br, cite,
+	code, dfn, em, i, img, kbd, q, samp, small, span, strong, sub, sup, tt,
+	var, legend, fieldset {
+	margin: 0;
+	padding: 0;
+}
+
+ol, ul, li {
+	list-style: none;
+	list-style-image: none;
+	list-style-position: outside;
+	list-style-type: none;
+}
+
+img, fieldset, abbr, acronym {
+	border: 0 none;
+}
+
+del, ins {
+	text-decoration: none;
+}
+
+a {
+	text-decoration: none;
+	color: #000;
+	outline: none;
+}
+
+table {
+	border-collapse: collapse;
+	　border-spacing: 0;
+}
+
+i, b, address {
+	text-decoration: none;
+	font-style: normal;
+	font-weight: lighter;
+}
+
+caption {
+	text-align: left;
+}
+
+time, mark {
+	margin: 0px;
+	padding: 0px;
+	background: none
+}
+
+article, aside, details, figcaption, figure, footer, header, hgroup,
+	menu, nav, section {
+	display: block;
+	margin: 0;
+	padding: 0;
+}
+
+sup {
+	vertical-align: text-top;
+}
+
+sub {
+	vertical-align: text-bottom;
+}
+
+.red {
+	color: #E22C37;
+}
+
+.mt50 {
+	width: 100%;
+	height: 45px;
+	overflow: hidden;
+}
+
+.gray {
+	color: #999;
+}
+
+.orange {
+	color: #ffa800;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	font-size: 14px;
+}
+
+form, fieldset, legend, input, button, textarea, p, blockquote, select {
+	font-size: 14px;
+	font-family: "microsoft yahei", Arial, Helvetica, sans-serif;
+}
+
+img {
+	-ms-interpolation-mode: bicubic;
+	max-width: 100%;
+} /*防止windows缩放图片时，图像失真*/
+/*首页*/
+.main_top {
+	position: fixed;
+	top: 0;
+	background-color: #F94D4D;
+	width: 100%;
+	height: 34px;
+	font-size: 16px;
+	line-height: 30px;
+	color: #fff;
+	text-align: center;
+	z-index: 10001;
+}
+
+.main_top img {
+	position: absolute;
+	right: 10px;
+	top: 5px;
+}
+
+.search_line {
+	opacity: 0.5;
+	border-radius: 0px;
+	background-color: #fff;
+	border-color: #fff;
+	margin-top: 5px;
+	height: 24px;
+	width: 80%;
+	position: absolute;
+	left: 5px;
+}
+
+.search_line span {
+	display: block;
+	background-color: #fff;
+	padding-left: 40px;
+	overflow: hidden;
+}
+
+.search_line input {
+	height: 22px;
+	width: 94%;
+	position: absolute;
+	left: 4%;
+	background-color: #fff;
+	border: 0px;
+	top: 0px;
+}
+
+.main_menu {
+	width: 100%;
+	background-color: #f8f8f8;
+	overflow: hidden;
+	position: fixed;
+	top: 0px;
+	z-index: 1000;
+}
+
+.group_top {
+	height: 40px;
+	width: 100%;
+	background-color: #fff;
+}
+
+.group_top ul {
+	height: 40px;
+	width: 100%;
+	margin-left: -1px;
+	float: left;
+}
+
+.group_top ul li {
+	width: 25%;
+	float: left;
+	border-bottom: 1px solid #ddd;
+	height: 38px;
+	text-align: center;
+	font-size: 14px;
+	line-height: 40px;
+}
+
+.group_top ul li.this {
+	border-bottom: 1px solid #008BFF;
+}
+
+.group_top ul li.this a {
+	color: #008BFF;
+}
+
+.group_top ul li a {
+	display: block;
+	width: 90%;
+	margin-left: auto;
+	margin-right: auto;
+	height: 38px;
+	color: #555;
+}
+
+.group_top ul li span {padding：auto;
+	position: relative;
+}
+
+.group_top ul li a b {
+	display: block;
+	width: 15px;
+	height: 14px;
+	position: absolute;
+	left: 0px;
+	top: 0px;
+}
+
+.group_top ul li a b img {
+	float: left;
+	margin-top: 2px;
+}
+
+.group_top ul li a i {
+	display: block;
+	width: 15px;
+	height: 14px;
+	position: absolute;
+	left: 0px;
+	top: 0px;
+}
+
+.group_top ul li a i img {
+	float: left;
+	margin-top: 1px;
+}
+
+.group_top ul .this {
+	height: 38px;
+	border-bottom: 2px solid #c70100;
+	color: #c70100;
+	text-shadow: 1px 1px 0px #fff;
+}
+/*幻灯*/
+.focusBox {
+	position: relative;
+	width: 100%;
+	height: 200px;
+	overflow: hidden;
+	margin-top: 40px;
+}
+
+.focusBox .pic img {
+	width: 100%;
+	height: 200px;
+	display: block;
+}
+
+.focusBox .hd {
+	overflow: hidden;
+	zoom: 1;
+	position: absolute;
+	bottom: 5px;
+	left: 49%;
+	margin-left: -50px;
+	z-index: 3
+}
+
+.focusBox .hd li {
+	float: left;
+	line-height: 15px;
+	text-align: center;
+	font-size: 12px;
+	width: 20px;
+	height: 5px;
+	cursor: pointer;
+	overflow: hidden;
+	background: #919191;
+	margin-left: 4px;
+	filter: alpha(opacity = 80);
+	opacity: .8;
+	-webkit-transition: All .5s ease;
+	-moz-transition: All .5s ease;
+	-o-transition: All .5s ease;
+	text-indent: 999px;
+}
+
+.focusBox .hd .on {
+	background: #ff9d9d;
+	filter: alpha(opacity = 100);
+	opacity: 1;
+}
+
+/*每周热卖*/
+.activity_box {
+	position: relative;
+	width: 100%;
+	height: 150px;
+	overflow: hidden;
+	border: 1px solid #0000;
+	margin-top: 10px;
+	text-align: center;
+}
+
+.activity_goods {
+	widows: 96%;
+	margin: 10px 5px;
+}
+
+/*热卖商品*/
+.hot_recommed {
+	text-align: center;
+	font-size: 14px;
+	margin-top: 5px;
+}
+
+.recommed_goods {
+	border-bottom: 2px solid #f2f2f2;
+	float: left;
+	width: 100%;
+	margin: 2px 0px;
+	padding-bottom: 5px;
+	background-color: #ffffff;
+}
+
+.recom_title {
+	display: block;
+	font-size: 14px;
+	text-align: left;
+	padding-left: 10px;
+}
+
+.recom_name {
+	display: block;
+	float: left;
+	font-size: 10px;
+	text-align: left;
+	color: gray;
+	padding-left: 10px;
+}
+
+.recom_price {
+	display: block;
+	font-size: 14px;
+	text-align: right;
+	color: red;
+	padding-right: 10px;
+}
+
+/*底部菜单栏**/
+.main_bottom {
+	position: fixed;
+	bottom: 0;
+	height: 50px;
+	width: 100%;
+	background-color: #fff;
+	overflow: hidden;
+	border-top: 1px solid #ccc;
+}
+
+.main_bottom ul {
+	height: 50px;
+	width: 100%;
+	float: left;
+}
+
+.main_bottom ul li {
+	width: 20%;
+	float: left;
+	height: 50px;
+	text-align: center;
+	display: block;
+	font-size: 12px;
+}
+
+.main_bottom ul li.this a {
+	color: #F00;
+}
+
+.main_bottom ul li a span {
+	font-size: 10px;
+	width: 100%;
+	text-align: center;
+}
+
+.main_bottom ul li a img {
+	width: 22px;
+	height: 22px;
+	text-align: center;
+	margin-top: 5px;
+}
+
+<!--
+栏目分类页-->.phone_floor {
+	width: 98%;
+	height: 100%;
+	overflow: hidden;
+	border: 1px solid #ccc;
+	box-shadow: 0px 1px 0px #ccc;
+	padding-bottom: 10px;
+	margin: auto;
+}
+
+.recom {
+	width: 98%;
+	overflow: hidden;
+	position: relative;
+	margin: auto;
+	padding-bottom: 10px;
+}
+
+.recom .piclist {
+	overflow: hidden;
+	margin: auto;
+}
+
+.recom .piclist li {
+	background: #ffffff;
+	width: 47.5%;
+	margin-left: 5px;
+	margin-top: 5px;
+}
+
+.recom .ohbox {
+	overflow: hidden;
+	position: relative;
+	max-width: 640px;
+	min-width: 320px;
+	text-align: center;
+	margin: auto;
+}
+
+.recom .list {
+	overflow: hidden;
+	zoom: 1;
+	left: 50%;
+	margin-left: -50px;
+	position: absolute;
+	padding: 5px 0px;
+}
+
+.recom .list li {
+	width: 8px;
+	height: 8px;
+	border: 1px solid #ddd;
+	background-color: #fff;
+	float: left;
+	display: inline;
+	width: 15px;
+	height: 15px;
+	cursor: pointer;
+	margin-left: 10px;
+	line-height: 10000px;
+	overflow: hidden;
+}
+
+.recom .list li.on {
+	border-color: #e22c37;
+	background-color: #e22c37;
+}
+
+.recom ul {
+	width: 98%;
+	overflow: hidden;
+	text-align: center;
+}
+
+.recom ul li {
+	width: 49%;
+	height: 215px;
+	display: block;
+	float: left;
+	overflow: hidden;
+	padding-left: 1%;
+	padding-top: 10px;
+}
+
+.recom ul li a {
+	margin: 0px;
+	overflow: hidden;
+	position: relative;
+	overflow: hidden;
+	text-align: center;
+}
+
+.recom ul li a span.goods_title {
+	font-size: 12px;
+	height: 30px;
+	line-height: 14px;
+	display: block;
+	text-align: left;
+}
+
+.recom ul li a span.goods_price {
+	font-size: 14px;
+	height: 30px;
+	line-height: 30px;
+	color: red;
+	display: block;
+	text-align: left;
+}
+
+<!--
+搜索页 -->.hot_search {
+	
+}
+
+.hot_search div {
+	border: 1px solid #aaa;
+	border-radius: 30px;
+	height: 26px;
+	text-align: center;
+	line-height: 26px;
+	margin: 5px;
+}
+
+.search_history ul li {
+	border-bottom: 1px solid #ddd;
+	width: 100%;
+	height: 30px;
+	line-height: 30px;
+	padding-left: 30px;
+}

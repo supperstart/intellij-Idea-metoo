@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+	<property name="LogPath" value="../logss/applog/" />
+
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+			<Pattern>%d{yyyy-MM-dd HH:mm:ss.SSS}  [%thread] %-5level %logger{80} - %msg%n</Pattern>
+		</encoder>
+	</appender>
+	<appender name="FILE_A"
+	class="ch.qos.logback.core.rolling.RollingFileAppender">
+	<file>${LogPath}/A.log</file>
+	<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy"> 
+		daily rollover
+	<fileNamePattern>${LogPath}/A.%d{yyyy-MM-dd}.log
+	</fileNamePattern>
+	</rollingPolicy>
+	<encoder>
+	<Pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %.-1level %relative [%thread] 
+		%c
+	%msg%nopex%n</Pattern>
+	</encoder>
+	</appender>
+
+	<appender name="FILE_B"
+	class="ch.qos.logback.core.rolling.RollingFileAppender">
+	<file>${LogPath}/B.log</file>
+	<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy"> 
+		daily rollover
+	<fileNamePattern>${LogPath}/B.%d{yyyy-MM-dd}.log
+	</fileNamePattern>
+	</rollingPolicy>
+	<encoder>
+	<Pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %.-1level %relative [%thread] 
+		%c
+	%msg%nopex%n</Pattern>
+	</encoder>
+	</appender>
+
+	<appender name="FILE_N"
+	class="ch.qos.logback.core.rolling.RollingFileAppender">
+	<file>${LogPath}/N.log</file>
+	<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy"> 
+		daily rollover
+	<fileNamePattern>${LogPath}/N.%d{yyyy-MM-dd}.log
+	</fileNamePattern>
+	</rollingPolicy>
+	<encoder>
+	<Pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %.-1level %relative [%thread] 
+		%c
+	%msg%nopex%n</Pattern>
+	</encoder>
+	</appender>
+
+	<root>
+		<level value="INFO" />
+		<appender-ref ref="STDOUT" />
+	</root>
+	<!-- -->
+	<!-- <logger name="A" level="INFO"> -->
+	<!-- <appender-ref ref="FILE_A" /> -->
+	<!-- </logger> -->
+	<!-- <logger name="B" level="INFO"> -->
+	<!-- <appender-ref ref="FILE_B" /> -->
+	<!-- </logger> -->
+	<!-- <logger name="N" level="INFO"> -->
+	<!-- <appender-ref ref="FILE_N" /> -->
+	<!-- </logger> -->
+	<!-- -->
+</configuration>
+

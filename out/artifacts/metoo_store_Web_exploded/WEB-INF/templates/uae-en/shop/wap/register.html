@@ -1,0 +1,262 @@
+
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta charset="utf-8">
+<title>registered user - $!config.title</title>
+<meta name="viewport"
+	content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<link rel="stylesheet" href="$!webPath/resources/wap/css/mui.min.css">
+<link href="$!webPath/resources/style/system/front/wap/css/style.css"
+	rel="stylesheet" type="text/css" />
+<link
+	href="$!webPath/resources/style/system/front/wap/v2.0/css/v2.0style.css"
+	rel="stylesheet" type="text/css" />
+<script src="$!webPath/resources/js/wap/jquery-1.10.2.min.js"></script>
+<script src="$!webPath/resources/js/jquery.validate.min.js"></script>
+<style>
+html, body, .mui-content {
+	background-color: #ffffff;
+}
+
+.mui-bar .mui-pull-left .mui-icon {
+	padding-right: 5px;
+	font-size: 28px;
+}
+
+.mui-bar .mui-btn {
+	font-weight: normal;
+	font-size: 17px;
+}
+
+.mui-bar .mui-btn-link {
+	top: 1px;
+}
+
+input {
+	margin: 0px !important;
+}
+
+.mui-content {
+	padding: 0px 20px;
+}
+
+.phone_login {
+	margin: 0px;
+}
+
+.light {
+	outline: 0;
+	border: 1px solid #f95d5d;
+	box-shadow: 0px 0px 10px 0px #f95d5d;
+}
+
+.phone_login ul li.ip {
+	border: none !important;
+}
+
+.phone_login ul li.ip_btn input {
+	line-height: initial;
+	background: #2199e8;
+}
+
+input {
+	-webkit-transition: all 0.30s ease-in-out;
+	-moz-transition: all 0.30s ease-in-out;
+	-ms-transition: all 0.30s ease-in-out;
+	-o-transition: all 0.30s ease-in-out;
+	outline: none !important;
+	padding: 3px 0 3px 3px !important;
+	margin: 5px 1px 3px 0 !important;
+	border: #ddd 1px solid !important;
+}
+
+input:focus {
+	box-shadow: 0px 0px 3px rgba(99, 184, 255, 1);
+	padding: 3px 0px 3px 3px;
+	margin: 5px 1px 3px 0;
+	border: rgba(99, 184, 255, 1) 1px solid;
+}
+
+#theForm {
+	display: block;
+	border-radius: 4px;
+	margin-top: 10px;
+	border: 1px #ddd solid;
+	background-color: #fff;
+}
+</style>
+<script>
+	jQuery(document).ready(function(){
+		  jQuery.validator.addMethod("verify",function(value,element){
+			    var re =  /^([0-9a-zA-Z]|[\u4E00-\u9FA5])+$/;
+		        if(re.test(jQuery("#userName").val())){		
+					return true;
+				} 
+				else {	
+				    return false;
+				}		  
+		  });
+		  jQuery("#theForm").validate({
+			errorPlacement: function(error, element) {  
+							   element.parent().addClass("bd_red");
+		        			 error.appendTo(element.parent().next());  
+		   					 },	
+			success:function(label) {
+		     						 label.parent().prev().removeClass("bd_red");
+								},
+			rules: {
+				userName:{
+							required:true,
+							verify:true,
+							remote:{
+								url: "$!webPath/verify_username.htm",     //后台处理程序
+								type: "post",               //数据发送方式
+								dataType: "json",           //接受数据格式   
+								data: {                     //要传递的数据
+									"userName": function(){return jQuery("#userName").val();}
+								}
+							}
+						},
+						password:{
+							required:true,
+							minlength:6,
+							maxlength:20  
+						},
+						repassword:{
+							required:true,
+							equalTo:"#password" 
+						},agree:{
+				  required:true
+				}#if($!config.securityCodeRegister),
+				code:{
+				  required:true,
+				  remote:{
+				    url: "$!webPath/verify_code.htm",     //后台处理程序
+		            type: "post",               //数据发送方式
+		            dataType: "json",           //接受数据格式   
+		            data: {                     //要传递的数据
+		                  "code": function(){return jQuery("#code").val();}
+				     }
+				  }
+				}
+				#end
+						
+					},
+			messages: {
+						userName:{
+							required:"用户名不能为空",
+							verify:"存在特殊字符",
+							remote:"The name already exists"
+						},
+						password:{
+							required:"密码不能为空",
+							minlength:"密码不能小于{0}个字符",
+							maxlength:"密码不能大于{0}个字符" 
+						},
+						repassword:{
+						 	required:"重复密码不能为空",
+						  	equalTo:"Enter the password inconsistent"
+						},
+						agree:{
+				 		 required:"请接受用户协议"
+							}#if($!config.securityCodeRegister),
+							code:{
+				  		required:"The verification code cannot empty",
+				  		remote:"验证码不正确"
+				}
+				#end
+					  },
+		  });
+		});
+</script>
+</head>
+
+<body>
+
+	<header id="header" class="mui-bar mui-bar-nav">
+		<a href="javascript:history.back(-1)"
+			class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+		<h1 class="mui-title">registered User</h1>
+	</header>
+
+	<div class="mui-content">
+		<h2 style="padding-top: 20px;">Welcome</h2>
+		<!--注册页-->
+		<form action="$!webPath/wap/register_finish.htm" method="post"
+			name="theForm" id="theForm">
+			<div class="phone_login">
+				<ul>
+					<li class="ip "><input name="userName" type="text" class=""
+						id="userName" placeholder="Name" /></li>
+					<li class="yz"></li>
+					<li class="ip"><input name="password" type="password"
+						id="password" placeholder="Create a password" /></li>
+					<li class="yz"></li>
+					<li class="ip"><input name="repassword" type="password"
+						id="repassword" placeholder="Determine a password" /></li>
+					<li class="yz"></li> #if($!config.securityCodeRegister)
+					<script>
+                 function refreshCode(){
+	                 jQuery("#code_img").attr("src","$!webPath/verify.json?d"+new Date().getTime());
+                 }
+             </script>
+					<li class="yzm"><input name="code" type="text" id="code"
+						placeholder="Verification code" /> <img id="code_img"
+						src="$!webPath/verify.json" width="73" height="27" /><a
+						href="javascript:void(0);" onClick="refreshCode();"><img
+							src="$!webPath/resources/style/system/front/wap/images/refresh.png"
+							width="32" height="32" /></a></li>
+					<li class="yz"></li> #end
+					<li><input name="agree" type="checkbox" id="agree"
+						value="true" checked="checked" /> <label for="agree">I
+							have read and agree </label> <a
+						href="$!webPath/wap/doc.htm?mark=register"> 《商城在线服务协议》</a></li>
+					<li class="yz">
+					<li class="ip_btn"><input name="" type="submit"
+						class="mui-btn mui-btn-block mui-btn-primary" value="Sign in" /></li>
+					<li>
+						<!-- <span class="fl"><a href="$!webPath/wap/login.htm">登陆</a></span>
+        <span class="fr"><a href="$!webPath/wap/forget1.htm">找回密码</a></span> -->
+					</li>
+				</ul>
+			</div>
+		</form>
+
+	</div>
+
+	</div>
+	<script src="$!webPath/resources/wap/mui.js"></script>
+	<script type="text/javascript">
+		mui.init({
+			swipeBack: true //启用右滑关闭功能
+		});
+		
+/* 		mui(document.body).on('tap', '.mui-btn', function(e) {
+            mui(this).button('loading');
+            setTimeout(function() {
+                mui(this).button('reset');
+                document.getElementById("theForm").submit(); 
+            }.bind(this), 2000);
+        }); */
+		
+		/* $("#userName").focus(function(){
+		  $("#userName").addClass("light");
+		});
+		$("#userName").blur(function(){
+		  $("#userName").removeClass("light");
+		}); */
+	</script>
+
+</body>
+
+</html>
+
+
+
+
+
+

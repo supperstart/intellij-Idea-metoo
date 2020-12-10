@@ -1,0 +1,38 @@
+<persistence 
+	xmlns="http://java.sun.com/xml/ns/persistence"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence
+          http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
+	version="2.0">
+	<!--配置持久化单元
+        name：持久化单元名称
+        transaction-type：事务类型
+             RESOURCE_LOCAL：本地事务管理
+             JTA：分布式事务管理 -->
+	<persistence-unit name="metoo_b2b2c" transaction-type="RESOURCE_LOCAL">
+	<!--配置JPA规范的服务提供商 [配置jpa ORM产品]org.hibernate.jpa.HibernatePersistenceProvider 
+		org.hibernate.ejb.HibernatePersistence -->
+		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+		<properties>
+		<!-- jpa中配置hibernate基本属性    jpa提供者的可选配置：我们的JPA规范的提供者为hibernate，所以jpa的核心配置中兼容hibernate的配 -->
+			<property name="hibernate.show_sql" value="true" />
+			<property name="hibernate.format_sql" value="true" />
+			<property name="hibernate.hbm2ddl.auto" value="update" />
+			<!--Ehcache二级缓存配置 -->
+			<property name="hibernate.cache.provider_class"
+				value="org.hibernate.cache.SingletonEhCacheProvider" />
+			<!-- 禁用二级缓存  -->
+            <!-- <property name="cache.provider_class">org.hibernate.cache.NoCacheProvider</property> -->
+            
+			<property name="hibernate.cache.provider_configuration"
+				value="/ehcache.xml" />
+			<property name="hibernate.cache.use_second_level_cache"
+				value="true" />
+			<property name="hibernate.cache.use_query_cache" value="true" />
+			<!-- 配置不同数据库的方言，例如分页，mysql使用limit oracle使用rownum  -->
+			<property name="hubernate.dialect" value="org.hibernate.dialect.MySQLDialect"></property>
+			
+		</properties>
+		<!--引入映射文件 <mapping resouce=""></mapping> -->
+	</persistence-unit>
+</persistence>

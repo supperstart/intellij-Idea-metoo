@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport"
+	content="width=device-width,inital-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+<meta name="apple-wap-web-app-capable" content="yes">
+<meta name="apple-wap-web-app-status-bar-style"
+	content="black-translucent">
+<title>首页 - $!config.title</title>
+<link
+	href="$!webPath/resources/style/system/front/wap/v2.0/css/v2.0style.css"
+	rel="stylesheet" type="text/css" />
+<script src="$!webPath/resources/js/wap/jquery-1.10.2.min.js"></script>
+<script src="$!webPath/resources/js/TouchSlide.1.1.js"></script>
+<script src="$!webPath/resources/js/jquery.SuperSlide.2.1.1.js"></script>
+<script type="text/javascript"
+	src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+</head>
+<body>
+	<!-- 专题主体-->
+	<div class="hot_recommed">
+		<div>
+			<Strong class="recommed_title">【$!{obj.title}】</Strong>
+			#if($!obj.banner)
+			#set($img="$!imageWebServer/$!{obj.banner.path}/$!{obj.banner.name}_small.$!{obj.banner.ext}")
+			#end <img src="$!img" />
+		</div>
+
+		#foreach($obj_goods in $objs)
+		<div class="phone_floor">
+			<div class="goodslist">
+				<div class="ohbox">
+					<ul>
+						#foreach($goods in
+						$!SubjectTools.getGoodsInfos("$!obj_goods.goods_ids"))
+						<li><a href="$!webPath/wap/goods.htm?id=$!goods.id"> <img
+								src="$!imageWebServer/$!{goods.img}" /> <span
+								class="goods_title">$!{goods.name}</span> <span
+								class="goods_price">￥$!{goods.price}</span>
+						</a></li> #end
+					</ul>
+				</div>
+			</div>
+
+		</div>
+		#end
+	</div>
+	$!httpInclude.include("/wap/footer.htm?op=list")
+</body>
+</html>

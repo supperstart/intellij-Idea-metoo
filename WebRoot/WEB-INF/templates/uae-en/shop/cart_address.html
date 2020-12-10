@@ -1,0 +1,138 @@
+#if(!$!error)
+<script>
+jQuery.validator.addMethod("mobile_telephone",function(value,element){
+  if(jQuery("#telephone").val()==""&&jQuery("#mobile").val()==""){
+     return false;
+	 
+  }else return true;
+});
+jQuery(document).ready(function(){
+  //								
+ jQuery("#theForm").validate({
+	ignore: "",
+  /*   rules:{
+	  trueName:{required :true},
+	  area_id:{required :true},
+	  area_info:{required :true},
+	  zip:{required :true,isZipCode:true},
+	  mobile:{mobile_telephone:true,isMobile:true},
+	  telephone:{isTel:true}
+	 }, */
+	messages:{
+	  trueName:{required :" Consignee cannot be empty"},
+	  area_id:{required :"  Please select the detail area"},
+	  area_info:{required :" The detailed address cannot be empty"},
+	  zip:{required :" Zip code cannot be empty ",isZipCode:" please fill in the correct zip code"},
+	  mobile:{mobile_telephone :" Please fill in"isMobile:" phone number  at least one "},
+	  telephone:{isTel:" Please fill in the telephone number correctly"}
+	},
+	errorPlacement: function(error, element){ 
+	  if(jQuery(error[0]).html()!=""){
+		 element.parent().remove(".error_ts");
+		 element.parent().append("<div class='error_ts'></div>");
+         error.appendTo(element.parent().find(".error_ts"));
+	  }
+    },
+	success:function(label){
+	    jQuery(label).parent().remove(".error_ts");
+	},
+	submitHandler:function(){
+	     var params = jQuery("#theForm").serialize();
+		 jQuery.ajax({type:'POST',url:'$!webPath/cart_address_save.htm',data:params,
+					  success:function(ret){
+						jQuery(".shopping_address_one_top_add").parent().find("ul").remove();   
+						jQuery(".shopping_address_one_top_add").parent().append(ret);
+						jQuery(".shopping_address_one_top_add").slideUp(2000);
+					    jQuery(".shopping_address_one_top_add").remove();
+		 }});
+	}
+  });
+    //
+ jQuery("select").change(function(){
+     var level=jQuery(this).attr("level");
+	 var id=jQuery(this).val();
+	 jQuery("#area_id").val("");
+	 for(var i=4;i>level;i--){
+	  jQuery("#area"+i).empty();
+	  jQuery("#area"+i).append("<option value=''> Please select</option>");
+	 }
+	 if(id!=""){
+	  jQuery.post("$!webPath/load_area.htm",{"pid":id},function(data){
+	     jQuery("#area"+level).empty();
+		  jQuery("#area"+level).append("<option value=''> Please select</option>");
+	      jQuery.each(data, function(index,item){
+		    jQuery("#area"+level).append("<option value='"+item.id+"'>"+item.areaName+"</option>");
+		  });
+	  },"json");
+	 }else{
+	   for(var i=level;i<=4;i++){
+	    jQuery("#area"+i).empty();
+	   }
+	 }
+  });
+ //
+ jQuery("#area3").change(function(){
+   var id=jQuery(this).val();
+   jQuery("#area_id").val(id);
+ });
+    //
+   jQuery(".shopping_address_one_left").click(function(){
+	  jQuery(".shopping_address_one_top_add").remove();												   
+   });
+   //保存数据
+   jQuery(".shopping_address_one_right a").click(function(){
+       jQuery("#theForm").submit();	 
+   });
+});
+</script>
+<div class="shopping_address_one_top_add" style="display:;">
+	<form action="$!webPath/cart_address_save.htm" method="post"
+		name="theForm" id="theForm">
+		<div class="shopping_address_one_top_input">
+			<ul>
+				<li class="shopping_address_one_top_i"><lable> Name</lable> <input
+					name="id" type="hidden" id="id" value="$!obj.id" /> <input
+					name="trueName" type="text" id="trueName" value="$!obj.trueName"
+					placeholder="Please fill in the name" /></li>
+				<!--       <li class="shopping_address_one_tel_i">
+      	<lable>电话</lable>
+        <input name="telephone" type="text" id="telephone" value="$!obj.telephone" placeholder=" Please fill in the number "  />
+      </li> -->
+				<li class="shopping_address_one_tel_i"><lable>Phone
+					number</lable> <input name="mobile" type="text" id="mobile"
+					value="$!obj.mobile"
+					placeholder=" Please fill in the mobile phone number" /></li>
+				<li class="shopping_address_one_address_i"><lable
+						style="display: block;">Region</lable> <select name="area1"
+					id="area1" level="2">
+						<option value="">Province/municipality</option> #foreach($area in
+						$areas)
+						<option value="$!area.id"
+							#if($!area.id==$!obj.area.parent.parent.id) selected="true" #end>$!area.areaName</option>
+						#end
+				</select> <select name="area2" id="area2" level="3"> #foreach($area
+						in $obj.area.parent.parent.childs)
+						<option value="$!area.id" #if($!area.id==$!obj.area.parent.id)
+							selected="true" #end>$!area.areaName</option> #end
+				</select> <select name="area3" id="area3" level="4"> #foreach($area
+						in $$obj.area.parent.childs)
+						<option value="$!area.id" #if($!area.id==$!obj.area.id)
+							selected="true" #end>$!area.areaName</option> #end
+				</select> <input id="area_id" name="area_id" type="hidden"
+					value="$!obj.area.id" /></li>
+				<li class="shopping_address_one_address_a_i"><lable>
+					Detailed Address</lable> <textarea name="area_info" cols="2" rows=""
+						id="area_info"
+						placeholder=" Street name or street address, house number">$!obj.area_info</textarea>
+					</textarea></li>
+				<li class="shopping_address_one_coding_i"><input name="zip"
+					type="text" id="zip" value="$!obj.zip" placeholder=" ZIP" /></li>
+				<li class="shopping_address_one_left"><a
+					href="javascript:void(0);">Cancel </a></li>
+				<li class="shopping_address_one_right"><a
+					href="javascript:void(0);">Confirm</a></li>
+			</ul>
+		</div>
+	</form>
+</div>
+#end

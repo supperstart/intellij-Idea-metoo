@@ -1,0 +1,102 @@
+<script src="$!webPath/resources/js/jquery.cookie.js"></script>
+<script>		  
+jQuery(document).ready(function(){
+  jQuery(".user_menu>span>b").click(function(){
+     var child_show=jQuery(this).parent().attr("child_show");
+	 if(child_show=="true"){
+		 jQuery(this).parent().find("ul").hide();
+	     jQuery(this).parent().find("i").removeClass("active");
+		 jQuery(this).parent().attr("child_show","false");
+	 }else{
+	    jQuery(this).parent().find("ul").show();
+		jQuery(this).parent().find("i").addClass("active");
+		jQuery(this).parent().attr("child_show","true");
+	 }
+	 var nav_status="";
+	 jQuery(".user_menu>span>b").each(function(){
+		nav_status=nav_status+jQuery(this).parent().attr("id")+","+jQuery(this).parent().attr("child_show")+";";
+	 }); 
+	 jQuery.cookie("buyer_nav",nav_status);
+  });
+  jQuery(".user_menu ul li a").removeClass("this");						
+  jQuery(".user_menu ul li a[op='$!{op}']").addClass("this");	
+  //
+  if(jQuery.cookie("buyer_nav")!=null){
+      var nav_status=jQuery.cookie("buyer_nav");
+	  jQuery.each(nav_status.split(";"), function(index,item){
+	     var list=item.split(",");
+		 jQuery("#"+list[0]).attr("child_show",list[1]);
+		 if(list[1]=="true"){
+	       jQuery("#"+list[0]+" ul").show();
+		 }else{
+		   jQuery("#"+list[0]).find("i").removeClass("active");	 
+		   jQuery("#"+list[0]+" ul").hide(); 	 
+		 }
+	  });
+   }
+   //
+});
+</script>
+<div class="usercenter_left">
+	<h3>
+		Hello!&nbsp;&nbsp;&nbsp;<a href="$!webPath/buyer/index.htm"
+			style="color: #ff9900;">$!{user.userName}</a>
+	</h3>
+	<a href="$!webPath/koala_logout.htm"
+		style="display: block; padding-bottom: 20px; background-color: #ff9900; border-radius: 3px; color: #FFF !important; width: 31%;
+	/* margin: 13px auto !important; */ display: block; font-size: 13px; text-align: center; padding: 2px; overflow: hidden; font-weight: 550;"><span>Log
+			Out</span></a>
+	<div class="user_menu">
+		<span child_show="true" id="trade_menu"><b>Order manage<i
+				class="active"></i></b>
+			<ul>
+				<li><a href="$!webPath/buyer/order.htm" op="order"><span
+						class="icon_sign"><i class="iconfont icondingdan"></i></span>My
+						order</a></li>
+				<!--             <li><a href="$!webPath/buyer/group.htm" op="group">生活购订单</a></li> -->
+				<li><a href="$!webPath/buyer/evaluate_list.htm" op="evaluate"><span
+						class="icon_sign"><i class="iconfont iconxiaoxi"></i></span>My
+						evaluation</a></li>
+				<li><a href="$!webPath/buyer/favorite_goods.htm" op="favorite"><span
+						class="icon_sign"><i class="iconfont iconicon-"></i></span>Wishilists</a></li>
+				             <li><a href="$!webPath/buyer/integral_order_list.htm" op="integral">我的积分兑换</a></li>
+            <li><a href="$!webPath/buyer/recharge_card_add.htm" op="card">充值卡充值</a></li> 
+				<li><a href="$!webPath/buyer/order_return_list.htm" op="return"><span
+						class="icon_sign"><i class="iconfont iconshouhou"></i></span>Return
+						/ Refund</a></li>
+			</ul> </span>
+		<!--<span child_show="true" id="server_menu"><b>服务中心<i class="active"></i></b>
+          <ul>
+            
+             <li><a href="$!webPath/buyer/order_complaint_list.htm" op="complaint"><span class="icon_sign" ><i class="iconfont icondingdan"></i></span>我的投诉</a></li>
+            <li><a href="$!webPath/buyer/message.htm" op="message"><span class="icon_sign" ><i class="iconfont icontousu"></i></span>站内信<strong style="color:#F00;">（$!{msg_size}）</strong></a></li> 
+          </ul>
+        </span>-->
+		<span child_show="true" id="user_menu"><b>Account management<i
+				class="active"></i></b>
+			<ul>
+				<li><a href="$!webPath/buyer/account.htm" op="account"><span
+						class="icon_sign"><i class="iconfont iconzhanghuguanli"></i></span>Account
+						details</a></li>
+				<!--             <li><a href="$!webPath/buyer/predeposit.htm" op="predeposit" ><span class="icon_sign" ><i class="iconfont iconsvg-"></i></span>账户充值</a></li> -->
+				<!-- <li><a href="$!webPath/buyer/predeposit_log.htm" op="predeposit_log"><span class="icon_sign" ><i class="iconfont icondingdan"></i></span>Finance</a></li>
+            <li><a href="$!webPath/buyer/buyer_cash.htm" op="buyer_cash"><span class="icon_sign" ><i class="iconfont icondingdan"></i></span>Withdraw</a></li> -->
+				<li><a href="$!webPath/buyer/address.htm" op="address"><span
+						class="icon_sign"><i class="iconfont icondingdan"></i></span>Shipping address</a></li>
+				<li><a href="$!webPath/buyer/coupon.htm" op="coupon"><span
+						class="icon_sign"><i class="iconfont icondingdan"></i></span>优惠劵</a></li>
+				<li><a href="$!webPath/buyer/foot_point.htm" op="foot"><span
+						class="icon_sign"><i class="iconfont icondingdan"></i></span>Footprint</a></li>
+			</ul> </span>
+		<!-- <span child_show="true" id="app_menu"><b>应用管理<i class="active"></i></b>
+          <ul>
+            #if($!config.sina_login==true||$!config.qq_login==true)
+            <li><a href="$!webPath/buyer/account_bind.htm" op="account_bind">账户绑定</a></li>
+            #end
+            <li><a href="$!webPath/buyer/my_sns_index.htm" op="sns" target="_blank">个人主页</a></li>
+            <li><a href="$!webPath/buyer/my_sns_circle.htm?type=my_circle" op="my_sns_circle" target="_blank">我的圈子</a></li>
+            <li><a href="$!webPath/buyer/freeapply_logs.htm" op="free">0元试用</a></li>
+          </ul>
+        </span> -->
+	</div>
+</div>

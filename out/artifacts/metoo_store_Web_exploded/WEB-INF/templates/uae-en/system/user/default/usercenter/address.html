@@ -1,0 +1,145 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Shipping address -$!{config.title}-$!{config.poweredby}</title>
+<meta name="keywords" content="$!config.keywords" />
+<meta name="description" content="$!config.description" />
+<meta name="generator" content="$!{config.meta_generator}" />
+<meta name="author" content="$!{config.meta_author}">
+	<meta name="copyright" content="$!{config.copyRight}">
+		<link
+			href="$!webPath/resources/style/system/front/default/css/public.css"
+			type="text/css" rel="stylesheet" />
+		<link
+			href="$!webPath/resources/style/system/front/default/css/public_auto.css"
+			type="text/css" rel="stylesheet" />
+		<link
+			href="$!webPath/resources/style/system/front/default/css/user.css"
+			type="text/css" rel="stylesheet" />
+		<link href="$!webPath/resources/style/common/css/overlay.css"
+			type="text/css" rel="stylesheet" />
+		<link
+			href="$!webPath/resources/style/common/css/jquery-ui-1.8.22.custom.css"
+			type="text/css" rel="stylesheet" />
+		<script src="$!webPath/resources/js/jquery-1.6.2.js"></script>
+		<script src="$!webPath/resources/js/jquery-ui-1.8.21.js"></script>
+		<script src="$!webPath/resources/js/jquery.poshytip.min.js"></script>
+		<script src="$!webPath/resources/js/jquery.shop.common.js"></script>
+		<script src="$!webPath/resources/js/jquery.validate.min.js"></script>
+		<script src="$!webPath/resources/js/jquery.iskyshop.validate.js"></script>
+</head>
+<style>
+.Biaoti {
+	width: 100%;
+	height: 50px;
+	border: 1px solid #e6e6e6;
+}
+
+.Biaoti ul {
+	list-style: none;
+}
+
+.Biaoti ul li {
+	display: block;
+	height: 50px;
+	line-height: 50px;
+	text-align: center;
+	float: left;
+	width: 14%;
+	font-weight: bolder;
+}
+</style>
+<body>
+	$!httpInclude.include("/top.htm") $!httpInclude.include("/head.htm")
+
+	<div class="main">
+		<div class="usercenter">
+			$!httpInclude.include("/buyer/nav.htm?op=address")
+			<div class="usercenter_right">
+				<div class="myorder">
+					<h4>
+						<span class="myorder_fright"></span><strong>Shipping
+							address</strong>
+					</h4>
+
+				</div>
+				<div class="Biaoti">
+					<ul>
+						<li style="width: 5%">Name</li>
+						<li style="width: 35%">Address</li>
+						<li style="width: 5%">Detail address</li>
+						<li style="width: 10%">Phone</li>
+						<li style="width: 10%">Mobile</li>
+					</ul>
+				</div>
+				<div class="user_list" style="margin: 0px;">
+
+					#if($!objs.size()>0)
+					<form method="post" id="ListForm">
+						<div class="user_list_box" style="margin: 0px; border: none;">
+							<table border="0" cellpadding="0" cellspacing="0"
+								class="user_order_table">
+
+								#foreach($obj in $objs)
+								<tr id="$!obj.id" #if($!obj.default_val==1)
+									class="user_list_box_this" #end>
+									<td align="center">$!obj.trueName</td>
+									#set($address="$!obj.area.parent.parent.areaName
+									$!obj.area.parent.areaName $!obj.area.areaName")
+									<td align="center" area_info_id="$!obj.id">$!address</td>
+									<td align="center">$!obj.area_info</td>
+									<td align="center">#if($!obj.telephone &&
+										$!obj.telephone!="") $!obj.telephone #else Not filled#end</td>
+									<td align="center">#if($!obj.mobile && $!obj.mobile!="")
+										$!obj.mobile #else Not filled#end</td>
+									<td align="center" class="user_order_table_yes"><a
+										href="javascript:void(0);" class="address_bor"
+										onclick="showDialog('msg_info','','Deleted after unrecoverable, whether to continue ?',1,'question',3,function(){window.location.href='$!webPath/buyer/address_del.htm?mulitId=$!obj.id&currentPage=$!currentPage'});"
+										class="del_a">Delete</a> <a href="javascript:void(0);"
+										class="address_bor"
+										dialog_uri="$!webPath/buyer/address_edit.htm?id=$!obj.id&currentPage=$!currentPage"
+										dialog_title="Edit address" dialog_width="400"
+										dialog_id="address_add" class="del_a">Edit</a>#if($!obj.default_val==0)
+										<a href="javascript:void(0);" class="address_bor"
+										onclick="showDialog('msg_info','','Make sure it is set to the default address？',1,'question',3,function(){window.location.href='$!webPath/buyer/address_default.htm?mulitId=$!obj.id&currentPage=$!currentPage'});"
+										class="del_a">Set default</a> #else <a
+										href="javascript:void(0);" class="address_bor"
+										onclick="showDialog('msg_info','','Make sure to cancel the default address?',1,'question',3,function(){window.location.href='$!webPath/buyer/address_default_cancle.htm?mulitId=$!obj.id&currentPage=$!currentPage'});"
+										class="del_a">Cancel default</a> #end</td>
+								</tr>
+								#end
+							</table>
+						</div>
+						<div class="userlist_allop">
+							<div class="user_list_page">
+								<span class="user_page_sp">$!gotoPageFormHTML</span>
+							</div>
+						</div>
+					</form>
+					#else
+					<div class="nothing">
+						<div class="nothing_left">
+							<img
+								src="$!webPath/resources/style/system/front/default/images/nothing.png" />
+						</div>
+						<div class="nothing_right">You do not have the shipping
+							address information yet !</div>
+					</div>
+					#end
+				</div>
+
+			</div>
+			<span class="user_list_t_btn"style" margin-top: 10px; margin-right: 10px;"><a
+				class="newadd" href="javascript:void(0);"
+				dialog_uri="$!webPath/buyer/address_add.htm?currentPage=$!currentPage"
+				dialog_title="NEW Shipping address" dialog_width="400"
+				dialog_id="address_add"><b><i class="newadd_i"></i>New
+						Shipping address</b></a></span>
+		</div>
+
+		$!httpInclude.include("/footer.htm")
+	</div>
+	<div id="contant"></div>
+</body>
+</html>

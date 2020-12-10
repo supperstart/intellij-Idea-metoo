@@ -1,0 +1,434 @@
+<style>
+li.add_img_spec {
+	width: 46px;
+	height: 46px;
+	float: left;
+	padding: 2px;
+	border: 1px solid #eee;
+	margin-right: 9px;
+	position: relative;
+	background:
+		url($!webPath/resources/style/system/front/default/images/seller_up_nav_a.png)
+		center center no-repeat;
+}
+
+.input_ {
+	border: 1px solid #A7A6AA;
+	height: 20px;
+	width: 70px;
+	line-height: 20px;
+	padding-left: 5px;
+	margin-bottom: 5px;
+	border: none;
+	border: 1px solid #ccc;
+}
+/* .table_tr:nth-child(odd){
+	background-color: #ebebeb;
+} */
+.table_tr, .table_th {
+	text-align: center
+}
+
+.table_tr:nth-child(odd) {
+	background-color: #efefef;
+}
+</style>
+
+#if($!supplement)
+<table width="100%" border="0" cellspacing="0" cellpadding="0"
+	class="tabledetail">
+	<tr style="background: #CCC">
+		#foreach($spec in $specs)
+		<td width="15%">$!spec.name</td> #end
+		<td width="15%">价格</td>
+		<td width="15%">预警</td>
+		<td width="15%"><b style="float: left;">库存</b> <span
+			class="select_all" id="select_all_count" mark="count"><img
+				src="$!webPath/resources/style/system/front/default/images/batch.png"
+				style="cursor: pointer" /></span> <span class="select_all_input"
+			mark="count" style="display: none;"><b><input name=""
+					type="text" mark="all_count" /></b><i><a
+					href="javascript:void(0);" mark="count" id="sure_count">确定</a></i></span></td>
+	</tr>
+	#foreach($gsp in $gsps)
+	<tr>
+		#set($id="") #foreach($c_gsp in $gsp) #set($id=$!{c_gsp.id}+"_"+$id)
+		<td>$!c_gsp.value</td> #end
+		<td id="inventory_details_price_$!id"></td>
+		<td id="inventory_details_supp_$!id"></td>
+		<td><input name="$!{id}" type="text"
+			id="inventory_details_count_$!id"
+			style="border: 1px solid #A7A6AA; height: 20px; line-height: 20px; padding-left: 5px; margin-bottom: 5px;"
+			value="0"></td>
+	</tr>
+	#end
+</table>
+#else
+<table style="min-width: 1300px;" border="0" cellspacing="0"
+	cellpadding="0" class="tabledetail">
+	<tbody>
+		<tr class="table_th" style="background: #CCC; min-width: 1300px;">
+			<td style="width: 6%">
+				<p>是否禁用</p>
+			</td> #foreach($spec in $specs)
+			<td width="7%">$!spec.name</td> #end
+			<td width="9%"><b>库存</b> <span class="select_all"
+				id="select_all_count" mark="count" style="margin: 0 35px"> <img
+					src="$!webPath/resources/style/system/front/default/images/batch.png"
+					style="cursor: pointer" />
+			</span> <span class="select_all_input" mark="count" style="display: none;">
+					<b><input name="" type="text" mark="all_count" /></b> <i><a
+						href="javascript:void(0);" mark="count" id="sure_count">确定</a></i>
+			</span></td>
+
+			<td width="9%"><b>商品价格(AED)</b> <span class="select_all"
+				id="select_all_price" mark="price" style="margin: 0 35px"> <img
+					src="$!webPath/resources/style/system/front/default/images/batch.png"
+					style="cursor: pointer" />
+			</span> <span class="select_all_input" mark="price" style="display: none;">
+					<b><input name="" type="text" mark="all_price" /></b> <i><a
+						href="javascript:void(0);" mark="price" id="sure_price">确定</a></i>
+			</span></td>
+
+			<td width="9%"><b>折扣价格(AED)</b> <span class="select_all"
+				id="select_all_supplement" mark="supplement" style="margin: 0 35px">
+					<img
+					src="$!webPath/resources/style/system/front/default/images/batch.png"
+					style="cursor: pointer" />
+			</span> <span class="select_all_input" mark="supplement"
+				style="display: none;"> <b><input name="" type="text"
+						mark="all_supplement" /></b> <i><a href="javascript:void(0);"
+						mark="supplement" id="sure_supplement">确定</a></i>
+			</span></td>
+
+			<td width="9%"><b>重量(g)</b> <span class="select_all"
+				id="select_all_weight" mark="weight" style="margin: 0 35px">
+					<img
+					src="$!webPath/resources/style/system/front/default/images/batch.png"
+					style="cursor: pointer" />
+			</span> <span class="select_all_input" mark="weight" style="display: none;">
+					<b><input name="" type="text" mark="all_weight" /></b> <i><a
+						href="javascript:void(0);" mark="weight" id="sure_weight">确定</a></i>
+			</span></td>
+
+			<td width="12%"><b>体积(cm*cm*cm)</b> <span class="select_all"
+				id="select_all_volume" mark="volume" style="margin: 0 35px">
+					<img
+					src="$!webPath/resources/style/system/front/default/images/batch.png"
+					style="cursor: pointer" />
+			</span> <span class="select_all_input" mark="volume" style="display: none;">
+
+					<input style="position: unset; width: 25%" name="" type="text"
+					mark="length" /> <input style="position: unset; width: 25%"
+					name="" type="text" mark="width" /> <input
+					style="position: unset; width: 25%" name="" type="text" mark="high" />
+
+					<i> <a href="javascript:void(0);" mark="volume"
+						id="volume_l_w_g">确定</a>
+				</i>
+			</span></td>
+
+			<td width="9%"><b>SKU编码</b> <span class="select_all_input"
+				mark="serial" style="display: none;"> <b><input name=""
+						type="text" mark="serial" /></b> <i><a href="javascript:void(0);"
+						mark="serial" id="sure_serial">确定</a></i>
+			</span></td>
+
+
+			<td width="15%"><b>图片</b> <span class="select_all_input"
+				mark="supplement" style="display: none;"><b><input
+						name="" type="text" mark="all_supplement" /></b><i><a
+						href="javascript:void(0);" mark="supplement" id="sure_supplement">确定</a></i></span>
+			</td>
+		</tr>
+		#foreach($gsp in $gsps)
+		<tr>
+			#set($id="") #foreach($c_gsp in $gsp) #set($id=$!{c_gsp.id}+"_"+$id)
+			#end
+			<td class="table_tr" style="max-width: 50px;"><input
+				class="gsp_disable_$!id" type="button" value="禁用"
+				onclick="disable('$!id')"
+				style="cursor: pointer; border: none; width: 40px; height: 24px; background: url($!webPath/resources/style/system/front/default/images/usercenter/edit.jpg) no-repeat;" />
+				<input class="gsp_open_$!id" type="button" value="解除"
+				onclick="opens('$!id')"
+				style="cursor: pointer; display: none; border: none; width: 40px; height: 24px; background: url($!webPath/resources/style/system/front/default/images/usercenter/edit.jpg) no-repeat;" />
+				<input class="" name="inventory_details_goodsDisabled_$!id"
+				id="inventory_details_goodsDisabled_$!id" type="hidden" value="0" />
+			</td> #set($id="") #foreach($c_gsp in $gsp) #set($id=$!{c_gsp.id}+"_"+$id)
+			<td class="table_tr">$!c_gsp.value</td> #end
+			<td class="table_tr"><input
+				class="{required:true,min:1,messages:{required:'请输入内容',min:'请输入大于1的数值'}}"
+				name="$!{id}" type="text" id="inventory_details_count_$!id" value="">
+
+			</td>
+			<td class="table_tr"><input
+				class="{required:true,min:1,messages:{required:'请输入内容',min:'请输入大于1的数值'}}"
+				name="nventory_details_$!{id}" type="text"
+				id="inventory_details_price_$!id" value=""></td>
+			<td class="table_tr"><input class="input_" name="$!{id}"
+				type="text" id="inventory_details_supplement_$!id" value=""></td>
+			<!-- begin -->
+			<td class="table_tr"><input class="input_" name="$!{id}"
+				type="text" id="inventory_details_weight_$!id" value=""></td>
+			<td class="table_tr" style="white-space: nowrap;"><input
+				class="{required:true,min:1,messages:{required:'请输入内容',min:'请输入大于1的数值'}} "
+				name="length_$!{id}" type="text" id="inventory_details_length_$!id"
+				style="width: 40px;" value=""> <input
+				class="{required:true,min:1,messages:{required:'请输入内容',min:'请输入大于1的数值'}} "
+				name="width_$!{id}" type="text" id="inventory_details_width_$!id"
+				style="width: 40px;" value=""> <input
+				class="{required:true,min:1,messages:{required:'请输入内容',min:'请输入大于1的数值'}} "
+				name="high_$!{id}" type="text" id="inventory_details_high_$!id"
+				style="width: 40px;" value=""></td>
+			<td class="table_tr"><input
+				class="{required:true,verify_sku:true,messages:{required:'请输入内容'}} "
+				data-id='$!obj.id' name="goodsSerial_$!{id}" type="text"
+				id="inventory_details_goodsSerial_$!id" value=""></td>
+			<!-- end -->
+			<td class="table_tr"
+				style="width: 190px; display: flex; justify-content: flex-start; flex-wrap: wrap">
+
+				<div class="parents_spec" id="$!{id}"
+					style="width: 100%; display: flex; justify-content: flex-start; flex-wrap: wrap;">
+				</div>
+
+				<ul class="show_spec_img_$!{id}">
+					<li class="add_img_spec" style="width: 46px"><span
+						class="upload_pictures_bottom_w"> <input class="img_src"
+							name="$!{id}" type="hidden" id="inventory_details_img_$!id"
+							value=""
+							style="border: 1px solid #A7A6AA; height: 20px; width: 70px; line-height: 20px; padding-left: 5px; margin-bottom: 5px;">
+
+							<input type="file" name="imgFile_$!{id}" id="imgFile_$!{id}"
+							mark="$!{id}" onchange="upload_spec_img(id,this)" />
+					</span></li>
+
+				</ul>
+
+			</td>
+		</tr>
+		#end
+	</tbody>
+</table>
+#end
+<script>
+/* 是否禁用编辑 */
+
+ function disable(id){
+	 jQuery(".gsp_open_"+id).show();
+	jQuery(".gsp_disable_"+id).hide();
+	
+	 jQuery("#inventory_details_count_"+id).attr("disabled",true);
+	 jQuery("#inventory_details_price_"+id).attr("disabled",true);
+	 jQuery("#inventory_details_supplement_"+id).attr("disabled",true);
+	 jQuery("#inventory_details_weight_"+id).attr("disabled",true);
+	 jQuery("#inventory_details_length_"+id).attr("disabled",true);
+	 jQuery("#inventory_details_width_"+id).attr("disabled",true);
+	 jQuery("#inventory_details_high_"+id).attr("disabled",true);
+	 
+	 jQuery("#inventory_details_goodsSerial_"+id).val("");
+	 jQuery("#inventory_details_count_"+id).val("");
+	 jQuery("#inventory_details_price_"+id).val("");
+	 jQuery("#inventory_details_supplement_"+id).val("");
+	 jQuery("#inventory_details_weight_"+id).val("");
+	 jQuery("#inventory_details_length_"+id).val("");
+	 jQuery("#inventory_details_width_"+id).val("");
+	 jQuery("#inventory_details_high_"+id).val("");
+	 
+	 jQuery("#inventory_details_goodsSerial_"+id).attr("disabled",true);
+	 jQuery("#inventory_details_img_"+id).hide();
+	 jQuery(".show_spec_img_"+id).hide();
+	 jQuery("#inventory_details_goodsDisabled_"+id).val(1);
+	 var class_error=jQuery(".gsp_open_"+id).parent().parent().siblings().find('.error')
+	 
+	 console.log(class_error.length);
+	/*  class_error.forEach(item){
+		 item.html()
+		  console.log(item.html())
+	 } */
+	 
+	
+	 
+}
+ function opens(id){
+	 jQuery(".gsp_open_"+id).hide();
+	jQuery(".gsp_disable_"+id).show();
+	
+	 jQuery("#inventory_details_count_"+id).attr("disabled",false);
+	 jQuery("#inventory_details_price_"+id).attr("disabled",false);
+	 jQuery("#inventory_details_supplement_"+id).attr("disabled",false);
+	 jQuery("#inventory_details_weight_"+id).attr("disabled",false);
+	 jQuery("#inventory_details_length_"+id).attr("disabled",false);
+	 jQuery("#inventory_details_width_"+id).attr("disabled",false);
+	 jQuery("#inventory_details_high_"+id).attr("disabled",false);
+	 jQuery("#inventory_details_goodsSerial_"+id).attr("disabled",false);
+	 jQuery("#inventory_details_goodsDisabled_"+id).val(0);
+	 jQuery("#inventory_details_img_"+id).show();
+	 jQuery(".show_spec_img_"+id).show();
+		
+ }
+/*商品规格图片ajax上传*/
+function upload_spec_img(id,obj){
+	 var sibilings=jQuery(obj).siblings('.img_src');
+	 img=sibilings.val() 
+	 //var m = jQuery("input[id^=imgFile_]").attr("mark");
+	 var mark=jQuery(obj).attr("mark");
+	 var eid = id;
+	//jQuery(".add_img_spec").removeClass("add_img_spec").addClass("add_loading");
+	jQuery.ajaxFileUpload({url:'$!webPath/seller_spec_upload.htm?marke='+mark,
+								  dataType:'json',
+								  fileElementId:[eid],
+								  fileFilter:"$!imageSuffix1",
+								  success:function(data){
+									   img=data.id+"_"+img; 
+									   sibilings.val(img); 
+									   //jQuery("div[id^='show_imgw_']")
+									   //jQuery("#"+data.marke).append("<li><span class='' ><img style='width:46px;height:46px' src='"+data.url+"' img_id='"+data.id+"'/></span></li>");
+									   
+									   if(data.id != null){
+										  /*  jQuery("#"+data.marke).append("<li><span class='' ><img style='width:46px;height:46px' src='"+data.url+"' img_id='"+data.id+"'/></span></li>"); */
+										   draw_goods_spec_img(data.url,data.id,mark);
+										   }
+
+								  },
+					});
+	
+}
+
+//根据传入新图片的URL，绘制下方小图。
+function  draw_goods_spec_img(img_url,img_id,img_mark){
+	if(jQuery("#"+img_mark).children().size()==8) {alert("最多可选择8张商品图片"); return;}
+	jQuery("#"+img_mark).append("<li style='width:46px'><span class=''><img style='width:46px;height:46px' src='"+img_url+"' img_id='"+img_id+"' title='可拖动' /><span class='upload_pictures_bottom_del'><a href='javascript:void(0)' onclick='del_goods_image("+img_id+",this)'><img src='$!imageWebServer/resources/style/system/front/default/images/usercenter/del_left.png'  title='删除图片文件' /></a></span></li>");
+	//draw_goods_main_img();
+	if(jQuery("#"+img_mark).children().size()>=8) jQuery(".show_spec_img_"+img_mark).hide();	
+}
+/*绘制商品主图*/
+/* function  draw_goods_main_img(){
+	if(jQuery("#show_spec_img").children().size()==0){
+		jQuery(".upload_pictures_top_img img").attr("src",null);
+	}else if(jQuery("#show_img").children().size()>=1){
+		var img_url=jQuery(".upload_pictures_bottom_i img").attr("src");
+		jQuery(".upload_pictures_top_img img").attr("src",img_url);
+	}
+} */
+
+jQuery(document).ready(function(){
+	jQuery("span[id^=select_all_]").click(function(){
+		var mark =	jQuery(this).attr("mark");
+		jQuery("span.select_all_input[mark='"+mark+"']").show();
+		jQuery(this).hide();
+	});	
+	jQuery("a[id^=sure_]").click(function(){
+		var mark =jQuery(this).attr("mark");
+		var val = jQuery("input[mark=all_"+mark+"]").val();
+		jQuery("#select_all_"+mark).show();
+		jQuery("span.select_all_input[mark='"+mark+"']").hide();
+		jQuery("input[id^=inventory_details_"+mark+"_]").each(function(){
+					if(val!=""){
+							var reg = new RegExp("^[0-9]*$");							
+							var reg2 = new RegExp("^[\+]{1}[0-9]*$");
+							var reg3 = new RegExp("^[\-]{1}[0-9]*$");
+							if(!reg.test(val)){
+								if(reg2.test(val)){
+									var num=parseInt(jQuery(this).val())+parseInt(val.replace("+",""));
+									if(num>=0)
+									jQuery(this).val(num);	
+								}else if(reg3.test(val)){
+									var num=parseInt(jQuery(this).val())-parseInt(val.replace("-",""));
+									if(num>=0)
+									jQuery(this).val(num);	
+								}
+							}else{
+								jQuery(this).val(val);	
+								}
+						}												   
+												   
+		 });	
+	});
+	
+ 	jQuery("#volume_l_w_g").click(function(){
+		
+		var mark =jQuery(this).attr("mark");
+		
+		jQuery("#select_all_"+mark).show();
+		jQuery("span.select_all_input[mark='"+mark+"']").hide();
+		
+		var len=jQuery("input[mark=length]").val();
+		
+		jQuery("input[id^=inventory_details_length_]").each(function(){
+					if(len!=""){
+							var reg = new RegExp("^[0-9]*$");							
+							var reg2 = new RegExp("^[\+]{1}[0-9]*$");
+							var reg3 = new RegExp("^[\-]{1}[0-9]*$");
+							if(!reg.test(len)){
+								if(reg2.test(len)){
+									var num=parseInt(jQuery(this).val())+parseInt(val.replace("+",""));
+									if(num>=0)
+									jQuery(this).val(num);	
+								}else if(reg3.test(len)){
+									var num=parseInt(jQuery(this).val())-parseInt(val.replace("-",""));
+									if(num>=0)
+									jQuery(this).val(num);	
+								}
+							}else{
+								jQuery(this).val(len);	
+								}
+						}												   
+												   
+		 });
+		
+		var width_val=jQuery("input[mark=width]").val();
+		
+		jQuery("input[id^=inventory_details_width_]").each(function(){
+			if(width_val!=""){
+					var reg = new RegExp("^[0-9]*$");							
+					var reg2 = new RegExp("^[\+]{1}[0-9]*$");
+					var reg3 = new RegExp("^[\-]{1}[0-9]*$");
+					if(!reg.test(width_val)){
+						if(reg2.test(width_val)){
+							var num=parseInt(jQuery(this).val())+parseInt(val.replace("+",""));
+							if(num>=0)
+							jQuery(this).val(num);	
+						}else if(reg3.test(width_val)){
+							var num=parseInt(jQuery(this).val())-parseInt(val.replace("-",""));
+							if(num>=0)
+							jQuery(this).val(num);	
+						}
+					}else{
+						jQuery(this).val(width_val);	
+						}
+				}
+			
+						   
+ 			});	
+		
+		
+		var high_val=jQuery("input[mark=high]").val();
+		
+		jQuery("input[id^=inventory_details_high_]").each(function(){
+			if(high_val!=""){
+					var reg = new RegExp("^[0-9]*$");							
+					var reg2 = new RegExp("^[\+]{1}[0-9]*$");
+					var reg3 = new RegExp("^[\-]{1}[0-9]*$");
+					if(!reg.test(width_val)){
+						if(reg2.test(high_val)){
+							var num=parseInt(jQuery(this).val())+parseInt(val.replace("+",""));
+							if(num>=0)
+							jQuery(this).val(num);	
+						}else if(reg3.test(high_val)){
+							var num=parseInt(jQuery(this).val())-parseInt(val.replace("-",""));
+							if(num>=0)
+							jQuery(this).val(num);	
+						}
+					}else{
+						jQuery(this).val(high_val);	
+						}
+				}			
+					
+			});
+ 	});
+	
+				
+});////
+
+</script>

@@ -1,0 +1,1092 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>填写商品详细信息 - $!{config.poweredby}</title>
+<link
+	href="$!webPath/resources/style/system/manage/$!{config.websiteCss}/template.css"
+	rel="stylesheet" type="text/css" />
+<link rel="stylesheet"
+	href="$!webPath/resources/editor/themes/default/default.css" />
+<link href="$!webPath/resources/style/common/css/overlay.css"
+	type="text/css" rel="stylesheet" />
+<link
+	href="$!webPath/resources/style/common/css/jquery-ui-1.8.22.custom.css"
+	type="text/css" rel="stylesheet">
+	<script src="$!webPath/resources/js/jquery-1.6.2.js"></script>
+	<script src="$!webPath/resources/js/jquery-ui-1.8.21.js"></script>
+	<script src="$!webPath/resources/js/jquery.zh.cn.js" charset="utf-8"></script>
+	<script src="$!webPath/resources/js/jquery.shop.common.js"></script>
+	<script src="$!webPath/resources/js/jquery.shop.base.js"></script>
+	<script src="$!webPath/resources/js/jquery.validate.min.js"></script>
+	<script charset="utf-8" src="$!webPath/resources/editor/kindeditor.js"></script>
+	<script charset="utf-8" src="$!webPath/resources/editor/lang/zh_CN.js"></script>
+	<script src="$!webPath/resources/js/ajaxfileupload.js"></script>
+	<script>
+jQuery.validator.addMethod("profix", function(value, element) {
+    return /^[0-9a-zA-Z]{0,6}$/.test(value);
+}, "前缀必须是6字之内字母数字的组合");
+jQuery.validator.addMethod("f_code_profix",
+    function(value, element) {
+        if (jQuery(':radio[id=f_sale_type][value=1]').attr('checked')&&jQuery("#f_code_json").val()==""){
+	        	if (jQuery('#f_code_profix').val() == ''){
+	        		return false;
+	        	}else{
+	        		return true;
+	        	}
+        }else{
+        	return true;
+        }}
+    );
+jQuery.validator.addMethod("f_code_count",
+    function(value, element) {
+        if (jQuery(':radio[id=f_sale_type][value=1]').attr('checked')&&jQuery("#f_code_json").val()==""){
+	        	if (jQuery('#f_code_count').val() == ''){
+	        		return false;
+	        	}else{
+	        		return true;
+	        	}
+        }else{
+        	return true;
+        }}
+    );
+  jQuery.validator.addMethod("transportId",
+    function(value, element) {
+        if (jQuery(':radio[id=goods_transfee][value=0]').attr('checked') && jQuery(':radio[id=transport_type][value=0]').attr('checked')){
+	        	if (jQuery('#transport_id').val() == ''){
+	        		return false;
+	        	}else{
+	        		return true;
+	        	}
+        }else{
+        	return true;
+        }}
+    );
+//options为编辑配置属性pc
+var options1 = {
+        cssPath : '$!webPath/resources/editor/plugins/code/prettify.css',
+        filterMode : true,
+		uploadJson:'$!webPath/upload.htm',
+		width : '860px',
+		height:'400px',
+		resizeType : 1,
+		allowImageUpload : true,
+		allowFlashUpload : false,
+		allowMediaUpload : true,
+		allowFileManager : true,
+		syncType:"form",
+		afterCreate : function() {
+							var self = this;
+							self.sync();
+						},
+		afterChange : function() {
+							var self = this;
+							self.sync();
+						},
+		afterBlur : function() {
+							var self = this;
+							self.sync();
+						},
+		items:['source', '|', 'fullscreen', 'undo', 'redo', 'cut', 'copy', 'paste',
+			'plainpaste', 'wordpaste', '|', 'justifyleft', 'justifycenter', 'justifyright',
+			'justifyfull', 'insertorderedlist', 'insertunorderedlist', 'indent', 'outdent', 'subscript',
+			'superscript', '|', 'selectall', 'clearhtml','quickformat','|',
+			'formatblock', 'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold',
+			'italic', 'underline', 'strikethrough', 'lineheight', 'removeformat', '|', 'image','flash', 'media', 'table', 'hr', 'emoticons', 'link', 'unlink', '|', 'about']
+}; 
+//options为编辑配置属性app
+var options2 = {
+        cssPath : '$!webPath/resources/editor/plugins/code/prettify.css',
+        filterMode : true,
+		uploadJson:'$!webPath/upload.htm',
+		width : '360px',
+		height:'400px',
+		minWidth:'360px',
+		resizeType : 1,
+		allowImageUpload : true,
+		allowFlashUpload : false,
+		allowMediaUpload : true,
+		allowFileManager : true,
+		syncType:"form",
+		afterCreate : function() {
+							var self = this;
+							self.sync();
+						},
+		afterChange : function() {
+							var self = this;
+							self.sync();
+						},
+		afterBlur : function() {
+							var self = this;
+							self.sync();
+						},
+		items:['source', '|', 'undo', 'redo', '|', 'justifyleft', 'justifycenter',  'insertorderedlist', 'insertunorderedlist', '|',
+			'formatblock', 'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold',
+			'italic', 'underline', 'strikethrough', 'lineheight', 'removeformat', '|','multiimage', 'image', 'hr', '|', 'about']
+}; 
+var user_goods_class_count=2;
+jQuery(document).ready(function() {
+	jQuery(".upload_pictures_bottom ul").sortable({stop: function(event,ui){},start:function(event,ui){},revert: true});
+	jQuery(".upload_pictures_bottom ul").bind('sortstop',
+		function(event, ui){
+			draw_goods_main_img();
+			jQuery(ui.item).css("cursor","auto");
+		});
+	jQuery(".upload_pictures_bottom ul").bind('sortstart',
+		function(event, ui){
+			jQuery(ui.item).css("cursor","move");
+		}); 	
+	jQuery(".upload_pictures_bottom ul" ).disableSelection();
+  jQuery(":radio[id=goods_status]").click(function(){
+    if(jQuery(this).val()==2){
+	   jQuery("#publish_info").show();
+	 }else{
+       jQuery("#publish_info").hide();
+	 }
+  });
+  
+    //
+  jQuery('#publish_day').attr("readonly","readonly").datepicker({
+	  dateFormat:"yy-mm-dd",
+	  minDate:0,
+	  changeMonth: true,
+	  changeYear: true
+  });
+  //
+  jQuery('#advance_date').attr("readonly","readonly").datepicker({
+	  dateFormat:"yy-mm-dd",
+	  minDate:0,
+	  changeMonth: true,
+	  changeYear: true
+  });
+ //默认赋值
+  jQuery(":radio[id='goods_transfee'][value='$!{obj.goods_transfee}']").attr("checked",true);
+  jQuery(":radio[id='goods_status'][value='$!{obj.goods_status}']").attr("checked",true);
+  jQuery(":radio[id='inventory_type'][value='$!{obj.inventory_type}']").attr("checked",true);
+  jQuery(":radio[id='goods_choice_type'][value='$!{obj.goods_choice_type}']").attr("checked",true);
+  jQuery(":radio[id='goods_cod'][value='$!{obj.goods_cod}']").attr("checked",true);
+  jQuery("#goods_brand_id").val("$!obj.goods_brand.id");
+  jQuery(":radio[id='f_sale_type'][value='$!{obj.f_sale_type}']").attr("checked",true);
+  jQuery(":radio[id='advance_sale_type'][value='$!{obj.advance_sale_type}']").attr("checked",true);
+  jQuery("#goods_top_format_id").val("$!obj.goods_top_format_id");
+  jQuery("#goods_bottom_format_id").val("$!obj.goods_bottom_format_id");
+  #foreach($spec in $obj.goods_specs)
+    jQuery(":checkbox[id=spec_$!{spec.id}]").attr("checked",true);
+  #end
+  #if($!obj.inventory_type=="spec")
+   var goods_spec_ids="";
+   jQuery(":checkbox[id^=spec_][checked=true]").each(function(){
+        goods_spec_ids=jQuery(this).val()+","+goods_spec_ids;
+   });
+   	 jQuery.ajax({async:false,type:'POST',url:'$!webPath/admin/goods_inventory.htm',dataType:"text",data:"goods_spec_ids="+goods_spec_ids,
+			  success:function(data){
+					jQuery("#inventory_detail_content").append(data);
+						 jQuery("#inventory_detail").show();	
+						 var inventory_detail='$!obj.goods_inventory_detail';
+						 var goods_inventory_detail=eval("("+inventory_detail+")");
+						 jQuery.each(goods_inventory_detail, function(index,item){
+							jQuery("#inventory_details_count_"+item.id).val(item.count);
+							jQuery("#inventory_details_price_"+item.id).val(item.price);
+						  if(jQuery("#inventory_detail_content>table").height()>=350){
+							jQuery("#inventory_detail_content").css({"width":"98%","height":"350px","overflow":"auto"});
+						  }else{
+							jQuery("#inventory_detail_content").css({"width":"98%","height":"auto","overflow":"auto"});
+						  }	
+						 });
+			 }
+	});
+
+	 
+  #end
+  #if($!obj.goods_property)
+  var data='$!obj.goods_property';
+  var properties=eval("("+data+")");
+  jQuery.each(properties,function(index,item){
+      jQuery("#property_"+item.id).val(item.val);
+  });
+  #end
+  //表单验证
+  jQuery("#theForm").validate({		
+	ignore: "",						  
+     rules: {
+	        goods_class_id:{
+			     required:true
+			},
+			 goods_serial:{
+			     maxlength:20
+			},
+			goods_name:{
+			     required:true,
+				 minlength:3,
+				 maxlength:50
+			    },
+			 goods_price:{
+			    required:true,
+				number:true,
+				range:[0.01,1000000] 
+			 },
+			 goods_weight:{
+				number:true
+				},
+			goods_volume:{
+				number:true
+				},	
+			 store_price:{
+			    required:true,
+				number:true,
+				range:[0.01,1000000] 
+			 },
+			 goods_inventory:{
+			    number:true,
+				range:[0,1000000000] 
+			 },
+			 transport_id:{transportId:true},
+			 f_code_profix:{f_code_profix:true,rangelength:[1,4],profix:true},
+			 f_code_count:{f_code_count:true,min:1,max:100000}
+			},
+     messages: {
+	        goods_class_id:{required:"商品分类不能为空"},
+			goods_serial:{maxlength:"输入字符长度不得超过20"},
+			goods_name:{
+			    required: "商品名不能为空",
+			    minlength:"商品名最少为3个字符",
+			    maxlength:"商品名最多为50个字符"			   
+			  },
+			goods_price:{
+			    required:"商品原价不能为空",
+				number:"商品原价只能是数字格式",
+				range:"商品价格只能在0.01-1000000之间"
+				},
+			goods_weight:{
+				number:"只能输入小数及整数"
+				},
+			goods_volume:{
+				number:"只能输入小数及整数"
+				},	
+			store_price:{
+			    required:"店铺价格不能为空",
+				number:"店铺价格只能是数字格式",
+				range:"店铺价格只能在0.01-1000000之间"
+				},
+			goods_inventory:{
+			    number:"商品库存只能为数字",
+				range:"商品库存数量只能在1-1000000000之间"
+			},
+			transport_id:{transportId:"请选择一个运费模板"},
+			f_code_profix:{f_code_profix:"请输入F码前缀",rangelength:"F码前缀长度为{0}位-{1}位"},
+			f_code_count:{f_code_count:"F码数量不能为空",min:"F码数量最小为1",max:"F码数量最大为100000"}
+		  }
+		 
+  }); 
+  //
+  jQuery(":input[id^=inventory_details_count_]").live("keyup",function(){
+     var goods_inventory=0;
+	 jQuery(":input[id^=inventory_details_count_]").each(function(){
+		var reg = new RegExp("^[0-9]*$");
+		if(!reg.test(jQuery(this).val())){
+		    jQuery(this).val("0");
+		}
+		goods_inventory=parseInt(jQuery(this).val())+goods_inventory;
+	 });
+	 jQuery("#goods_inventory").val(goods_inventory);
+  });
+   //
+  jQuery(":input[id^=inventory_details_price_]").live("keyup",function(){
+	 jQuery(":input[id^=inventory_details_price_]").each(function(){
+	 jQuery(this).val(jQuery(this).val().replace(/[^0-9.]/g,''));    
+	 });
+  });
+  
+     //物流运费
+  jQuery("#buyer_transport_info").find("input[type='text']").live("keyup",function(){
+	 jQuery(":input[id='mail_trans_fee']").each(function(){
+		 jQuery(this).val(jQuery(this).val().replace(/[^0-9.]/g,''));    
+	 });
+  });
+
+  
+  //table切换
+  jQuery("#ul_table li").click(function(){
+	jQuery(this).parent().find("li a").removeClass("this");	
+	jQuery(this).find("a").addClass("this");
+	var id =jQuery(this).attr("id");
+	jQuery("table").hide();
+	jQuery("table[id=goods_"+id+"]").show();
+   });
+  //
+  jQuery(":radio[id=inventory_type]").click(inventory_type);
+  jQuery(":checkbox[id^=spec_]").click(inventory_type);
+  //
+  editor = KindEditor.create('#goods_details_web',options1);   
+  editor2 = KindEditor.create('#goods_details_app',options2);
+  //
+  jQuery(":radio[id='goods_transfee']").click(function(){
+     var val=jQuery(this).val();
+	 if(val==0){
+	    jQuery("#buyer_transport_info").show();
+	  }else{
+	    jQuery("#buyer_transport_info").hide();
+	  }
+  });
+  //
+  jQuery(":radio[id=f_sale_type]").click(function(){
+     if(jQuery(this).val()==1){
+	   jQuery("tr[id^=f_code_]").show();
+	 }else{
+	   jQuery("tr[id^=f_code_]").hide();
+	 }
+  });
+  //
+  jQuery(":radio[id=advance_sale_type]").click(function(){
+     if(jQuery(this).val()==1){
+	   jQuery("tr[id^=advance_sale_]").show();
+	 }else{
+	   jQuery("tr[id^=advance_sale_]").hide();
+	 }
+  });
+  //
+  
+});
+function inventory_type(){
+  var rv=jQuery(":radio[id=inventory_type][checked=true]").val();
+  if(rv=="all"){
+	 jQuery("#inventory_detail_content").empty(); 
+    jQuery("#inventory_detail").hide();
+  }else{
+  jQuery("#inventory_detail_content").empty();
+  var goods_spec_ids="";
+  jQuery(":checkbox[id^=spec_][checked=true]").each(function(){
+     goods_spec_ids=jQuery(this).val()+","+goods_spec_ids;
+  });
+  jQuery.post("$!webPath/admin/goods_inventory.htm",{"goods_spec_ids":goods_spec_ids},function(data){
+     jQuery("#inventory_detail_content").append(data);																						
+     jQuery("#inventory_detail").show();
+	 if(jQuery("#inventory_detail_content>table").height()>=350){
+	    jQuery("#inventory_detail_content").css({"width":"98%","height":"350px","overflow":"auto"});
+	  }else{
+	    jQuery("#inventory_detail_content").css({"width":"98%","height":"auto","overflow":"auto"});
+	  }
+   },"text");  																				  
+ }
+}
+/*Ajax分页*/
+function ajaxPage(url,currentPage,obj){
+  var ajax_page=jQuery(obj).parent().attr("ajax_page");
+  if(ajax_page=="goods_transport"){
+     jQuery.post("$!webPath/admin/goods_transport.htm",{"currentPage":currentPage,"ajax":true},function(data){
+         jQuery("#ListForm").empty().html(data);
+      },"html");
+  }else if(ajax_page=="goods_img"){
+     var ajax_type=jQuery(obj).parent().attr("ajax_type");
+     var type=jQuery(obj).parent().attr("type");
+	 var album_id=jQuery(obj).parent().attr("album_id");
+     jQuery.post("$!webPath/admin/goods_img.htm",{"currentPage":currentPage,"type":type,"album_id":album_id},function(text){
+       jQuery(ajax_type).empty();
+	   jQuery(ajax_type).append(text);
+     },"text");
+
+  }else if(ajax_page=="goods_album"){
+	  var ajax_type=jQuery(obj).parent().attr("ajax_type");
+     jQuery.post("$!webPath/admin/goods_album.htm",{"currentPage":currentPage,"ajax_type":ajax_type},function(text){
+       jQuery(ajax_type).empty();
+	   jQuery(ajax_type).append(text);
+     },"text");
+  }
+}
+function saveForm(){
+  editor.sync();//同步编辑器的数据到texterea
+  editor2.sync();
+  
+  /*商品图片处理*/
+	var image_ids="";
+	var main_image_id="";
+	jQuery(".upload_pictures_bottom_i img").each(function(index, element) {
+		
+		var image_id=jQuery(element).attr("img_id");
+		if(index==0){
+			main_image_id=image_id;
+		}else{
+			image_ids=image_ids+","+image_id;
+		}
+		
+	});	
+	if(image_ids=="" && main_image_id==""){
+	   showDialog("warning","","请至少上传一张商品图片！",2,"warning",3);
+	}else{
+	  jQuery("#image_ids").val(image_ids);
+	  jQuery("#goods_main_img_id").val(main_image_id);
+	  var goods_spec_ids="";
+	  jQuery(":checkbox[id^=spec_][checked=true]").each(function(){
+		 goods_spec_ids=jQuery(this).val()+","+goods_spec_ids;
+	  });
+	  jQuery("#goods_spec_ids").val(goods_spec_ids);
+	  var goods_properties="";
+	  jQuery("select[id^=property_]").each(function(){
+		if(jQuery(this).val()!=""){
+		   goods_properties=jQuery(this).attr("id").substring(9)+","+jQuery(this).val()+";"+goods_properties;
+		}
+	  });
+	  jQuery("#goods_properties").val(goods_properties);
+	  var intentory_details="";
+	  jQuery("input[id^=inventory_details_count_]").each(function(){
+		 var id=jQuery(this).attr("name");
+		 var count=jQuery(this).val();
+		 var price=jQuery("#inventory_details_price_"+id).val();
+		 intentory_details=id+","+count+","+price+";"+intentory_details;
+	  });
+	  jQuery("#intentory_details").val(intentory_details);
+	  jQuery("#theForm").submit();
+    }
+}
+function switch_detail_editor(str){
+	jQuery("a[id^='detail_']").removeClass("this");
+	jQuery("#detail_"+str).addClass("this");
+	
+	jQuery("#goods_details_div_web").hide();
+	jQuery("#goods_details_div_app").hide();
+	jQuery("#goods_details_div_"+str).show();
+	if(str=="app")
+		jQuery("#goods_details_div_app_content").show();
+	else
+		jQuery("#goods_details_div_app_content").hide();
+}
+//商品图片删除
+function del_goods_image(img_id,obj){
+  if(confirm("删除后不可恢复，是否继续？")){	
+	jQuery(obj).parent().parent().remove();
+	jQuery.post("$!webPath/admin/goods_image_del.htm",{"image_id":img_id},function(data){
+	    if(data.result==true){
+			draw_goods_main_img();
+			jQuery(".add_img").show();
+		}else showDialog("msg_info","","删除失败!",2,"warning",3,'');
+	},"json");
+  }				   
+}
+function remove_goods_image(obj){
+	jQuery(obj).parent().parent().remove();
+	draw_goods_main_img();
+	jQuery(".add_img").show();
+}
+//根据传入新图片的URL，绘制下方小图。
+function  draw_goods_img(img_url,img_id){
+	if(jQuery("#show_img").children().size()==5) {alert("最多可选择5张商品图片"); return;}
+	jQuery("#show_img").append("<li><span class='upload_pictures_bottom_i'><img src='"+img_url+"' img_id='"+img_id+"' title='可拖动' /></span><span class='upload_pictures_bottom_del'><a href='javascript:void(0)' onclick='del_goods_image("+img_id+",this)'><img src='$!imageWebServer/resources/style/system/front/default/images/usercenter/del_left.png' title='删除图片文件' /></a><a href='javascript:void(0)' onclick='remove_goods_image(this)'><img src='$!imageWebServer/resources/style/system/front/default/images/usercenter/del_right.png' title='删除图片数据'/></a></span></li>");
+	draw_goods_main_img();
+	if(jQuery("#show_img").children().size()>=5) jQuery(".add_img").hide();	
+}
+/*绘制商品主图*/
+function  draw_goods_main_img(){
+	if(jQuery("#show_img").children().size()==0){
+		jQuery(".upload_pictures_top_img img").attr("src",null);
+	}else if(jQuery("#show_img").children().size()>=1){
+		var img_url=jQuery(".upload_pictures_bottom_i img").attr("src");
+		jQuery(".upload_pictures_top_img img").attr("src",img_url);
+	}
+}
+//商品图片ajax上传
+function upload_goods_img(){
+	jQuery(".add_img").removeClass("add_img").addClass("add_loading");
+	jQuery.ajaxFileUpload({url:'$!webPath/admin/swf_upload.htm',
+								  dataType:'json',
+								  fileElementId:['imgFile'],
+								  fileFilter:"$!imageSuffix1",
+								  success:function(data){
+									jQuery(".add_loading").removeClass("add_loading").addClass("add_img");		
+				 					draw_goods_img(data.url,data.id);
+								  },
+		});
+}
+</script>
+	<style type="text/css">
+label.error {
+	color: #F00;
+	margin-left: 3px;
+}
+
+input.error {
+	border: 2px solid #F00;
+}
+</style>
+</head>
+<body>
+	<div class="cont">
+		<h3 class="seth">#if($!edit)商品编辑#else商品发布#end</h3>
+		<div class="nav_list">
+			<ul id="ul_table">
+				<li id="info"><a href="javascript:void(0);" class="this"><b>商品详细</b></a></li>
+				<li id="img"><a href="javascript:void(0);"><b>商品图片</b></a></li>
+				<li id="description"><a href="javascript:void(0);"><b>详情描述</b></a></li>
+				<li id="pack"><a href="javascript:void(0);"><b>包装清单</b></a></li>
+				<li id="other"><a href="javascript:void(0);"><b>其他信息</b></a></li>
+			</ul>
+		</div>
+		<div class="adddetail">
+			<form action="$!webPath/admin/add_goods_finish.htm" method="post"
+				enctype="multipart/form-data" name="theForm" id="theForm">
+				<table width="100%" border="0" cellspacing="0" cellpadding="0"
+					class="tabledetail" id="goods_info">
+					<tr>
+						<td colspan="2" class="tableh1">商品详细</td>
+					</tr>
+					<tr>
+						<td width="95" align="right">商品分类：</td>
+						<td><span>$!goods_class_info</span><span class="editbtn">
+								<input name="edit_class" type="button" id="edit_class"
+								value="编辑" style="cursor: pointer;"
+								onclick="window.location.href='$!webPath/admin/add_goods_first.htm?id=$!obj.id'" />
+								<input name="goods_class_id" type="hidden" id="goods_class_id"
+								value="$!{goods_class.id}" /> <input name="goods_spec_ids"
+								type="hidden" id="goods_spec_ids" /> <input
+								name="goods_properties" type="hidden" id="goods_properties" />
+								<input type="hidden" name="intentory_details"
+								id="intentory_details" /> <input name="goods_type"
+								type="hidden" id="goods_type" value="0" /> <input name="id"
+								type="hidden" id="id" value="$!obj.id" />
+						</span></td>
+					</tr>
+					<tr>
+						<td align="right" valign="top">商品名称：</td>
+						<td class="sptable"><span class="tabtxt1 size1"> <input
+								name="goods_name" type="text" id="goods_name"
+								value="$!obj.goods_name" />
+						</span> <span class="hui2">商品标题名称长度至少3个字符，最长50个汉字</span></td>
+					</tr>
+					<tr>
+						<td align="right" valign="top">商品原价：</td>
+						<td class="sptable"><span class="tabtxt1 size2"> <input
+								name="goods_price" type="text" id="goods_price"
+								value="$!obj.goods_price" />
+						</span> <span class="hui2">商品原价必须是0.01~1000000之间的数字</span></td>
+					</tr>
+					<tr>
+						<td align="right" valign="top">商品类型：</td>
+						<td class="sptable"><label> <input
+								name="goods_choice_type" type="radio" id="goods_choice_type"
+								value="0" checked="checked" /> 实物商品
+						</label> <label> <input type="radio" name="goods_choice_type"
+								id="goods_choice_type" value="1" /> 虚拟商品
+						</label> <span class="hui2">充值卡、消费券等属于虚拟商品</span></td>
+					</tr>
+					<!-- <tr>
+          <td align="right" valign="top">货到付款：</td>
+          <td class="sptable"><label>
+              <input name="goods_cod" type="radio" id="goods_cod" value="0" checked="checked" />
+              支持 </label>
+            <label>
+              <input type="radio" name="goods_cod" id="goods_cod" value="-1" />
+              不支持 </label>
+            <span class="hui2">该商品是否支持货到付款</span></td>
+        </tr> -->
+					<tr>
+						<td align="right" valign="top">店铺价格：</td>
+						<td class="sptable"><span class="tabtxt1 size2"> <input
+								name="store_price" type="text" id="store_price"
+								value="$!obj.store_price" />
+						</span> <span class="hui2">
+								<ul class="tableli">
+									<li>商品原价必须是0.01~1000000之间的数字</li>
+									<li>若启用了库存配置，请在下方商品库存区域进行管理</li>
+									<li>商品规格库存表中如有价格差异，店铺价格显示为价格区间形式</li>
+								</ul>
+						</span></td>
+					</tr>
+					#foreach($gs in $goods_spec_list)
+					<tr id="gs_$!{gs.id}" gs_name="$!{gs.name}">
+						<td align="right" valign="top">$!{gs.name}：</td>
+						<td class="sptable"><ul class="color_chose">
+								#foreach($gsp in $!gs.properties)
+								<li><span class="cc_sp1"> <input
+										name="spec_$!{gsp.id}" type="checkbox" id="spec_$!{gsp.id}"
+										gs_id="$!gs.id" gsp_val="$!gsp.value" value="$!gsp.id" />
+								</span> <label for="spec_$!{gsp.id}"> #if($!gs.type=="img") <span
+										class="cc_sp2"> <img
+											src="$!imageWebServer/$!{gsp.specImage.path}/$!{gsp.specImage.name}"
+											width="16" height="16" />
+									</span> #end <span class="cc_sp3">$!gsp.value</span>
+								</label></li> #end
+							</ul></td>
+					</tr>
+					#end
+					<tr>
+						<td align="right" valign="top">库存配置：</td>
+						<td class="sptable"><label> <input
+								name="inventory_type" id="inventory_type" type="radio"
+								value="all" checked="checked" /> 全局配置
+						</label> <label> <input type="radio" name="inventory_type"
+								id="inventory_type" value="spec" /> 规格配置
+						</label> <span class="hui2">
+								<ul class="tableli">
+									<li>全局配置表示所有规格无单独库存、价格配置</li>
+									<li>规格配置需要配置对应属性的库存、价格</li>
+								</ul>
+						</span></td>
+					</tr>
+					<tr id="inventory_detail" style="display: none;">
+						<td align="right" valign="top">详细库存：</td>
+						<td class="sptable"><div id="inventory_detail_content"
+								style="width: 98%; height: auto; overflow: auto;"></div></td>
+					</tr>
+					<tr>
+						<td align="right" valign="top">商品库存：</td>
+						<td class="sptable"><span class="tabtxt1 size2"> <input
+								name="goods_inventory" type="text" id="goods_inventory"
+								value="$!obj.goods_inventory" />
+						</span> <span class="hui2">
+								<ul class="tableli">
+									<li>商铺库存数量必须为1~1000000000之间的整数</li>
+									<li>若启用了库存配置，则系统自动计算商品的总数，此处无需商家填写</li>
+								</ul>
+						</span></td>
+					</tr>
+					<tr>
+						<td align="right" valign="top">商品货号：</td>
+						<td class="sptable"><span class="tabtxt1 size2"> <input
+								name="goods_serial" type="text" id="goods_serial"
+								value="$!obj.goods_serial" />
+						</span> <span class="hui2">
+								<ul class="tableli">
+									<li>商品货号是指商家个人管理商品的编号，买家不可见</li>
+									<li>最多可输入20个字符，支持输入中文、字母、数字、_、/、-和小数点</li>
+								</ul>
+						</span></td>
+					</tr>
+				</table>
+				<table id="goods_img" style="display: none" width="100%" border="0"
+					cellspacing="0" cellpadding="0" class="tabledetail">
+					<tr>
+						<td class="tableh1" colspan="2">商品图片</td>
+					</tr>
+
+					<tr>
+						<td>首页宣传图 ： <input name="acc" type="file" id="acc"
+							class="file-text" size="30" /> #if($!obj.ad_acc) <img
+							src="$!imageWebServer/$!obj.ad_acc.path/$!obj.ad_acc.name"
+							width="200" height="$!height" /> #end
+						</td>
+					</tr>
+					<tr>
+						<script>
+		    function photo_switch(clz,obj){	
+			 if(clz=="tab_body_b"){
+			 var album_id = jQuery(obj).attr("album_id");
+			 jQuery.post("$!webPath/admin/goods_img.htm",{"type":"goods_img_album","album_id":album_id},function(text){
+				jQuery(".tab_body_b").empty();
+				jQuery(".tab_body_b").append(text);
+			  },"text");
+			 }
+			 jQuery("."+clz).show();			  
+			}
+			function show_album(clz,obj){
+				 jQuery(".tabbody_ul li").removeClass("this");
+			 	 jQuery(obj).addClass("this");
+				 jQuery(".tab_body_b").empty();
+			 	 if(clz=="tab_body_b"){
+			 		 jQuery.post("$!webPath/admin/goods_album.htm",{"ajax_type":".tab_body_b"},function(text){
+				 	 jQuery(".tab_body_b").empty();
+				 	 jQuery(".tab_body_b").append(text);
+			       		 },"text");
+				}		
+			}	
+		  </script>
+						<td>
+							<!--商品图片上传 -->
+
+							<div class="tab_body" style="width: 1040px; margin-left: 40px">
+								<ul class="tabbody_ul">
+									<li class="this" style="cursor: pointer;"
+										onclick="show_album('tab_body_a',this)">上传图片</li>
+									<li style="cursor: pointer;"
+										onclick="show_album('tab_body_b',this)">从用户相册选择</li>
+								</ul>
+								<div class="tabbodys" style="width: 1038px;">
+									<div class="tab_body_b" style="width: 1040px;"></div>
+									<div class="tab_body_a" style="width: 1040px;">
+										<div class="upload_pictures">
+											<div class="upload_pictures_top">
+												<div class="upload_pictures_top_img">
+													<img
+														#if($!obj.goods_main_photo)
+                    src="$!imageWebServer/$!{obj.goods_main_photo.path}/$!{obj.goods_main_photo.name}"
+														#end />
+												</div>
+											</div>
+											<div class="upload_pictures_bottom">
+												<ul id="show_img">
+													#if($!obj.goods_main_photo)
+													<li><span class="upload_pictures_bottom_i"><img
+															src="$!imageWebServer/$!{obj.goods_main_photo.path}/$!{obj.goods_main_photo.name}"
+															img_id="$!{obj.goods_main_photo.id}" title="可拖动" /></span> <span
+														class="upload_pictures_bottom_del"> <a
+															href="javascript:void(0)"
+															onclick="del_goods_image('$!{obj.goods_main_photo.id}',this)"><img
+																src="$!imageWebServer/resources/style/system/front/default/images/usercenter/del_left.png"
+																title="删除图片文件" /></a> <a href="javascript:void(0)"
+															onclick="remove_goods_image(this)"><img
+																src="$!imageWebServer/resources/style/system/front/default/images/usercenter/del_right.png"
+																title="删除图片数据" /></a>
+													</span></li> #end #foreach($img in $obj.goods_photos)
+													#if($velocityCount==1)
+													#set($img2="$!imageWebServer/$!{img.path}/$!{img.name}")
+													#set($img2_id="$!img.id")
+													<li><span class="upload_pictures_bottom_i"><img
+															src="$!{img2}" img_id="$!{img2_id}" title="可拖动" /></span> <span
+														class="upload_pictures_bottom_del"> <a
+															href="javascript:void(0)"
+															onclick="del_goods_image('$!{img2_id}',this)"><img
+																src="$!imageWebServer/resources/style/system/front/default/images/usercenter/del_left.png"
+																title="删除图片文件" /></a> <a href="javascript:void(0)"
+															onclick="remove_goods_image(this)"><img
+																src="$!imageWebServer/resources/style/system/front/default/images/usercenter/del_right.png"
+																title="删除图片数据" /></a>
+													</span></li> #end #if($velocityCount==2)
+													#set($img3="$!imageWebServer/$!{img.path}/$!{img.name}")
+													#set($img3_id="$!img.id")
+													<li><span class="upload_pictures_bottom_i"><img
+															src="$!{img3}" img_id="$!{img3_id}" title="可拖动" /></span> <span
+														class="upload_pictures_bottom_del"> <a
+															href="javascript:void(0)"
+															onclick="del_goods_image('$!{img3_id}',this)"><img
+																src="$!imageWebServer/resources/style/system/front/default/images/usercenter/del_left.png"
+																title="删除图片文件" /></a> <a href="javascript:void(0)"
+															onclick="remove_goods_image(this)"><img
+																src="$!imageWebServer/resources/style/system/front/default/images/usercenter/del_right.png"
+																title="删除图片数据" /></a>
+													</span></li> #end #if($velocityCount==3)
+													#set($img4="$!imageWebServer/$!{img.path}/$!{img.name}")
+													#set($img4_id="$!img.id")
+													<li><span class="upload_pictures_bottom_i"><img
+															src="$!{img4}" img_id="$!{img4_id}" title="可拖动" /></span> <span
+														class="upload_pictures_bottom_del"> <a
+															href="javascript:void(0)"
+															onclick="del_goods_image('$!{img4_id}',this)"><img
+																src="$!imageWebServer/resources/style/system/front/default/images/usercenter/del_left.png"
+																title="删除图片文件" /></a> <a href="javascript:void(0)"
+															onclick="remove_goods_image(this)"><img
+																src="$!imageWebServer/resources/style/system/front/default/images/usercenter/del_right.png"
+																title="删除图片数据" /></a>
+													</span></li> #end #if($velocityCount==4)
+													#set($img5="$!imageWebServer/$!{img.path}/$!{img.name}")
+													#set($img5_id="$!img.id")
+													<li><span class="upload_pictures_bottom_i"><img
+															src="$!{img5}" img_id="$!{img5_id}" title="可拖动" /></span> <span
+														class="upload_pictures_bottom_del"> <a
+															href="javascript:void(0)"
+															onclick="del_goods_image('$!{img5_id}',this)"><img
+																src="$!imageWebServer/resources/style/system/front/default/images/usercenter/del_left.png"
+																title="删除图片文件" /></a> <a href="javascript:void(0)"
+															onclick="remove_goods_image(this)"><img
+																src="$!imageWebServer/resources/style/system/front/default/images/usercenter/del_right.png"
+																title="删除图片数据" /></a>
+													</span></li> #end #end
+												</ul>
+												<ul>
+													<li class="add_img"#if($!obj.goods_photos.size()>=4)
+														style="display:none" #end > <span
+														class="upload_pictures_bottom_w"> <input
+															name="imgFile" type="file" id="imgFile"
+															onchange="upload_goods_img()" />
+													</span>
+													</li>
+												</ul>
+												<input name="image_ids" type="hidden" id="image_ids" /> <input
+													name="goods_main_img_id" type="hidden"
+													id="goods_main_img_id" />
+											</div>
+										</div>
+										<!--说明 -->
+										<div class="upload_pictures_statement">
+											<div class="upload_pictures_statement_c">
+												<img
+													src="$!imageWebServer/resources/style/system/front/default/images/upload_right.png" />
+												<span>1、最多可发布 <b style="color: #F00">5</b> 张商品图片<br />
+													2、商品主图下方小图可<b style="color: #F00">拖动</b>以便调整顺序<br />
+													3、支持格式：$!{imageSuffix}<br /> 4、建议选择尺寸<b
+													style="color: #F00">800x800</b>、大小1M内的图片<br /> 5、空间不限制大小<br />
+													6、<img
+													src="$!imageWebServer/resources/style/system/front/default/images/usercenter/del_left.png" />
+													表示从服务器删除图片文件，不可恢复 <br /> 7、<img
+													src="$!imageWebServer/resources/style/system/front/default/images/usercenter/del_right.png" />
+													表示删除该商品的图片数据
+												</span>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</td>
+					</tr>
+				</table>
+				<table id="goods_description" style="display: none" width="100%"
+					border="0" cellspacing="0" cellpadding="0" class="tabledetail">
+					<tr>
+						<td colspan="2" class="tableh1">详情描述</td>
+					</tr>
+					#foreach($property in $goods_class.goodsType.properties)
+					<tr>
+						<td align="right" valign="top">$!{property.name}：</td>
+						<td><select name="property_$!{property.id}"
+							id="property_$!{property.id}">
+								<option value="">请选择...</option> #foreach($info in
+								$CommUtil.splitByChar("$!property.value",","))
+
+
+								<option value="$!info">$!info</option> #end
+
+
+						</select></td>
+					</tr>
+					#end
+					<tr>
+						<td align="right" valign="top" style="width: 95px;">商品描述：</td>
+						<td id="detail_td_web"><div
+								style="width: 861px; float: left;">
+								<div class="detail_td_web_nav">
+									<div class="addphoto_c">
+										<a id="detail_web" class="this" href="javascript:void(0);"
+											onclick="switch_detail_editor('web');">电脑端</a>
+									</div>
+									<div class="addphoto_c">
+										<a id="detail_app" href="javascript:void(0);"
+											onclick="switch_detail_editor('app');">手机端</a>
+									</div>
+								</div>
+								<div id="goods_details_div_web" class="addphoto_c_textarea">
+									<textarea name="goods_details"
+										style="width: 100%; height: 400px; visibility: hidden;"
+										id="goods_details_web">$!obj.goods_details</textarea>
+								</div>
+								<div id="goods_details_div_app"
+									style="display: none; float: left;">
+									<textarea name="goods_details_mobile"
+										style="width: 100%; height: 400px; visibility: hidden;"
+										id="goods_details_app">$!obj.goods_details_mobile</textarea>
+								</div>
+								<div id="goods_details_div_app_content"
+									class="goods_details_div_app_right" style="display: none;">
+									<ul>
+										<li>手机端商品描述说明：</li>
+										<li>1.手机端商品描述用于手机app，描述应该符合手机用户的使用场景。</li>
+										<li>2.由于手机端的特殊性，建议只使用图片和文字来描述您的商品，并合理安排您的图片的数量和大小。</li>
+									</ul>
+								</div>
+							</div> <script>
+              function switch_editor_photo(obj){
+			  var album_id = jQuery(obj).attr("album_id");
+				jQuery.post("$!webPath/admin/goods_img.htm",{"type":"goods_detail_album","album_id":album_id},function(text){
+				   jQuery(".editor_photo_detail").empty();																					  
+			  	   jQuery(".editor_photo_detail").append(text);
+			    },"text"); 
+				jQuery(".editor_photo_detail").show();
+		   }
+		   
+		   
+		   		function switch_editor_album(mark){
+				 var dis=jQuery(".editor_photo_detail").css("display");
+						  if(dis=="none" || mark=="album_list"){
+							jQuery.post("$!webPath/admin/goods_album.htm",{"type":"goods_detail_album","ajax_type":".editor_photo_detail"},function(text){
+							   jQuery(".editor_photo_detail").empty();																					  
+							   jQuery(".editor_photo_detail").append(text);
+							},"text"); 
+							jQuery(".editor_photo_detail").show();
+						  }else{
+							jQuery(".editor_photo_detail").hide();
+						  }		
+			 }
+           </script>
+							<div class="photoimg" style="width: 100%; float: left;">
+								<div class="addphoto_b">
+									<a href="javascript:void(0);"
+										onclick="switch_editor_album('');">插入相册图片</a>
+								</div>
+								<div class="editor_photo_detail" style="display: none;"></div>
+							</div></td>
+					</tr>
+				</table>
+				<table id="goods_pack" style="display: none;" width="100%"
+					border="0" cellspacing="0" cellpadding="0" class="tabledetail">
+					<tr>
+						<td colspan="2" class="tableh1">包装清单</td>
+					</tr>
+					<tr>
+						<td align="right" valign="top">清单详情：</td>
+						<td><textarea name="pack_details" cols="140" rows="10"
+								style="resize: none" id="pack_details">$!obj.pack_details</textarea></td>
+					</tr>
+					<tr>
+						<td align="right" valign="top">售后保障：</td>
+						<td><textarea name="goods_service" cols="140" rows="10"
+								style="resize: none" id="goods_service">$!obj.goods_service</textarea></td>
+					</tr>
+				</table>
+				<table id="goods_other" style="display: none" width="100%"
+					border="0" cellspacing="0" cellpadding="0" class="tabledetail">
+					<tr>
+						<td colspan="2" class="tableh1">其他信息</td>
+					</tr>
+					<tr>
+						<td align="right" width="95" valign="middle">商品品牌：</td>
+						<td><select name="goods_brand_id" id="goods_brand_id">
+								<option value="">请选择...</option> #foreach($gb in $gbs)
+								<option value="$!gb.id">$!gb.name</option> #end
+						</select></td>
+					</tr>
+					<tr>
+						<td width="95" align="right" valign="top">商品重量：</td>
+						<td class="sptable"><span class="tabtxt1 size2"> <input
+								name="goods_weight" type="text" id="goods_weight"
+								value="$!obj.goods_weight" />
+						</span> <span class="hui2"> 单位：千克(Kg) </span></td>
+					</tr>
+					<tr>
+						<td align="right" valign="top">商品体积：</td>
+						<td class="sptable"><span class="tabtxt1 size2"> <input
+								name="goods_volume" type="text" id="goods_volume"
+								value="$!obj.goods_volume" />
+						</span> <span class="hui2"> 单位：立方米(m³) </span></td>
+					</tr>
+					<tr>
+						<td rowspan="2" align="right" valign="middle">物流运费：</td>
+						<td><label> <input name="goods_transfee" type="radio"
+								id="goods_transfee" value="1" checked="checked" /> 商家承担运费
+						</label></td>
+					</tr>
+					<tr>
+						<td><label> <input name="goods_transfee" type="radio"
+								id="goods_transfee" value="0" /> 买家承担运费
+						</label> <script>
+			jQuery(document).ready(function(){
+			   jQuery(":radio[id=transport_type]").click(function(){
+				   var val=jQuery(this).val();
+				   if(val==0){
+				     jQuery("#transport_template_select").show();
+					 jQuery("#mail_trans_fee").attr("readonly","readonly");
+					 jQuery("#express_trans_fee").attr("readonly","readonly");
+					 jQuery("#ems_trans_fee").attr("readonly","readonly");
+				   }else{
+				     jQuery("#transport_template_select").hide();
+					 jQuery("#mail_trans_fee").removeAttr("readonly");
+					 jQuery("#express_trans_fee").removeAttr("readonly");
+					 jQuery("#ems_trans_fee").removeAttr("readonly");
+				   }
+				});
+			   #if($!obj.transport)
+			     jQuery(":radio[id=transport_type][value=0]").attr("checked","checked");
+				 jQuery("#transport_template_select").show();
+			   #else
+			     jQuery(":radio[id=transport_type][value=1]").attr("checked","checked");
+				 jQuery("#transport_template_select").hide();
+			   #end
+			   #if($!obj.goods_transfee==0)
+			      jQuery("#buyer_transport_info").show();
+			   #end
+			});
+			</script>
+							<div id="buyer_transport_info"
+								style="display: none; width: 80%; background: #F8F8F8; border: 1px solid #CCC; margin-top: 10px; padding-left: 20px;">
+								<ul style="line-height: 30px;">
+									<li><label> <input name="transport_type"
+											type="radio" id="transport_type" value="0" checked="checked" />
+											使用运费模板
+									</label>
+										<div id="transport_template_select"
+											style="padding-left: 30px;">
+											<input type="hidden" value="$!obj.transport.id"
+												name="transport_id" id="transport_id" /> <span
+												style="color: #06C;" id="transport_template_name">$!{obj.transport.trans_name}</span>
+											<span
+												style="display: block; width: 70px; height: 28px; text-align: center; border: #CCC solid 1px;">
+												<a href="javascript:void(0);"
+												dialog_uri="$!webPath/admin/goods_transport.htm"
+												dialog_title="选择运费模板" dialog_width="600" dialog_height="500"
+												dialog_id="transport_template_frm">选择模板</a>
+											</span>
+										</div></li>
+									<li><label> <input type="radio"
+											name="transport_type" id="transport_type" value="1" /> 固定运费
+									</label> 平邮 <input name="mail_trans_fee" type="text"
+										id="mail_trans_fee"
+										value="$!CommUtil.null2Float($!obj.mail_trans_fee)" size="10" />
+										元,快递 <input name="express_trans_fee" type="text"
+										id="express_trans_fee"
+										value="$!CommUtil.null2Float($!obj.express_trans_fee)"
+										size="10" /> 元,EMS <input name="ems_trans_fee" type="text"
+										id="ems_trans_fee"
+										value="$!CommUtil.null2Float($!obj.ems_trans_fee)" size="10" />
+										元</li>
+								</ul>
+							</div></td>
+					</tr>
+					<tr>
+						<td align="right" valign="top">商品发布：</td>
+						<td class="prorelease"><span> <label> <input
+									name="goods_status" id="goods_status" type="radio" value="0"
+									checked="checked" /> &nbsp;立即发布
+							</label>
+						</span> <span> <label> <input name="goods_status"
+									id="goods_status" type="radio" value="1" /> &nbsp;放入仓库
+							</label>
+						</span> <span> <label> <input name="goods_status"
+									id="goods_status" type="radio" value="2" /> &nbsp;定时发布
+							</label>
+						</span> <span style="display: none;" id="publish_info"> <input
+								type="text" name="publish_day" id="publish_day" /> 日 <select
+								name="publish_hour" id="publish_hour">
+									<option value="0">00</option>
+									<option value="1">01</option>
+									<option value="2">02</option>
+									<option value="3">03</option>
+									<option value="4">04</option>
+									<option value="5">05</option>
+									<option value="6">06</option>
+									<option value="7">07</option>
+									<option value="8">08</option>
+									<option value="9">09</option>
+									<option value="10">10</option>
+									<option value="11">11</option>
+									<option value="12">12</option>
+									<option value="13">13</option>
+									<option value="14">14</option>
+									<option value="15">15</option>
+									<option value="16">16</option>
+									<option value="17">17</option>
+									<option value="18">18</option>
+									<option value="19">19</option>
+									<option value="20">20</option>
+									<option value="21">21</option>
+									<option value="22">22</option>
+									<option value="23">23</option>
+							</select> 时 <select name="publish_min" id="publish_min">
+									<option value="0">0分</option>
+									<option value="15">15分</option>
+									<option value="30">30分</option>
+									<option value="45">45分</option>
+							</select> 分
+						</span></td>
+					</tr>
+					<tr>
+						<td align="right" valign="top">SEO关键字：</td>
+						<td class="sptable"><span class="tabtxt1 size1"> <input
+								name="seo_keywords" type="text" id="seo_keywords"
+								value="$!obj.seo_keywords" />
+						</span> <span class="hui2 noteswidth">SEO关键字 (keywords)
+								出现在商品详细页面头部的 Meta 标签中， 用于记录本页面商品的关键字，多个关键字间请用半角逗号 "," 隔开。</span></td>
+					</tr>
+					<tr>
+						<td align="right" valign="top">SEO描述：</td>
+						<td class="sptable"><span class="texttable"> <textarea
+									name="seo_description" cols="" rows="" id="seo_description">$!obj.seo_description</textarea>
+						</span> <span class="hui2 noteswidth">SEO描述 (Description)
+								出现在商品详细页面头部的 Meta 标签中， 用于记录本页面商品的的描述，建议80字左右，应该是该商品的最精确的简短的概述。</span></td>
+					</tr>
+				</table>
+				<span class="submittable"
+					style="margin-left: 125px; margin-top: 20px; float: left"> <input
+					name="" type="button" value="提交" onclick="saveForm();" /> <input
+					name="goods_session" type="hidden" id="goods_session"
+					value="$!goods_session" />
+				</span>
+			</form>
+		</div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,197 @@
+
+
+
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+<meta charset="utf-8" />
+<meta name="viewport"
+	content="width=device-width,inital-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+<meta name="apple-wap-web-app-capable" content="yes">
+<meta name="apple-wap-web-app-status-bar-style"
+	content="black-translucent">
+<title>$!config.title</title>
+<link href="$!webPath/resources/wap/css/mui.min.css" rel="stylesheet"
+	type="text/css" />
+<link href="$!webPath/resources/wap/fonts/mui.ttf" rel="stylesheet"
+	type="text/css" />
+<link rel="stylesheet" href="$!webPath/resources/wap/css/index.css">
+<link rel="stylesheet" href="$!webPath/resources/wap/css/index_left.css">
+<link rel="stylesheet" href="$!webPath/resources/wap/fonts/iconfont.css">
+<link
+	href="$!webPath/resources/style/system/front/wap/css/style_170228_bak.css"
+	rel="stylesheet" type="text/css" />
+<script src="$!webPath/resources/js/wap/defined.js"></script>
+<script src="$!webPath/resources/js/jquery-1.6.2.js"></script>
+<style>
+.red_submit a, .red_submit input {
+	background: #1E90FF;
+}
+
+.mui-bar-nav ~.mui-content, body {
+	height: 100%;
+}
+
+input, button, .mui-btn {
+	margin: 5px 15px 10px 5px;
+}
+
+.mui-spinner {
+	display: inline-block;
+	width: 24px;
+	height: 24px;
+	-webkit-transform-origin: 50%;
+	transform-origin: 50%;
+	-webkit-animation: spinner-spin 1s step-end infinite;
+	animation: spinner-spin 1s step-end infinite;
+}
+
+.mui-spinner:after {
+	display: block;
+	content: "";
+	width: 100%;
+	height: 100%;
+	background-position: 50%;
+	background-size: 100%;
+	background-repeat: no-repeat;
+}
+
+.mui-spinner-custom:after {
+	background-image:
+		url("data:image/svg+xml;charset=utf-8,<svg viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'><defs><line id='l' x1='60' x2='60' y1='7' y2='27' stroke='red' stroke-width='11' stroke-linecap='round'/></defs><g><use xlink:href='%23l' opacity='.27'/><use xlink:href='%23l' opacity='.27' transform='rotate(30 60,60)'/><use xlink:href='%23l' opacity='.27' transform='rotate(60 60,60)'/><use xlink:href='%23l' opacity='.27' transform='rotate(90 60,60)'/><use xlink:href='%23l' opacity='.27' transform='rotate(120 60,60)'/><use xlink:href='%23l' opacity='.27' transform='rotate(150 60,60)'/><use xlink:href='%23l' opacity='.37' transform='rotate(180 60,60)'/><use xlink:href='%23l' opacity='.46' transform='rotate(210 60,60)'/><use xlink:href='%23l' opacity='.56' transform='rotate(240 60,60)'/><use xlink:href='%23l' opacity='.66' transform='rotate(270 60,60)'/><use xlink:href='%23l' opacity='.75' transform='rotate(300 60,60)'/><use xlink:href='%23l' opacity='.85' transform='rotate(330 60,60)'/></g></svg>");
+}
+</style>
+</head>
+
+<body>
+
+	<div id="offCanvasWrapper" class="mui-off-canvas-wrap mui-draggable">
+		<!--侧滑菜单部分-->
+		<aside id="offCanvasSide" class="mui-off-canvas-left">
+			<div id="offCanvasSideScroll" class="mui-scroll-wrapper">
+				<div class="mui-scroll">
+					$!httpInclude.include("/wap/index_left.htm")</div>
+			</div>
+		</aside>
+		<!--主界面部分-->
+		<div class="mui-inner-wrap">
+			<header class="mui-bar mui-bar-nav">
+				$!httpInclude.include("/wap/top.htm") </header>
+			<!-- 主题内容 -->
+			<div id="offCanvasContentScroll"
+				class="mui-content mui-scroll-wrapper">
+
+				<!-- 主体内容 -->
+				<div class="mui-scroll">
+
+					<div class="error_page1">
+						<p>购物车添加成功！</p>
+					</div>
+
+					<div class="red_submit">
+						<a class="back" href="javascript:history.go(-1);">返回</a><a
+							class="back" href="$!webPath/wap/goods_cart1.htm">查看购物车</a>
+					</div>
+
+					<div style="margin-top: 100px; display: block;"></div>
+				</div>
+			</div>
+			<!-- off-canvas backdrop -->
+			<div class="mui-off-canvas-backdrop"></div>
+		</div>
+		<!--购物车列表-->
+		<aside id="offCanvasSides" class="mui-off-canvas-right"
+			style="background: #fff;">
+			<div id="offCanvasSideScroll" class="mui-scroll-wrapper">
+				<div class="mui-scroll">
+					$!httpInclude.include("/wap/cart_right.htm")</div>
+			</div>
+		</aside>
+	</div>
+	<script src="$!webPath/resources/wap/mui.js"></script>
+	<script>
+	mui.init({
+        swipeBack: true //启用右滑关闭功能
+    });
+   
+  	//关闭侧滑效果
+		document.getElementsByClassName('mui-inner-wrap')[0].addEventListener('drag', function(event) {
+		　　event.stopPropagation();
+	});
+    mui(document.body).on('tap', '.mui-btn', function(e) {
+        mui(this).button('loading');
+        setTimeout(function() {
+        	if(e.target.id=="addto"){
+           	 $("#addto").trigger("click")
+           }
+            mui(this).button('reset');
+        }.bind(this), 2000); 
+    });
+   
+    //侧滑容器父节点
+    var offCanvasWrapper = mui('#offCanvasWrapper');
+    //主界面容器
+    var offCanvasInner = offCanvasWrapper[0].querySelector('.mui-inner-wrap');
+    //菜单容器
+    // var offCanvasSide = document.getElementById("offCanvasSide");
+    // if (!mui.os.android) {
+    //     document.getElementById("move-togger").classList.remove('mui-hidden');
+    //     var spans = document.querySelectorAll('.android-only');
+    //     for (var i = 0, len = spans.length; i < len; i++) {
+    //         spans[i].style.display = "none";
+    //     }
+    // }
+    //移动效果是否为整体移动
+    var moveTogether = false;
+    //侧滑容器的class列表，增加.mui-slide-in即可实现菜单移动、主界面不动的效果；
+    var classList = offCanvasWrapper[0].classList;
+    
+    mui(".last_li").on('tap', '#offCanvasHide', function (event) {
+    	 offCanvasWrapper.offCanvas('close');
+    });
+    //主界面和侧滑菜单界面均支持区域滚动；
+    mui('#offCanvasSideScroll').scroll();
+    mui('#offCanvasContentScroll').scroll();
+    //实现ios平台原生侧滑关闭页面；
+    if (mui.os.plus && mui.os.ios) {
+        mui.plusReady(function () { //5+ iOS暂时无法屏蔽popGesture时传递touch事件，故该demo直接屏蔽popGesture功能
+            plus.webview.currentWebview().setStyle({
+                'popGesture': 'none'
+            });
+        });
+    }
+    
+    
+    mui("body").on('tap', '#search_btn', function (event) {
+    	jQuery("#theForm").submit();
+    });
+    mui("body").on('tap', '.group_top li', function (event) {
+    	var con = jQuery(this)[0];
+    	var orderBy = jQuery(con).attr("id").substring(4);
+		if(orderBy=="store_price"){
+			if("$!{orderType}"=="asc"){
+				window.location.href="$!webPath/wap/search_goods.htm?keyword=$!{keyword}&&orderBy="+orderBy+"&&orderType=desc";
+			}else{
+				window.location.href="$!webPath/wap/search_goods.htm?keyword=$!{keyword}&&orderBy="+orderBy+"&&orderType=asc";
+			}	
+		}else{
+			window.location.href="$!webPath/wap/search_goods.htm?keyword=$!{keyword}&&orderBy="+orderBy;
+		} 
+    });
+    mui(".tab-view-user").on('tap', '.tab-view-list', function (event) {
+        if ($(event.target).siblings().hasClass("accordion_active") != true) {
+         /* 	$(event.target).after("background: transparent;")  */
+            $(event.target).siblings().addClass("accordion_active")
+        	/* $(event.target).after("background-color: #222;")  */
+            return;
+        }
+        $(event.target).siblings().removeClass("accordion_active");
+       /*  $(event.target).after("background-color: transparent;")  */
+    });
+    mui('body').on('tap','a',function(){document.location.href=this.href;});
+
+	</script>
+</body>
+
+</html>
