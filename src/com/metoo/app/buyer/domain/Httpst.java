@@ -23,7 +23,6 @@ public class Httpst {
 	public static String doGet(String url, Map<String, String> param) {
 		// 创建Httpclient对象
 		CloseableHttpClient httpclient = HttpClients.createDefault();
- 		
 		String resultString = "";
 		CloseableHttpResponse response = null;
 		try {
