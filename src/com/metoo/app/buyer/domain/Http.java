@@ -41,7 +41,7 @@ public class Http {
 	 *            请求参数
 	 * @return
 	 */
-	public static String get(String url) {
+	public static String getTets(String url) {
 		try {
 			CloseableHttpClient httpClient = HttpClients.createDefault();
 			HttpGet httpGet = new HttpGet(url);
