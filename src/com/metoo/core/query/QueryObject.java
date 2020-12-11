@@ -37,7 +37,7 @@ public class QueryObject implements IQueryObject {
 
 	private String construct;// 查询构造器，为空时查询obj所有字段
 
-	protected Integer pageSize = 12;// 默认分页数据，表示每页12条记录
+	protected Integer pageSize = 20;// 默认分页数据，表示每页12条记录
 
 	protected Integer currentPage = 0;// 当前页，默认为0，jpa查询从0开始计算，表示第一页
 

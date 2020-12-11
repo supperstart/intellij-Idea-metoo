@@ -127,7 +127,6 @@ public class MStoreViewActionV2 {
 			if (goods_store != null && !goods_store.equals("")) {
 				gqo.addQuery("obj.goods_store.id", new SysMap("store_id", CommUtil.null2Long(goods_store)), "=");
 			}
-			gqo.setPageSize(30);
 			gqo.addQuery("obj.goods_status", new SysMap("goods_status", 0), "=");
 			IPageList pList = this.goodsService.list(gqo);
 			List<Goods> goods = pList.getResult();

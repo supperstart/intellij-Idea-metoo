@@ -183,7 +183,14 @@ public class LuceneUtil {
 				params = params + " AND goods_type:" + goods_type;
 			}
 			if (goods_class != null && !goods_class.equals("")) {
-				params = params + " AND goods_class:" + goods_class;
+				String[] goods_ids = goods_class.split(",");
+				for (int i = 0; i <= goods_ids.length; i++) {
+					if(i>0){
+						params = params + " OR goods_class:" + goods_ids[i];
+					}else{
+						params = params + " AND goods_class:" + goods_ids[i];
+					}
+				}
 			}
 			if (goods_transfee != null && !goods_transfee.equals("")) {
 				params = params + " AND goods_transfee:" + goods_transfee;
@@ -480,7 +487,14 @@ public class LuceneUtil {
 				params = params + " AND store_id:" + store_id;
 			}
 			if (goods_class != null && !goods_class.equals("")) {
-				params = params + " AND goods_class:" + goods_class;
+				String[] goods_ids = goods_class.split(",");
+				for (int i = 0; i <= goods_ids.length; i++) {
+					if(i>0){
+						params = params + " OR goods_class:" + goods_ids[i];
+					}else{
+						params = params + " AND goods_class:" + goods_ids[i];
+					}
+				}
 			}
 			if (goods_transfee != null && !goods_transfee.equals("")) {
 				params = params + " AND goods_transfee:" + goods_transfee;

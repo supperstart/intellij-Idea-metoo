@@ -261,9 +261,8 @@ public class MArticleViewAction {
 		}
 	}
 
-//	@RequestMapping("/article_goods.json")
 	@RequestMapping("v1/article_goods.json")
-	public void store_goods_list(HttpServletRequest request, HttpServletResponse response, String gc_id,
+	public void article_goods(HttpServletRequest request, HttpServletResponse response, String gc_id,
 			String currentPage, String orderBy, String orderType, String brand_ids, String gs_ids, String properties,
 			String all_property_status, String detail_property_status, String goods_type, String goods_inventory,
 			String goods_transfee, String goods_cod, String gc_ids) {
@@ -329,7 +328,7 @@ public class MArticleViewAction {
 			gqo.addQuery("obj.goods_transfee", new SysMap("goods_transfee", 1), "=");
 			mv.addObject("goods_transfee", goods_transfee);
 		}
-		gqo.setPageSize(24);// 设定分页查询，每页24件商品
+
 		gqo.addQuery("obj.goods_status", new SysMap("goods_status", 0), "=");
 
 		List<Map> goods_property = new ArrayList<Map>();

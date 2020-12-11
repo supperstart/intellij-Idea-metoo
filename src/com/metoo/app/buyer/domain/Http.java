@@ -23,7 +23,7 @@ import org.apache.http.util.EntityUtils;
 
 /**
  * httputil
- * 
+ *
  * @author lvchaohua idea 0
  *
  */

@@ -105,8 +105,9 @@ public class LuceneVoTools {
 		vo.setVo_photos_url(str);
 		vo.setVo_goods_evas(goods.getEvaluates().size());
 		if (goods.getGc().getLevel() == 2) {
-			vo.setVo_goods_class(CommUtil.null2String(goods.getGc().getParent().getId()) + "_"
-					+ CommUtil.null2String(goods.getGc().getId()));
+			/*vo.setVo_goods_class(CommUtil.null2String(goods.getGc().getParent().getId()) + "_"
+					+ CommUtil.null2String(goods.getGc().getId()));*/
+			vo.setVo_goods_class(CommUtil.null2String(goods.getGc().getId()));
 		} else {
 			vo.setVo_goods_class(CommUtil.null2String(goods.getGc().getId()) + "_");
 		}

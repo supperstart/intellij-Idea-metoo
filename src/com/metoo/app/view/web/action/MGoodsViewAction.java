@@ -1584,7 +1584,7 @@ public class MGoodsViewAction {
 	 * @param orderType
 	 * @return
 	 */
-	@RequestMapping("wap_store_goods_list.json")
+	@RequestMapping("category_goods.json")
 	public void store_goods_list(HttpServletRequest request, HttpServletResponse response, String gc_id,
 			String currentPage, String orderBy, String orderType, String brand_ids, String gs_ids, String properties,
 			String all_property_status, String detail_property_status, String goods_type, String goods_inventory,
@@ -1660,7 +1660,6 @@ public class MGoodsViewAction {
 			mv.addObject("goods_transfee", goods_transfee);
 		}
 		gqo.addQuery("obj.goods_store.store_status", new SysMap("store_status", 15), "=");
-		gqo.setPageSize(30);// 设定分页查询，每页30件商品
 		gqo.addQuery("obj.goods_status", new SysMap("goods_status", 0), "=");
 
 		List<Map> goods_property = new ArrayList<Map>();

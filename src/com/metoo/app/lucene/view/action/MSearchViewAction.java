@@ -62,8 +62,8 @@ public class MSearchViewAction {
 	private GoodsViewTools goodsTools;
 	@Autowired
 	private IGoodsService goodsService;
-	
-	
+
+
 	@RequestMapping("/v1/hot_search.json")
 	public void search_hot(HttpServletRequest request, HttpServletResponse response){
 		Map searchMap = new HashMap();
@@ -72,13 +72,13 @@ public class MSearchViewAction {
 		List strList = null;
 		if(sysc.getHotSearch() != null && !sysc.getHotSearch().equals("")){
 			String[] str = CommUtil.splitByChar(sysc.getHotSearch(), ",");
-			 strList = new ArrayList();
+			strList = new ArrayList();
 			for(String string : str){
 				strList.add(string);
 			}
 			hot = 0;
 		}
-		Result result = new Result(hot, strList);		
+		Result result = new Result(hot, strList);
 		String search_temp = Json.toJson(result, JsonFormat.compact());
 		try {
 			response.getWriter().print(search_temp);
@@ -86,9 +86,9 @@ public class MSearchViewAction {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 	}
-	
+
 	/**
 	 * 用于移动端搜索
 	 * @param request
@@ -107,20 +107,20 @@ public class MSearchViewAction {
 	 */
 	@RequestMapping("v1/search.json")
 	public void wapsearch(HttpServletRequest request,
-			HttpServletResponse response, String gc_id, String currentPage,
-			String orderBy, String orderType, String goods_type,
-			String goods_inventory, String keyword, String goods_transfee,
-			String goods_cod,String searchType, String store_id) throws UnsupportedEncodingException {
+						  HttpServletResponse response, String gc_id, String currentPage,
+						  String orderBy, String orderType, String goods_type,
+						  String goods_inventory, String keyword, String goods_transfee,
+						  String goods_cod,String searchType, String store_id) throws UnsupportedEncodingException {
 		if(goods_type.equals("")){
 			goods_type = "1";
 		}
 		Result result = null;
-		Map map = new HashMap();
+		Map<String, Object> map = new HashMap<String, Object>();
 		//response.addCookie(search_history_cookie(request, keyword));
 		ModelAndView mv = new JModelAndView("lucene/search_goods_list.html",
 				configService.getSysConfig(),
 				this.userConfigService.getUserConfig(), 1, request, response);
-		
+
 		ModelAndView storeMv = new JModelAndView("supplier_list.html",
 				configService.getSysConfig(),
 				this.userConfigService.getUserConfig(), 1, request,
@@ -202,7 +202,7 @@ public class MSearchViewAction {
 				sort = new Sort(new SortField(order_by, SortField.Type.DOUBLE,
 						order_type));
 			}
-			
+
 			if (CommUtil.null2String(orderBy).equals("addTime")) {
 				order_by = "add_time";
 				sort = new Sort(new SortField(order_by, SortField.Type.DOUBLE,
@@ -216,8 +216,9 @@ public class MSearchViewAction {
 			if (gc_id != null && !gc_id.equals("")) {
 				GoodsClass gc = this.goodsClassService.getObjById(CommUtil
 						.null2Long(gc_id));
-				query_gc = gc.getLevel() == 1 ? gc_id + "_*" : CommUtil
-						.null2String(gc.getParent().getId()) + "_" + gc_id;
+				query_gc = gc_id;
+						/*gc.getLevel() == 1 ? gc_id + "_*" : CommUtil
+						.null2String(gc.getParent().getId()) + "_" + gc_id;*/
 			}
 			LuceneResult pList = null;
 			if (sort != null) {
@@ -225,11 +226,11 @@ public class MSearchViewAction {
 						goods_inventory, goods_type, query_gc, goods_transfee,
 						goods_cod, sort, null, null, null);
 			} else {
-					pList = lucene.appSearch(keyword, CommUtil.null2Int(currentPage),
-							goods_inventory, goods_type, query_gc, goods_transfee,
-							goods_cod, null, null, null, store_id);
+				pList = lucene.appSearch(keyword, CommUtil.null2Int(currentPage),
+						goods_inventory, goods_type, query_gc, goods_transfee,
+						goods_cod, null, null, null, store_id);
 			}
-			
+
 			CommUtil.saveLucene2ModelAndView(pList, mv);
 			List<LuceneVo> luceneVos = pList.getVo_list();
 			List<Map<String, Object>> luceneList = new ArrayList<Map<String, Object>>();
@@ -250,6 +251,7 @@ public class MSearchViewAction {
 					goodsMap.put("goods_collect", lucenevo.getVo_goods_collect());
 					goodsMap.put("store_id", lucenevo.getVo_store_id());
 					goodsMap.put("goods_discount_rate", lucenevo.getVo_rate());
+					goodsMap.put("goods_class", lucenevo.getVo_goods_class());
 					luceneList.add(goodsMap);
 				}
 			}
@@ -286,8 +288,8 @@ public class MSearchViewAction {
 			}
 		}
 		*/
-			response.setContentType("application/json");
-			response.setCharacterEncoding("UTF-8");
+		response.setContentType("application/json");
+		response.setCharacterEncoding("UTF-8");
 		try {
 			response.getWriter().print(Json.toJson(
 					new Result(0, "Suucessfully", map), JsonFormat.compact()));
@@ -295,17 +297,17 @@ public class MSearchViewAction {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	
+
 	}
-	
+
 	/**
 	 * 根据店铺SEO关键字，查出关键字命中的店铺
-	 * 
+	 *
 	 * @param keyword
 	 * @return
 	 */
 	public List<Store> search_stores_seo(String keyword) {
-		Map params = new HashMap();
+		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("keyword1", keyword);
 		params.put("keyword2", keyword + ",%");
 		params.put("keyword3", "%," + keyword + ",%");
@@ -341,16 +343,16 @@ public class MSearchViewAction {
 		});
 		return stores;
 	}
-	
+
 	/**
 	 * 得到一个存有搜索数据的Cookie
-	 * 
+	 *
 	 * @param request
 	 * @return
 	 * @throws UnsupportedEncodingException
 	 */
 	public Cookie search_history_cookie(HttpServletRequest request,
-			String keyword) {
+										String keyword) {
 		String str = "";
 		Cookie[] cookies = request.getCookies();
 		Cookie search_cookie = null;

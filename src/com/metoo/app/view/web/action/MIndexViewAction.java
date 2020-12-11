@@ -124,7 +124,6 @@ public class MIndexViewAction {
 				}
 			}
 		}
-		gqo.setPageSize(30);
 		gqo.addQuery("obj.goods_status", new SysMap("goods_status", 0), "=");
 		gqo.addQuery("obj.goods_store.store_status", new SysMap("store_status", 15), "=");
 		IPageList pList = this.goodsService.list(gqo);
